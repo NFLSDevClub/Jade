@@ -3,6 +3,7 @@ package com.zzzyt.jade.util;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.MathUtils;
+import com.zzzyt.jade.Config;
 
 public class Utils {
 
@@ -51,5 +52,13 @@ public class Utils {
 
 	public static float sqr(float x) {
 		return x * x;
+	}
+
+	public static float screenToWorldY(float y) {
+		return y - Config.originY;
+	}
+
+	public static float screenToWorldX(float x) {
+		return x - Config.originX;
 	}
 }

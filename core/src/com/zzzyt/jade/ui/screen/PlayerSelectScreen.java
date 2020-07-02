@@ -39,7 +39,7 @@ public class PlayerSelectScreen implements FadeableScreen {
 
 	@Override
 	public void show() {
-		BGM.play("mus/Idea29.ogg");
+		BGM.play("mus/Idea29.wav");
 
 		this.st = new Stage(viewport);
 		this.input = new InputMultiplexer();
