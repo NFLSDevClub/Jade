@@ -1,54 +1,68 @@
 package com.zzzyt.jade.util;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.utils.Logger;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.zzzyt.jade.Config;
+import com.zzzyt.jade.music.BackgroundMusic;
 
 public class BGM {
 
-	public static Music bgm;
-	public static String name = "";
+	public static BackgroundMusic bgm;
 
+	private static ObjectMap<String, BackgroundMusic> bgms = new ObjectMap<String, BackgroundMusic>();
 	private static Logger logger = new Logger("BGM", Config.logLevel);
 
 	public static void play(String name) {
-		play(name, true);
-	}
-
-	public static void play(String name, boolean isLooping) {
+		BackgroundMusic bgm = BGM.bgm;
 		if (name == null) {
 			throw new IllegalArgumentException("BGM name can't be null");
 		}
-		if (BGM.name.equals(name)) {
-			logger.debug("Same BGM as before. No changing.");
-			return;
-		}
-		if (BGM.bgm != null) {
-			logger.debug("\"" + BGM.name + "\" is stopped and disposed.");
+		if (bgm != null) {
+			if (bgm.getName().equals(name)) {
+				logger.debug("Same BGM as before. No changing.");
+				return;
+			}
+			logger.debug("Stopping \"" + bgm.getName() + "\".");
 			bgm.stop();
 			bgm.dispose();
 		}
-		logger.debug("Loading and playing \"" + name + "\".");
-		BGM.name = name;
-		BGM.bgm = Gdx.audio.newMusic(Gdx.files.internal(name));
-		BGM.bgm.setLooping(isLooping);
-		BGM.bgm.play();
+		logger.debug("Playing \"" + name + "\".");
+		BGM.bgm = bgms.get(name);
+		if (BGM.bgm == null) {
+			logger.error("BGM with this name doesn't exist!");
+		} else {
+			BGM.bgm.play();
+		}
+	}
+
+	public static BackgroundMusic register(BackgroundMusic music) {
+		bgms.put(music.getName(), music);
+		return music;
+	}
+	
+	public static void update() {
+		if (BGM.bgm != null) {
+			BGM.bgm.update();
+		}
 	}
 
 	public static void stop() {
 		if (BGM.bgm != null) {
-			logger.debug("Stopping \"" + BGM.name + "\".");
+			logger.debug("Stopping \"" + BGM.bgm.getName() + "\".");
 			BGM.bgm.stop();
 		}
 	}
 
 	public static void dispose() {
 		if (BGM.bgm != null) {
-			logger.debug("\"" + BGM.name + "\" is stopped and disposed.");
+			logger.debug("\"" + BGM.bgm.getName() + "\" is stopped and disposed.");
 			BGM.bgm.stop();
 			BGM.bgm.dispose();
 		}
+	}
+	
+	public static Logger getLogger() {
+		return logger;
 	}
 
 }

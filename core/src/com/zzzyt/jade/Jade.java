@@ -202,12 +202,4 @@ public class Jade implements Disposable {
 		fbo.dispose();
 		Jade.session = null;
 	}
-
-	public static float screenToWorldY(float y) {
-		return y - Config.originY;
-	}
-
-	public static float screenToWorldX(float x) {
-		return x - Config.originX;
-	}
 }

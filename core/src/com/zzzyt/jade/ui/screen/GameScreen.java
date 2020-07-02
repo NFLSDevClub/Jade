@@ -17,7 +17,7 @@ import com.zzzyt.jade.Config;
 import com.zzzyt.jade.Jade;
 import com.zzzyt.jade.entity.RoundBullet;
 import com.zzzyt.jade.entity.SquareBullet;
-import com.zzzyt.jade.entity.PlayerBuilder;
+import com.zzzyt.jade.entity.BasicPlayerBuilder;
 import com.zzzyt.jade.ui.QuitListener;
 import com.zzzyt.jade.ui.widget.FPSDisplay;
 import com.zzzyt.jade.ui.widget.GameFrame;
@@ -38,7 +38,7 @@ public class GameScreen implements FadeableScreen {
 	private FPSDisplay fps;
 	private GameFrame frame;
 
-	private PlayerBuilder reimu, marisa;
+	private BasicPlayerBuilder reimu, marisa;
 
 	private ScreenState state;
 
@@ -49,15 +49,17 @@ public class GameScreen implements FadeableScreen {
 
 	@Override
 	public void show() {
-		BGM.play("mus/Idea12.ogg");
+		BGM.play("mus/Idea12.wav");
 
 		if (reimu == null) {
-			this.reimu = new PlayerBuilder();
-			reimu.fromAtlas(A.get("player/th10_player.atlas"), "th10_reimu", 5).data(2, 4.5f, 2).hitbox(new Sprite((Texture)A.get("player/hitbox.png")));
+			this.reimu = new BasicPlayerBuilder();
+			reimu.fromAtlas(A.get("player/th10_player.atlas"), "th10_reimu", 5, 2).data(2, 4.5f, 2)
+					.hitbox(new Sprite((Texture) A.get("player/hitbox.png")));
 		}
 		if (marisa == null) {
-			this.marisa = new PlayerBuilder();
-			marisa.fromAtlas(A.get("player/th10_player.atlas"), "th10_marisa", 5).data(3.5f, 5, 2).hitbox(new Sprite((Texture)A.get("player/hitbox.png")));
+			this.marisa = new BasicPlayerBuilder();
+			marisa.fromAtlas(A.get("player/th10_player.atlas"), "th10_marisa", 5, 2).data(3.5f, 5, 2)
+					.hitbox(new Sprite((Texture) A.get("player/hitbox.png")));
 		}
 
 		this.st = new Stage(viewport);
@@ -94,17 +96,16 @@ public class GameScreen implements FadeableScreen {
 
 	@Override
 	public void render(float delta) {
-		if(MathUtils.randomBoolean()) {
+		if (MathUtils.randomBoolean()) {
 			jade.add(new SquareBullet(new TextureRegion(A.get("bu/rectbullet.png", Texture.class)), 0, 8,
-					MathUtils.random(-150, 150), MathUtils.random(-100, 0), 1, MathUtils.random(-150, -30))).setScale(0.5f)
-					.setColor(new Color(MathUtils.random(), 0, 1, 1));
-		}
-		else {
+					MathUtils.random(-150, 150), MathUtils.random(-100, 0), 1, MathUtils.random(-150, -30)))
+					.setScale(0.5f).setColor(new Color(MathUtils.random(), 0, 1, 1));
+		} else {
 			jade.add(new RoundBullet(new TextureRegion(A.get("bu/testbullet2.png", Texture.class)), 0, 4,
-					MathUtils.random(-150, 150), MathUtils.random(-100, 0), 1, MathUtils.random(-150, -30))).setScale(1f)
-					.setColor(new Color(MathUtils.random(), 0, 1, 1));
+					MathUtils.random(-150, 150), MathUtils.random(-100, 0), 1, MathUtils.random(-150, -30)))
+					.setScale(1f).setColor(new Color(MathUtils.random(), 0, 1, 1));
 		}
-		
+
 		jade.update();
 		jade.draw();
 

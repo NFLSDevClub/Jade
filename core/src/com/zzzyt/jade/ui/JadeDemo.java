@@ -8,12 +8,14 @@ import com.badlogic.gdx.math.WindowedMean;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
 import com.zzzyt.jade.Config;
+import com.zzzyt.jade.music.BackgroundMusic;
 import com.zzzyt.jade.ui.screen.FadeableScreen;
 import com.zzzyt.jade.ui.screen.GameScreen;
 import com.zzzyt.jade.ui.screen.PlayerSelectScreen;
 import com.zzzyt.jade.ui.screen.ScreenState;
 import com.zzzyt.jade.ui.screen.StartScreen;
 import com.zzzyt.jade.util.A;
+import com.zzzyt.jade.util.BGM;
 import com.zzzyt.jade.util.Game;
 import com.zzzyt.jade.util.Utils;
 
@@ -28,6 +30,8 @@ public class JadeDemo implements ApplicationListener {
 
 	@Override
 	public void create() {
+		Gdx.app.setLogLevel(Config.logLevel);
+		
 		Game.game = this;
 
 		this.logger = new Logger("Main", Config.logLevel);
@@ -35,6 +39,9 @@ public class JadeDemo implements ApplicationListener {
 
 		A.init();
 
+		BGM.register(new BackgroundMusic("mus/Idea12.wav",6,9));
+		BGM.register(new BackgroundMusic("mus/Idea29.wav",10,26));
+		
 		this.blocker = new InputBlocker();
 		blocker.enable();
 
@@ -57,6 +64,8 @@ public class JadeDemo implements ApplicationListener {
 
 	@Override
 	public void render() {
+		BGM.update();
+		
 		if (Gdx.input.isKeyPressed(Keys.F4)) {
 			if (Gdx.graphics.isFullscreen()) {
 				Gdx.graphics.setWindowedMode(Config.windowWidth, Config.windowHeight);
