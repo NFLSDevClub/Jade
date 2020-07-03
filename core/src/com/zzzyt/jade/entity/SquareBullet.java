@@ -1,35 +1,46 @@
 package com.zzzyt.jade.entity;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Pool.Poolable;
 import com.zzzyt.jade.Jade;
 import com.zzzyt.jade.util.Collision;
 
-public class SquareBullet extends Bullet {
+public class SquareBullet extends Bullet implements Poolable {
 
-	public float side;
+	public float sideLength;
 
-	public SquareBullet(TextureRegion region, int tag, float side) {
+	public SquareBullet() {
+		super();
+	}
+	
+	public SquareBullet(TextureRegion region, int tag, float sideLength) {
 		super(region, tag);
-		this.side = side;
+		this.sideLength = sideLength;
 	}
 
-	public SquareBullet(TextureRegion region, int tag, float side, float x, float y) {
+	public SquareBullet(TextureRegion region, int tag, float sideLength, float x, float y) {
 		super(region, tag, x, y);
-		this.side = side;
+		this.sideLength = sideLength;
 	}
 
-	public SquareBullet(TextureRegion region, int tag, float side, float x, float y, float speed, float dir) {
+	public SquareBullet(TextureRegion region, int tag, float sideLength, float x, float y, float speed, float dir) {
 		super(region, tag, x, y, speed, dir);
-		this.side = side;
+		this.sideLength = sideLength;
 	}
 
 	@Override
 	public boolean collide(BasicPlayer player) {
-		return Collision.circleSquare(player.x, player.y, player.radius, x, y, side);
+		// I'm not sure if this is appropriate...
+		return Collision.squareSquare(player.x, player.y, player.radius * 2, x, y, sideLength);
 	}
 
 	@Override
 	public void onHit() {
 		Jade.session.onHit();
+	}
+
+	@Override
+	public void reset() {
+		this.sideLength = -1;
 	}
 }

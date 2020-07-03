@@ -2,6 +2,7 @@ package com.zzzyt.jade;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
@@ -9,7 +10,9 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Logger;
+import com.badlogic.gdx.utils.Pool;
 import com.zzzyt.jade.entity.Bullet;
+import com.zzzyt.jade.entity.RoundBullet;
 import com.zzzyt.jade.entity.BasicPlayer;
 import com.zzzyt.jade.util.Game;
 import com.zzzyt.jade.util.Utils;
@@ -18,12 +21,14 @@ public class Jade implements Disposable {
 
 	public static Jade session;
 
-	private FrameBuffer fbo;
-	private TextureRegion fboRegion;
-	private SpriteBatch batch;
-	private OrthographicCamera cam;
-	private Logger logger;
+	private transient FrameBuffer fbo;
+	private transient TextureRegion fboRegion;
+	private transient SpriteBatch batch;
+	private transient OrthographicCamera cam;
+	private transient Logger logger;
 
+	public Pool<RoundBullet> roundBulletPool;
+	
 	public Array<Bullet> bullets;
 	public Array<Bullet> candidates;
 	public BasicPlayer player;
@@ -48,6 +53,13 @@ public class Jade implements Disposable {
 		this.batch = new SpriteBatch();
 		batch.setProjectionMatrix(cam.combined);
 
+		this.roundBulletPool=new Pool<RoundBullet>() {
+			@Override
+			protected RoundBullet newObject() {
+				return new RoundBullet();
+			}
+		};
+		
 		this.bullets = new Array<Bullet>(false, 1024);
 		this.candidates = new Array<Bullet>(false, 256);
 
@@ -77,6 +89,14 @@ public class Jade implements Disposable {
 		return fboRegion;
 	}
 
+	public RoundBullet newRoundBullet(TextureRegion region, int tag, float radius) {
+		RoundBullet tmp=roundBulletPool.obtain();
+		tmp.sprite=new Sprite(region);
+		tmp.tag=tag;
+		tmp.radius=radius;
+		return tmp;
+	}
+	
 	public Bullet add(Bullet bullet) {
 		bulletCount++;
 		bullet.id = bullets.size;
@@ -89,6 +109,9 @@ public class Jade implements Disposable {
 			blankCount++;
 		bulletCount--;
 		bullets.set(bullet.id, null);
+		if(bullet instanceof RoundBullet) {
+			roundBulletPool.free((RoundBullet) bullet);
+		}
 		return bullet;
 	}
 

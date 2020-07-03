@@ -1,13 +1,18 @@
 package com.zzzyt.jade.entity;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Pool.Poolable;
 import com.zzzyt.jade.Jade;
 import com.zzzyt.jade.util.Collision;
 
-public class RoundBullet extends Bullet {
+public class RoundBullet extends Bullet implements Poolable {
 
 	public float radius;
 
+	public RoundBullet() {
+		super();
+	}
+	
 	public RoundBullet(TextureRegion region, int tag, float radius) {
 		super(region, tag);
 		this.radius = radius;
@@ -21,7 +26,7 @@ public class RoundBullet extends Bullet {
 	public RoundBullet(TextureRegion region, int tag, float radius, float x, float y, float speed, float dir) {
 		super(region, tag, x, y, speed, dir);
 		this.radius = radius;
-	}
+	}	
 
 	@Override
 	public boolean collide(BasicPlayer player) {
@@ -31,5 +36,10 @@ public class RoundBullet extends Bullet {
 	@Override
 	public void onHit() {
 		Jade.session.onHit();
+	}
+
+	@Override
+	public void reset() {
+		this.radius = -1;
 	}
 }

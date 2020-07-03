@@ -15,7 +15,6 @@ import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.zzzyt.jade.Config;
 import com.zzzyt.jade.Jade;
-import com.zzzyt.jade.entity.RoundBullet;
 import com.zzzyt.jade.entity.SquareBullet;
 import com.zzzyt.jade.entity.BasicPlayerBuilder;
 import com.zzzyt.jade.ui.QuitListener;
@@ -96,14 +95,18 @@ public class GameScreen implements FadeableScreen {
 
 	@Override
 	public void render(float delta) {
-		if (MathUtils.randomBoolean()) {
-			jade.add(new SquareBullet(new TextureRegion(A.get("bu/rectbullet.png", Texture.class)), 0, 8,
-					MathUtils.random(-150, 150), MathUtils.random(-100, 0), 1, MathUtils.random(-150, -30)))
-					.setScale(0.5f).setColor(new Color(MathUtils.random(), 0, 1, 1));
-		} else {
-			jade.add(new RoundBullet(new TextureRegion(A.get("bu/testbullet2.png", Texture.class)), 0, 4,
-					MathUtils.random(-150, 150), MathUtils.random(-100, 0), 1, MathUtils.random(-150, -30)))
-					.setScale(1f).setColor(new Color(MathUtils.random(), 0, 1, 1));
+		for(int i=0;i<1;i++) {
+			if (MathUtils.randomBoolean()) {
+				jade.add(jade.newRoundBullet(new TextureRegion(A.get("bu/testbullet2.png", Texture.class)), 0, 4))
+				.setXY(MathUtils.random(-150, 150), MathUtils.random(-100, 0))
+				.setDir(MathUtils.random(-150, -30))
+				.setSpeed(1)
+				.setScale(1f).setColor(new Color(MathUtils.random(), 0, 1, 1));
+			} else {
+				jade.add(new SquareBullet(new TextureRegion(A.get("bu/rectbullet.png", Texture.class)), 0, 8,
+						MathUtils.random(-150, 150), MathUtils.random(-100, 0), 1, MathUtils.random(-150, -30)))
+						.setScale(0.5f).setColor(new Color(MathUtils.random(), 0, 1, 1));
+			}
 		}
 
 		jade.update();

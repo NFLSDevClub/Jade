@@ -133,19 +133,22 @@ public class BasicPlayer implements Player {
 	}
 
 	@Override
-	public void x(float x) {
+	public BasicPlayer setX(float x) {
 		this.x = x;
+		return this;
 	}
 
 	@Override
-	public void y(float y) {
+	public BasicPlayer setY(float y) {
 		this.y = y;
+		return this;
 	}
 
 	@Override
-	public void xy(float x, float y) {
+	public BasicPlayer setXY(float x, float y) {
 		this.x = x;
 		this.y = y;
+		return this;
 	}
 
 	@Override

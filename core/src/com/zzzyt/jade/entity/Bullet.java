@@ -8,17 +8,22 @@ import com.badlogic.gdx.math.MathUtils;
 import com.zzzyt.jade.Jade;
 import com.zzzyt.jade.util.Utils;
 
-public class Bullet {
+public class Bullet implements Entity{
 
 	public int id;
+	public int type;
 	public int tag;
 
 	public float x, y;
-	public Sprite sprite;
+	public transient Sprite sprite;
 	public float speed, dir;
 
 	private float boundingRadius;
 
+	public Bullet() {
+		
+	}
+	
 	public Bullet(TextureRegion region, int tag) {
 		this.sprite = new Sprite(region);
 		this.tag = tag;
@@ -63,25 +68,38 @@ public class Bullet {
 		return this;
 	}
 
-	public Bullet x(float nx) {
+	@Override
+	public Bullet setX(float nx) {
 		x = nx;
 		updateSpritePosition();
 		return this;
 	}
 
-	public Bullet y(float ny) {
+	@Override
+	public Bullet setY(float ny) {
 		y = ny;
 		updateSpritePosition();
 		return this;
 	}
 
-	public Bullet xy(float nx, float ny) {
+	@Override
+	public Bullet setXY(float nx, float ny) {
 		x = nx;
 		y = ny;
 		updateSpritePosition();
 		return this;
 	}
 
+	@Override
+	public float getX() {
+		return x;
+	}
+
+	@Override
+	public float getY() {
+		return y;
+	}
+	
 	public Bullet updateSpritePosition() {
 		sprite.setPosition(x - sprite.getWidth() * sprite.getScaleX() / 2,
 				y - sprite.getHeight() * sprite.getScaleY() / 2);

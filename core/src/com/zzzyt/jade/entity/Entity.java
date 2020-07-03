@@ -7,7 +7,7 @@ public interface Entity {
 	public void update();
 	public float getX();
 	public float getY();
-	public void x(float x);
-	public void y(float y);
-	public void xy(float x,float y);
+	public Entity setX(float x);
+	public Entity setY(float y);
+	public Entity setXY(float x,float y);
 }

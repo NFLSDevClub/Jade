@@ -6,13 +6,15 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.zzzyt.jade.Config;
+import com.zzzyt.jade.ui.GridComponent;
 import com.zzzyt.jade.util.A;
 
-public class LabelButton extends Label {
+public class LabelButton extends Label implements GridComponent{
 
-	public int gridX, gridY;
 	public Runnable runnable;
 	public boolean active;
+	
+	private int gridX, gridY;
 	private float staticX, staticY;
 	private LabelStyle activeStyle, inactiveStyle;
 	private Action activeAction, inactiveAction;
@@ -43,10 +45,12 @@ public class LabelButton extends Label {
 		setBounds(x, y, width, height);
 	}
 
-	public void run() {
+	@Override
+	public void trigger() {
 		runnable.run();
 	}
 
+	@Override
 	public void update() {
 		setPosition(staticX, staticY);
 		if (active) {
@@ -68,13 +72,15 @@ public class LabelButton extends Label {
 		}
 	}
 
-	public LabelButton setActive() {
+	@Override
+	public LabelButton activate() {
 		active = true;
 		update();
 		return this;
 	}
 
-	public LabelButton setInactive() {
+	@Override
+	public LabelButton deactivate() {
 		active = false;
 		update();
 		return this;
@@ -107,6 +113,21 @@ public class LabelButton extends Label {
 	public Label setAction(Runnable action) {
 		this.runnable = action;
 		return this;
+	}
+
+	@Override
+	public int getGridX() {
+		return gridX;
+	}
+
+	@Override
+	public int getGridY() {
+		return gridY;
+	}
+
+	@Override
+	public boolean isActive() {
+		return active;
 	}
 
 }

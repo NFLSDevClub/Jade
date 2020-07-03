@@ -105,15 +105,15 @@ public class BackgroundLoader extends Thread {
 	public static void loadSafe(FileHandle fh) {
 		String extension = fh.extension();
 		if ("png".equals(extension))
-			A.load(fh.path(), Texture.class, A.textureParam);
+			A.load(fh.path(), Texture.class, A.defaultTextureParameter());
 		else if ("jpg".equals(extension))
-			A.load(fh.path(), Texture.class, A.textureParam);
+			A.load(fh.path(), Texture.class, A.defaultTextureParameter());
 		else if ("jpeg".equals(extension))
-			A.load(fh.path(), Texture.class, A.textureParam);
+			A.load(fh.path(), Texture.class, A.defaultTextureParameter());
 		else if ("bmp".equals(extension))
-			A.load(fh.path(), Texture.class, A.textureParam);
+			A.load(fh.path(), Texture.class, A.defaultTextureParameter());
 		else if ("gif".equals(extension))
-			A.load(fh.path(), Texture.class, A.textureParam);
+			A.load(fh.path(), Texture.class, A.defaultTextureParameter());
 		else if ("atlas".equals(extension))
 			A.load(fh.path(), TextureAtlas.class);
 		else if ("fnt".equals(extension))

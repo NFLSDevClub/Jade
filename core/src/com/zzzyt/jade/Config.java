@@ -8,6 +8,7 @@ public class Config {
 
 	public static int logLevel = Logger.DEBUG;
 
+	public static int fps = 60;
 	public static int windowWidth = 640;
 	public static int windowHeight = 480;
 	public static int w = 384;
