@@ -2,6 +2,7 @@ package com.zzzyt.jade.ui;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -14,7 +15,6 @@ public class Grid extends Group implements InputProcessor {
 	public int x, y;
 	public boolean cycle;
 
-	private GridComponent current;
 	private int minX, minY, maxX, maxY;
 	private boolean enabled;
 
@@ -27,7 +27,6 @@ public class Grid extends Group implements InputProcessor {
 		this.minY = Integer.MAX_VALUE;
 		this.maxX = Integer.MIN_VALUE;
 		this.maxY = Integer.MIN_VALUE;
-		this.current = null;
 		this.enabled = true;
 	}
 
@@ -47,20 +46,18 @@ public class Grid extends Group implements InputProcessor {
 		if (grid.size() == 0)
 			return;
 		GridComponent button = grid.get(0);
-		button.activate();
-		current = button;
 		x = button.getGridX();
 		y = button.getGridY();
+		select(x,y);
 	}
 
 	public void selectLast() {
 		if (grid.size() == 0)
 			return;
 		GridComponent button = grid.get(grid.size() - 1);
-		button.activate();
-		current = button;
 		x = button.getGridX();
 		y = button.getGridY();
+		select(x,y);
 	}
 
 	public void select(int nx, int ny) {
@@ -72,13 +69,21 @@ public class Grid extends Group implements InputProcessor {
 				dist = distance(nx, ny, button.getGridX(), button.getGridY());
 			}
 		}
-		if (current != null)
-			current.deactivate();
-		if (closest != null)
-			closest.activate();
-		current = closest;
+		for (GridComponent button : grid) {
+			if (button.isActive()) {
+				button.deactivate();
+			}
+		}
+		if (closest == null) {
+			return;
+		}
 		x = closest.getGridX();
 		y = closest.getGridY();
+		for (GridComponent button : grid) {
+			if (button.getGridX() == x && button.getGridY() == y) {
+				button.activate();
+			}
+		}
 	}
 
 	public void updateAll() {
@@ -114,8 +119,11 @@ public class Grid extends Group implements InputProcessor {
 		} else if (Utils.matchKey(keycode, Config.keyRight)) {
 			select(x + 1, y);
 		} else if (Utils.matchKey(keycode, Config.keySelect)) {
-			if (current != null)
-				current.trigger();
+			for (GridComponent button : grid) {
+				if(button.isActive()) {
+					button.trigger();					
+				}
+			}
 		}
 		return false;
 	}

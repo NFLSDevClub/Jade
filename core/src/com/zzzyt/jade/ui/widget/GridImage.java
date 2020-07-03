@@ -8,13 +8,16 @@ import com.zzzyt.jade.ui.GridComponent;
 
 public class GridImage extends Image implements GridComponent {
 
-	private int gridX, gridY;
-	private Runnable runnable;
-	private boolean active;
+	protected float staticX, staticY;
+	protected int gridX, gridY;
+	protected Runnable runnable;
+	protected boolean active;
 
 	public GridImage(Texture texture, float x, float y, int gridX, int gridY, Runnable runnable) {
 		super(texture);
 		setPosition(x, y);
+		this.staticX = x;
+		this.staticY = y;
 		this.gridX = gridX;
 		this.gridY = gridY;
 		this.runnable = runnable;
@@ -25,6 +28,7 @@ public class GridImage extends Image implements GridComponent {
 	public GridComponent activate() {
 		active = true;
 		clearActions();
+		setPosition(staticX, staticY);
 		addAction(Actions.sequence(Actions.moveBy(-10, 0, 0.1f, Interpolation.sine),
 				Actions.moveBy(10, 0, 0.1f, Interpolation.sine)));
 		setColor(1, 1, 1, 1f);
@@ -64,7 +68,9 @@ public class GridImage extends Image implements GridComponent {
 
 	@Override
 	public void trigger() {
-		runnable.run();
+		if (runnable != null) {
+			runnable.run();
+		}
 	}
 
 }

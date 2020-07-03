@@ -14,10 +14,10 @@ public class GridLabel extends Label implements GridComponent{
 	public Runnable runnable;
 	public boolean active;
 	
-	private int gridX, gridY;
-	private float staticX, staticY;
-	private LabelStyle activeStyle, inactiveStyle;
-	private Action activeAction, inactiveAction;
+	protected int gridX, gridY;
+	protected float staticX, staticY;
+	protected LabelStyle activeStyle, inactiveStyle;
+	protected Action activeAction, inactiveAction;
 
 	public GridLabel(CharSequence text, LabelStyle activeStyle) {
 		super(text, activeStyle);
