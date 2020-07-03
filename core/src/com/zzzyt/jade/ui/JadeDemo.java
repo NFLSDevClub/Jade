@@ -39,8 +39,8 @@ public class JadeDemo implements ApplicationListener {
 
 		A.init();
 
-		BGM.register(new BackgroundMusic("mus/Idea12.wav",0,12));
-		BGM.register(new BackgroundMusic("mus/Idea29.wav",10,26));
+		BGM.register(new BackgroundMusic("mus/Idea12.ogg",0,12));
+		BGM.register(new BackgroundMusic("mus/Idea29.ogg",10,26));
 		
 		this.blocker = new InputBlocker();
 		blocker.enable();

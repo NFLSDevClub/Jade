@@ -48,7 +48,7 @@ public class GameScreen implements FadeableScreen {
 
 	@Override
 	public void show() {
-		BGM.play("mus/Idea12.wav");
+		BGM.play("mus/Idea12.ogg");
 
 		if (reimu == null) {
 			this.reimu = new BasicPlayerBuilder();

@@ -28,7 +28,7 @@ public class Jade implements Disposable {
 	private transient Logger logger;
 
 	public Pool<RoundBullet> roundBulletPool;
-	
+
 	public Array<Bullet> bullets;
 	public Array<Bullet> candidates;
 	public BasicPlayer player;
@@ -38,7 +38,7 @@ public class Jade implements Disposable {
 	private int bulletCount, blankCount;
 
 	public Jade() {
-		this.logger = new Logger("Jade",Config.logLevel);
+		this.logger = new Logger("Jade", Config.logLevel);
 
 		logger.info("Creating Jade session...");
 
@@ -53,13 +53,13 @@ public class Jade implements Disposable {
 		this.batch = new SpriteBatch();
 		batch.setProjectionMatrix(cam.combined);
 
-		this.roundBulletPool=new Pool<RoundBullet>() {
+		this.roundBulletPool = new Pool<RoundBullet>() {
 			@Override
 			protected RoundBullet newObject() {
 				return new RoundBullet();
 			}
 		};
-		
+
 		this.bullets = new Array<Bullet>(false, 1024);
 		this.candidates = new Array<Bullet>(false, 256);
 
@@ -90,13 +90,13 @@ public class Jade implements Disposable {
 	}
 
 	public RoundBullet newRoundBullet(TextureRegion region, int tag, float radius) {
-		RoundBullet tmp=roundBulletPool.obtain();
-		tmp.sprite=new Sprite(region);
-		tmp.tag=tag;
-		tmp.radius=radius;
+		RoundBullet tmp = roundBulletPool.obtain();
+		tmp.sprite = new Sprite(region);
+		tmp.tag = tag;
+		tmp.radius = radius;
 		return tmp;
 	}
-	
+
 	public Bullet add(Bullet bullet) {
 		bulletCount++;
 		bullet.id = bullets.size;
@@ -109,7 +109,7 @@ public class Jade implements Disposable {
 			blankCount++;
 		bulletCount--;
 		bullets.set(bullet.id, null);
-		if(bullet instanceof RoundBullet) {
+		if (bullet.getClass() == RoundBullet.class) {
 			roundBulletPool.free((RoundBullet) bullet);
 		}
 		return bullet;
@@ -132,8 +132,9 @@ public class Jade implements Disposable {
 		for (int i = 0; i < bullets.size; i++) {
 			if (terminating)
 				break;
-			if (bullets.get(i) != null)
+			if (bullets.get(i) != null) {
 				bullets.get(i).update();
+			}
 		}
 
 		if ((bulletCount <= Config.cleanupBulletCount && blankCount >= Config.cleanupBlankCount)

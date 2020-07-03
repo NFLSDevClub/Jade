@@ -44,7 +44,7 @@ public class StartScreen implements FadeableScreen {
 		this.st = new Stage(viewport);
 		this.input = new InputMultiplexer();
 
-		BGM.play("mus/Idea29.wav");
+		BGM.play("mus/Idea29.ogg");
 
 		this.background = new Image((Texture) A.get("bg/start_bg.png"));
 		background.setZIndex(0);
