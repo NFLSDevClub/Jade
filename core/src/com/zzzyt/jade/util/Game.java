@@ -13,12 +13,12 @@ public class Game {
 	public static void quit() {
 		Gdx.app.exit();
 	}
-	
+
 	public static InputProcessor addProcessor(InputProcessor processor) {
 		game.input.addProcessor(processor);
 		return processor;
 	}
-	
+
 	public static InputProcessor removeProcessor(InputProcessor processor) {
 		game.input.removeProcessor(processor);
 		return processor;

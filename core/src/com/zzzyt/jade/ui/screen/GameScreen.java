@@ -1,55 +1,38 @@
 package com.zzzyt.jade.ui.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.ScalingViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.zzzyt.jade.Config;
 import com.zzzyt.jade.Jade;
 import com.zzzyt.jade.entity.SquareBullet;
 import com.zzzyt.jade.entity.BasicPlayerBuilder;
-import com.zzzyt.jade.ui.QuitListener;
-import com.zzzyt.jade.ui.widget.FPSDisplay;
 import com.zzzyt.jade.ui.widget.GameFrame;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.BGM;
 import com.zzzyt.jade.util.G;
 import com.zzzyt.jade.util.Game;
 
-public class GameScreen implements FadeableScreen {
+public class GameScreen extends BasicScreen {
 
 	public Jade jade;
 
-	public Viewport viewport;
-	public Stage st;
-	public InputMultiplexer input;
-
-	private Image background;
-	private FPSDisplay fps;
 	private GameFrame frame;
-
 	private BasicPlayerBuilder reimu, marisa;
 
-	private ScreenState state;
-
 	public GameScreen() {
-		this.viewport = new ScalingViewport(Scaling.fit, Config.windowWidth, Config.windowHeight);
-		this.state = ScreenState.HIDDEN;
+		super();
 	}
 
 	@Override
 	public void show() {
 		BGM.play("mus/Idea12.ogg");
 
+		init("mus/Idea12.ogg",A.get("bg/game_bg.png"));
+		
 		if (reimu == null) {
 			this.reimu = new BasicPlayerBuilder();
 			reimu.fromAtlas(A.get("player/th10_player.atlas"), "th10_reimu", 5, 2).data(2, 4.5f, 2)
@@ -61,24 +44,9 @@ public class GameScreen implements FadeableScreen {
 					.hitbox(new Sprite((Texture) A.get("player/hitbox.png")));
 		}
 
-		this.st = new Stage(viewport);
-		this.input = new InputMultiplexer();
-
-		this.background = new Image((Texture) A.get("bg/game_bg.png"));
-		background.setZIndex(0);
-		st.addActor(background);
-
-		this.fps = new FPSDisplay();
-		st.addActor(fps);
-
 		this.frame = new GameFrame();
 		frame.setBounds(Config.offsetX, Config.offsetY, Config.w, Config.h);
 		st.addActor(frame);
-
-		input.addProcessor(st);
-		input.addProcessor(new QuitListener(() -> {
-			Game.switchScreen("start");
-		}));
 
 		this.jade = new Jade();
 
@@ -89,10 +57,8 @@ public class GameScreen implements FadeableScreen {
 		}
 
 		frame.setJade(jade);
-
-		Game.addProcessor(input);
 	}
-
+	
 	@Override
 	public void render(float delta) {
 		for(int i=0;i<1;i++) {
@@ -121,20 +87,10 @@ public class GameScreen implements FadeableScreen {
 	}
 
 	@Override
-	public void resize(int width, int height) {
-		viewport.update(width, height);
+	protected void onQuit() {
+		Game.switchScreen("start");
 	}
-
-	@Override
-	public void pause() {
-
-	}
-
-	@Override
-	public void resume() {
-
-	}
-
+	
 	@Override
 	public void hide() {
 		Game.removeProcessor(input);
@@ -143,41 +99,6 @@ public class GameScreen implements FadeableScreen {
 			jade.dispose();
 		if (st != null)
 			st.dispose();
-	}
-
-	@Override
-	public void dispose() {
-
-	}
-
-	@Override
-	public boolean fadeOut(float duration) {
-		state = ScreenState.FADING_OUT;
-		st.getRoot().addAction(Actions.sequence(Actions.delay(duration), Actions.run(() -> {
-			hide();
-		})));
-		return true;
-	}
-
-	@Override
-	public boolean fadeIn(float duration) {
-		state = ScreenState.FADING_IN;
-		show();
-		st.getRoot().getColor().a = 0;
-		st.getRoot().addAction(Actions.sequence(Actions.fadeIn(duration), Actions.run(() -> {
-			state = ScreenState.SHOWN;
-		})));
-		return true;
-	}
-
-	@Override
-	public ScreenState getState() {
-		return state;
-	}
-
-	@Override
-	public void setState(ScreenState state) {
-		this.state = state;
 	}
 
 	@Override

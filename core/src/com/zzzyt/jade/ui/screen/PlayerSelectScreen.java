@@ -1,53 +1,24 @@
 package com.zzzyt.jade.ui.screen;
 
-import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.ScalingViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.zzzyt.jade.Config;
 import com.zzzyt.jade.ui.Grid;
-import com.zzzyt.jade.ui.QuitListener;
-import com.zzzyt.jade.ui.widget.FPSDisplay;
 import com.zzzyt.jade.ui.widget.LabelButton;
 import com.zzzyt.jade.util.A;
-import com.zzzyt.jade.util.BGM;
 import com.zzzyt.jade.util.G;
 import com.zzzyt.jade.util.Game;
 
-public class PlayerSelectScreen implements FadeableScreen {
+public class PlayerSelectScreen extends BasicScreen {
 
-	public Viewport viewport;
-	public Stage st;
-	public InputMultiplexer input;
-
-	private Image background;
-	private FPSDisplay fps;
 	private Grid grid;
-	private ScreenState state;
 
 	public PlayerSelectScreen() {
-		this.viewport = new ScalingViewport(Scaling.none, Config.windowWidth, Config.windowHeight);
-		this.state = ScreenState.HIDDEN;
+		super();
 	}
 
 	@Override
 	public void show() {
-		BGM.play("mus/Idea29.ogg");
-
-		this.st = new Stage(viewport);
-		this.input = new InputMultiplexer();
-
-		this.background = new Image((Texture) A.get("bg/start_bg.png"));
-		background.setZIndex(0);
-		st.addActor(background);
-
-		this.fps = new FPSDisplay();
-		st.addActor(fps);
+		init("mus/Idea29.ogg",A.get("bg/select_bg.png"));
 		
 		this.grid = new Grid(true);
 		st.addActor(grid);
@@ -61,88 +32,29 @@ public class PlayerSelectScreen implements FadeableScreen {
 			Game.switchScreen("game");
 		}));
 		grid.selectFirst();
-
-		input.addProcessor(st);
-		input.addProcessor(grid);
-		input.addProcessor(new QuitListener(() -> {
-			Game.switchScreen("start", 0.5f);
-		}));
-
 		grid.updateAll();
-
-		Game.addProcessor(input);
+		input.addProcessor(grid);
 	}
 
 	@Override
-	public void render(float delta) {
-		st.act();
-		st.draw();
-	}
-
-	@Override
-	public void resize(int width, int height) {
-		viewport.update(width, height);
-	}
-
-	@Override
-	public void pause() {
-
-	}
-
-	@Override
-	public void resume() {
-
-	}
-
-	@Override
-	public void hide() {
-		Game.removeProcessor(input);
-		state = ScreenState.HIDDEN;
-		if (st != null)
-			st.dispose();
-	}
-
-	@Override
-	public void dispose() {
-
-	}
-
-	@Override
-	public boolean fadeOut(float duration) {
-		state = ScreenState.FADING_OUT;
-		grid.clearActions();
-		grid.setPosition(0, 0);
-		grid.addAction(Actions.moveTo(100, 0, duration, Interpolation.sineOut));
-		st.getRoot().addAction(Actions.sequence(Actions.delay(duration), Actions.run(() -> {
-			hide();
-		})));
-		return true;
-	}
-
-	@Override
-	public boolean fadeIn(float duration) {
-		state = ScreenState.FADING_IN;
-		show();
+	protected void onFadeIn(float duration) {
 		grid.clearActions();
 		grid.setPosition(100, 0);
 		grid.addAction(Actions.moveTo(0, 0, duration, Interpolation.sineOut));
-		st.getRoot().getColor().a = 0;
-		st.getRoot().addAction(Actions.sequence(Actions.fadeIn(duration), Actions.run(() -> {
-			state = ScreenState.SHOWN;
-		})));
-		return true;
 	}
-
+	
 	@Override
-	public ScreenState getState() {
-		return state;
+	protected void onFadeOut(float duration) {
+		grid.clearActions();
+		grid.setPosition(0, 0);
+		grid.addAction(Actions.moveTo(100, 0, duration, Interpolation.sineOut));
 	}
-
+	
 	@Override
-	public void setState(ScreenState state) {
-		this.state = state;
+	protected void onQuit() {
+		Game.switchScreen("start", 0.5f);
 	}
-
+	
 	@Override
 	public String getName() {
 		return "playerSelect";
