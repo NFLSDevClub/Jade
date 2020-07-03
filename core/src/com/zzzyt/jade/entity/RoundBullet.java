@@ -29,8 +29,8 @@ public class RoundBullet extends Bullet implements Poolable {
 	}	
 
 	@Override
-	public boolean collide(BasicPlayer player) {
-		return Collision.circleCircleOrtho(player.x, player.y, player.radius, x, y, radius);
+	public boolean collide(Player player) {
+		return Collision.circleCircleOrtho(player.getX(), player.getY(), player.getRadius(), x, y, radius);
 	}
 
 	@Override

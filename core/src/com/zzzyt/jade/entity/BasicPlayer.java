@@ -195,4 +195,9 @@ public class BasicPlayer implements Player {
 	public float getY() {
 		return y;
 	}
+
+	@Override
+	public float getRadius() {
+		return radius;
+	}
 }

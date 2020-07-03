@@ -46,7 +46,7 @@ public class Collision {
 	}
 
 	public static boolean squareSquare(float x1, float y1, float s1, float x2, float y2, float s2) {
-		if (Math.max(x1 - x2, y1 - y2) <= (s1 + s2) / 2) {
+		if (Math.max(Math.abs(x1 - x2), Math.abs(y1 - y2)) <= (s1 + s2) / 2) {
 			return true;
 		}
 		return false;

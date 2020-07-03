@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.zzzyt.jade.Config;
 import com.zzzyt.jade.util.Utils;
 
-public class Grid extends Group implements InputProcessor{
+public class Grid extends Group implements InputProcessor {
 
 	public List<GridComponent> grid;
 	public int x, y;
@@ -16,6 +16,7 @@ public class Grid extends Group implements InputProcessor{
 
 	private GridComponent current;
 	private int minX, minY, maxX, maxY;
+	private boolean enabled;
 
 	public Grid(boolean cycle) {
 		this.cycle = cycle;
@@ -27,6 +28,7 @@ public class Grid extends Group implements InputProcessor{
 		this.maxX = Integer.MIN_VALUE;
 		this.maxY = Integer.MIN_VALUE;
 		this.current = null;
+		this.enabled = true;
 	}
 
 	public GridComponent add(GridComponent component) {
@@ -35,8 +37,8 @@ public class Grid extends Group implements InputProcessor{
 		minY = Math.min(minY, component.getGridY());
 		maxX = Math.max(maxX, component.getGridX());
 		maxY = Math.max(maxY, component.getGridY());
-		if(component instanceof Actor) {
-			addActor((Actor)component);
+		if (component instanceof Actor) {
+			addActor((Actor) component);
 		}
 		return component;
 	}
@@ -101,6 +103,8 @@ public class Grid extends Group implements InputProcessor{
 
 	@Override
 	public boolean keyDown(int keycode) {
+		if (!enabled)
+			return false;
 		if (Utils.matchKey(keycode, Config.keyUp)) {
 			select(x, y - 1);
 		} else if (Utils.matchKey(keycode, Config.keyDown)) {
@@ -115,7 +119,7 @@ public class Grid extends Group implements InputProcessor{
 		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean keyUp(int keycode) {
 		return false;
@@ -149,5 +153,17 @@ public class Grid extends Group implements InputProcessor{
 	@Override
 	public boolean scrolled(int amount) {
 		return false;
+	}
+
+	public void enable() {
+		enabled = true;
+	}
+
+	public void disable() {
+		enabled = false;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
 	}
 }

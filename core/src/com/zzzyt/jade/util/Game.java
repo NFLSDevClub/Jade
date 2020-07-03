@@ -11,7 +11,7 @@ public class Game {
 	public static JadeDemo game;
 
 	public static void quit() {
-		Gdx.app.exit();
+		switchScreen("", 0.5f);
 	}
 
 	public static InputProcessor addProcessor(InputProcessor processor) {

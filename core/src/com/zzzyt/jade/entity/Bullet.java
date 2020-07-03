@@ -32,6 +32,7 @@ public class Bullet implements Entity{
 		this.dir = 0;
 		this.x = 0;
 		this.y = 0;
+		updateSpritePosition();
 	}
 
 	public Bullet(TextureRegion region, int tag, float x, float y) {
@@ -42,6 +43,7 @@ public class Bullet implements Entity{
 		this.dir = 0;
 		this.x = x;
 		this.y = y;
+		updateSpritePosition();
 	}
 
 	public Bullet(TextureRegion region, int tag, float x, float y, float speed, float dir) {
@@ -52,6 +54,7 @@ public class Bullet implements Entity{
 		this.dir = dir;
 		this.x = x;
 		this.y = y;
+		updateSpritePosition();
 	}
 
 	public float getBoundingRadius() {
@@ -145,10 +148,10 @@ public class Bullet implements Entity{
 			Jade.session.remove(this);
 			return;
 		}
-		sprite.setPosition(x - sprite.getWidth() / 2, y - sprite.getHeight() / 2);
+		updateSpritePosition();
 	}
 
-	public boolean collide(BasicPlayer player) {
+	public boolean collide(Player player) {
 		return false;
 	}
 

@@ -9,6 +9,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
 import com.zzzyt.jade.Config;
 import com.zzzyt.jade.music.BackgroundMusic;
+import com.zzzyt.jade.ui.screen.BlankScreen;
+import com.zzzyt.jade.ui.screen.DifficultySelectScreen;
 import com.zzzyt.jade.ui.screen.FadeableScreen;
 import com.zzzyt.jade.ui.screen.GameScreen;
 import com.zzzyt.jade.ui.screen.PlayerSelectScreen;
@@ -31,7 +33,7 @@ public class JadeDemo implements ApplicationListener {
 	@Override
 	public void create() {
 		Gdx.app.setLogLevel(Config.logLevel);
-		
+
 		Game.game = this;
 
 		this.logger = new Logger("Main", Config.logLevel);
@@ -39,9 +41,9 @@ public class JadeDemo implements ApplicationListener {
 
 		A.init();
 
-		BGM.register(new BackgroundMusic("mus/Idea12.ogg",0,12));
-		BGM.register(new BackgroundMusic("mus/Idea29.ogg",10,26));
-		
+		BGM.register(new BackgroundMusic("mus/Idea12.ogg", 0, 12));
+		BGM.register(new BackgroundMusic("mus/Idea29.ogg", 10, 26));
+
 		this.blocker = new InputBlocker();
 		blocker.enable();
 
@@ -52,10 +54,13 @@ public class JadeDemo implements ApplicationListener {
 		this.fpsCounter = new WindowedMean(10);
 
 		this.screens = new Array<FadeableScreen>();
+		screens.add(new BlankScreen());
 		screens.add(new StartScreen());
 		screens.add(new GameScreen());
+		screens.add(new DifficultySelectScreen());
 		screens.add(new PlayerSelectScreen());
 
+		Game.switchScreen("blank");
 		Game.switchScreen("start", 0.5f);
 
 		BackgroundLoader backgroundLoader = new BackgroundLoader();
@@ -65,7 +70,7 @@ public class JadeDemo implements ApplicationListener {
 	@Override
 	public void render() {
 		BGM.update();
-		
+
 		if (Gdx.input.isKeyPressed(Keys.F4)) {
 			if (Gdx.graphics.isFullscreen()) {
 				Gdx.graphics.setWindowedMode(Config.windowWidth, Config.windowHeight);
@@ -77,29 +82,33 @@ public class JadeDemo implements ApplicationListener {
 
 		Utils.glClear();
 
-		int flag = 0;
+		boolean flag1 = false;
+		boolean flag2 = false;
 		for (int i = 0; i < screens.size; i++) {
-			if (screens.get(i).getState() == ScreenState.FADING_OUT) {
-				flag++;
+			if (screens.get(i).getState() == ScreenState.FADING_IN) {
+				flag1 = true;
 				screens.get(i).render(Utils.safeDeltaTime());
 			}
 		}
 		for (int i = 0; i < screens.size; i++) {
 			if (screens.get(i).getState() == ScreenState.SHOWN) {
-				flag++;
+				flag2 = true;
 				screens.get(i).render(Utils.safeDeltaTime());
 			}
 		}
 		for (int i = 0; i < screens.size; i++) {
-			if (screens.get(i).getState() == ScreenState.FADING_IN) {
-				flag++;
+			if (screens.get(i).getState() == ScreenState.FADING_OUT) {
+				flag1 = true;
 				screens.get(i).render(Utils.safeDeltaTime());
 			}
 		}
-		if (flag <= 1) {
-			blocker.disable();
-		} else {
+		if (flag1) {
 			blocker.enable();
+		} else {
+			blocker.disable();
+		}
+		if (!flag1 && !flag2) {
+			Gdx.app.exit();
 		}
 	}
 

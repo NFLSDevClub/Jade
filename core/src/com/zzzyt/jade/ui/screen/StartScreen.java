@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.zzzyt.jade.ui.Grid;
-import com.zzzyt.jade.ui.widget.LabelButton;
+import com.zzzyt.jade.ui.widget.GridLabel;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.Game;
 
@@ -27,7 +27,6 @@ public class StartScreen extends BasicScreen {
 		A.load("font/LBRITE.ttf");
 		A.load("font/LBRITEI.ttf");
 		A.load("bg/start_bg.png");
-		A.load("font/debug.fnt");
 		A.finishLoading();
 
 		init("mus/Idea29.ogg",A.get("bg/start_bg.png"));
@@ -43,31 +42,31 @@ public class StartScreen extends BasicScreen {
 
 		this.grid = new Grid(true);
 		st.addActor(grid);
-		grid.add(new LabelButton("Game Start", 24, 430, 290, 200, 30, 0, 1, () -> {
-			Game.switchScreen("playerSelect", 0.5f);
+		grid.add(new GridLabel("Game Start", 24, 430, 290, 200, 30, 0, 1, () -> {
+			Game.switchScreen("difficultySelect", 0.5f);
 		}));
-		grid.add(new LabelButton("Extra Start", 24, 420, 260, 200, 30, 0, 2, () -> {
+		grid.add(new GridLabel("Extra Start", 24, 420, 260, 200, 30, 0, 2, () -> {
 
 		}));
-		grid.add(new LabelButton("Stage Practise", 24, 410, 230, 2001, 30, 0, 3, () -> {
+		grid.add(new GridLabel("Stage Practise", 24, 410, 230, 2001, 30, 0, 3, () -> {
 
 		}));
-		grid.add(new LabelButton("Spell Practise", 24, 400, 200, 200, 30, 0, 4, () -> {
+		grid.add(new GridLabel("Spell Practise", 24, 400, 200, 200, 30, 0, 4, () -> {
 
 		}));
-		grid.add(new LabelButton("Replay", 24, 390, 170, 200, 30, 0, 5, () -> {
+		grid.add(new GridLabel("Replay", 24, 390, 170, 200, 30, 0, 5, () -> {
 
 		}));
-		grid.add(new LabelButton("Player Data", 24, 380, 140, 200, 30, 0, 6, () -> {
+		grid.add(new GridLabel("Player Data", 24, 380, 140, 200, 30, 0, 6, () -> {
 
 		}));
-		grid.add(new LabelButton("Music Room", 24, 370, 110, 200, 30, 0, 7, () -> {
+		grid.add(new GridLabel("Music Room", 24, 370, 110, 200, 30, 0, 7, () -> {
 
 		}));
-		grid.add(new LabelButton("Settings", 24, 360, 80, 200, 30, 0, 8, () -> {
+		grid.add(new GridLabel("Settings", 24, 360, 80, 200, 30, 0, 8, () -> {
 
 		}));
-		grid.add(new LabelButton("Quit", 24, 350, 50, 200, 30, 0, 9, () -> {
+		grid.add(new GridLabel("Quit", 24, 350, 50, 200, 30, 0, 9, () -> {
 			Game.quit();
 		}));
 		grid.selectFirst();
@@ -85,7 +84,7 @@ public class StartScreen extends BasicScreen {
 	@Override
 	protected void onFadeIn(float duration) {
 		grid.clearActions();
-		grid.setPosition(100, 0);
+		grid.setPosition(200, 0);
 		grid.addAction(Actions.moveTo(0, 0, duration, Interpolation.sineOut));
 
 		titles.clearActions();
@@ -96,7 +95,7 @@ public class StartScreen extends BasicScreen {
 	@Override
 	protected void onFadeOut(float duration) {
 		grid.clearActions();
-		grid.addAction(Actions.moveTo(100, 0, duration, Interpolation.sineOut));
+		grid.addAction(Actions.moveTo(200, 0, duration, Interpolation.sineOut));
 
 		titles.clearActions();
 		titles.addAction(Actions.moveTo(0, 200, duration, Interpolation.sineOut));

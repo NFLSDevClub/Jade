@@ -31,8 +31,8 @@ public class GameScreen extends BasicScreen {
 	public void show() {
 		BGM.play("mus/Idea12.ogg");
 
-		init("mus/Idea12.ogg",A.get("bg/game_bg.png"));
-		
+		init("mus/Idea12.ogg", A.get("bg/game_bg.png"));
+
 		if (reimu == null) {
 			this.reimu = new BasicPlayerBuilder();
 			reimu.fromAtlas(A.get("player/th10_player.atlas"), "th10_reimu", 5, 2).data(2, 4.5f, 2)
@@ -50,29 +50,24 @@ public class GameScreen extends BasicScreen {
 
 		this.jade = new Jade();
 
-		if ("reimu".equals(G.get("_selectedPlayer"))) {
+		if ("reimu".equals(G.get("_player"))) {
 			jade.setPlayer(reimu.build());
-		} else if ("marisa".equals(G.get("_selectedPlayer"))) {
+		} else if ("marisa".equals(G.get("_player"))) {
 			jade.setPlayer(marisa.build());
 		}
 
 		frame.setJade(jade);
 	}
-	
+
 	@Override
 	public void render(float delta) {
-		for(int i=0;i<1;i++) {
-			if (MathUtils.randomBoolean()) {
-				jade.add(jade.newRoundBullet(new TextureRegion(A.get("bu/testbullet2.png", Texture.class)), 0, 4))
-				.setXY(MathUtils.random(-150, 150), MathUtils.random(-100, 0))
-				.setDir(MathUtils.random(-150, -30))
-				.setSpeed(1)
-				.setScale(1f).setColor(new Color(MathUtils.random(), 0, 1, 1));
-			} else {
-				jade.add(new SquareBullet(new TextureRegion(A.get("bu/rectbullet.png", Texture.class)), 0, 8,
-						MathUtils.random(-150, 150), MathUtils.random(-100, 0), 1, MathUtils.random(-150, -30)))
-						.setScale(0.5f).setColor(new Color(MathUtils.random(), 0, 1, 1));
-			}
+		if (MathUtils.randomBoolean(diffToChance((String) G.get("_difficulty")))) {
+			jade.add(jade.newRoundBullet(new TextureRegion(A.get("bu/testbullet2.png", Texture.class)), 0, 4))
+					.setXY(MathUtils.random(-150, 150), MathUtils.random(-100, 0)).setDir(MathUtils.random(-150, -30))
+					.setSpeed(1).setScale(1f).setColor(new Color(MathUtils.random(), 0, 1, 1)).updateSpritePosition();
+			jade.add(new SquareBullet(new TextureRegion(A.get("bu/rectbullet.png", Texture.class)), 0, 6,
+					MathUtils.random(-150, 150), MathUtils.random(-100, 0), 1, MathUtils.random(-150, -30)))
+					.setScale(0.5f).setColor(new Color(MathUtils.random(), 0, 1, 1));
 		}
 
 		jade.update();
@@ -86,11 +81,26 @@ public class GameScreen extends BasicScreen {
 		jade.postRender();
 	}
 
+	private float diffToChance(String str) {
+		switch (str) {
+		case "easy":
+			return 0.1f;
+		case "normal":
+			return 0.25f;
+		case "hard":
+			return 0.5f;
+		case "lunatic":
+			return 1f;
+		default:
+			return 0;
+		}
+	}
+
 	@Override
 	protected void onQuit() {
-		Game.switchScreen("start");
+		
 	}
-	
+
 	@Override
 	public void hide() {
 		Game.removeProcessor(input);

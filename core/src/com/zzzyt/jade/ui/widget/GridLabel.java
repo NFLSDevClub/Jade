@@ -9,7 +9,7 @@ import com.zzzyt.jade.Config;
 import com.zzzyt.jade.ui.GridComponent;
 import com.zzzyt.jade.util.A;
 
-public class LabelButton extends Label implements GridComponent{
+public class GridLabel extends Label implements GridComponent{
 
 	public Runnable runnable;
 	public boolean active;
@@ -19,12 +19,12 @@ public class LabelButton extends Label implements GridComponent{
 	private LabelStyle activeStyle, inactiveStyle;
 	private Action activeAction, inactiveAction;
 
-	public LabelButton(CharSequence text, LabelStyle activeStyle) {
+	public GridLabel(CharSequence text, LabelStyle activeStyle) {
 		super(text, activeStyle);
 		this.activeStyle = activeStyle;
 	}
 
-	public LabelButton(CharSequence text, int fontSize, float x, float y, float width, float height, int gridX,
+	public GridLabel(CharSequence text, int fontSize, float x, float y, float width, float height, int gridX,
 			int gridY, Runnable runnable) {
 		super(text, new LabelStyle(A.getFont(Config.UIFont, 24, 2, Color.BLACK), Config.UIFontColor));
 		this.staticX = x;
@@ -73,38 +73,38 @@ public class LabelButton extends Label implements GridComponent{
 	}
 
 	@Override
-	public LabelButton activate() {
+	public GridLabel activate() {
 		active = true;
 		update();
 		return this;
 	}
 
 	@Override
-	public LabelButton deactivate() {
+	public GridLabel deactivate() {
 		active = false;
 		update();
 		return this;
 	}
 
-	public LabelButton setActiveStyle(LabelStyle style) {
+	public GridLabel setActiveStyle(LabelStyle style) {
 		activeStyle = style;
 		update();
 		return this;
 	}
 
-	public LabelButton setInactiveStyle(LabelStyle style) {
+	public GridLabel setInactiveStyle(LabelStyle style) {
 		inactiveStyle = style;
 		update();
 		return this;
 	}
 
-	public LabelButton setActiveAction(Action action) {
+	public GridLabel setActiveAction(Action action) {
 		activeAction = action;
 		update();
 		return this;
 	}
 
-	public LabelButton setInactiveAction(Action action) {
+	public GridLabel setInactiveAction(Action action) {
 		inactiveAction = action;
 		update();
 		return this;

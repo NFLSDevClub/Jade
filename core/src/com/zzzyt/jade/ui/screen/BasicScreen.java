@@ -31,10 +31,10 @@ public class BasicScreen implements FadeableScreen {
 
 	@Override
 	public void show() {
-		
+
 	}
 
-	public void init(String bgm,Texture background) {
+	public void init(String bgm, Texture background) {
 		BGM.play(bgm);
 
 		this.st = new Stage(viewport);
@@ -46,7 +46,7 @@ public class BasicScreen implements FadeableScreen {
 
 		this.fps = new FPSDisplay();
 		st.addActor(fps);
-		
+
 		input.addProcessor(st);
 		input.addProcessor(new QuitListener(() -> {
 			onQuit();
@@ -54,19 +54,19 @@ public class BasicScreen implements FadeableScreen {
 
 		Game.addProcessor(input);
 	}
-	
+
 	protected void onFadeIn(float duration) {
-		
+
 	}
-	
+
 	protected void onFadeOut(float duration) {
-		
+
 	}
-	
+
 	protected void onQuit() {
-		
+
 	}
-	
+
 	@Override
 	public void render(float delta) {
 		st.act();
@@ -104,7 +104,7 @@ public class BasicScreen implements FadeableScreen {
 	@Override
 	public boolean fadeOut(float duration) {
 		state = ScreenState.FADING_OUT;
-		st.getRoot().addAction(Actions.sequence(Actions.delay(duration), Actions.run(() -> {
+		st.getRoot().addAction(Actions.sequence(Actions.fadeOut(duration), Actions.run(() -> {
 			hide();
 		})));
 		onFadeOut(duration);
@@ -115,8 +115,8 @@ public class BasicScreen implements FadeableScreen {
 	public boolean fadeIn(float duration) {
 		state = ScreenState.FADING_IN;
 		show();
-		st.getRoot().getColor().a = 0;
-		st.getRoot().addAction(Actions.sequence(Actions.fadeIn(duration), Actions.run(() -> {
+		st.getRoot().getColor().a = 1;
+		st.getRoot().addAction(Actions.sequence(Actions.delay(duration), Actions.run(() -> {
 			state = ScreenState.SHOWN;
 		})));
 		onFadeIn(duration);
