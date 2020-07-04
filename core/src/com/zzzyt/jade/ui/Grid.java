@@ -64,14 +64,12 @@ public class Grid extends Group implements InputProcessor {
 		GridComponent closest = null;
 		int dist = Integer.MAX_VALUE;
 		for (GridComponent button : grid) {
+			if (button.isActive()) {
+				button.deactivate();
+			}
 			if (distance(nx, ny, button.getGridX(), button.getGridY()) < dist) {
 				closest = button;
 				dist = distance(nx, ny, button.getGridX(), button.getGridY());
-			}
-		}
-		for (GridComponent button : grid) {
-			if (button.isActive()) {
-				button.deactivate();
 			}
 		}
 		if (closest == null) {

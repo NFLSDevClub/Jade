@@ -1,7 +1,11 @@
 package com.zzzyt.jade.ui.widget;
 
+import java.util.concurrent.Callable;
+
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.zzzyt.jade.ui.GridComponent;
@@ -12,6 +16,7 @@ public class GridImage extends Image implements GridComponent {
 	protected int gridX, gridY;
 	protected Runnable runnable;
 	protected boolean active;
+	protected Callable<? extends Action> activeAction, inactiveAction;
 
 	public GridImage(Texture texture, float x, float y, int gridX, int gridY, Runnable runnable) {
 		super(texture);
@@ -21,24 +26,38 @@ public class GridImage extends Image implements GridComponent {
 		this.gridX = gridX;
 		this.gridY = gridY;
 		this.runnable = runnable;
+		this.activeAction = () -> Actions.sequence(Actions.moveTo(staticX, staticY), Actions.color(Color.WHITE),
+				Actions.sequence(Actions.moveTo(staticX - 10, staticY, 0.1f, Interpolation.sine),
+						Actions.moveTo(staticX, staticY, 0.1f, Interpolation.sine)));
+		this.inactiveAction = () -> Actions.forever(Actions.color(Color.GRAY));
+		deactivate();
+	}
+
+	public GridImage(Texture texture, float x, float y, int gridX, int gridY, Callable<? extends Action> activeAction,
+			Callable<? extends Action> inactiveAction, Runnable runnable) {
+		super(texture);
+		setPosition(x, y);
+		this.staticX = x;
+		this.staticY = y;
+		this.gridX = gridX;
+		this.gridY = gridY;
+		this.runnable = runnable;
+		this.activeAction = activeAction;
+		this.inactiveAction = inactiveAction;
 		deactivate();
 	}
 
 	@Override
 	public GridComponent activate() {
 		active = true;
-		clearActions();
-		setPosition(staticX, staticY);
-		addAction(Actions.sequence(Actions.moveBy(-10, 0, 0.1f, Interpolation.sine),
-				Actions.moveBy(10, 0, 0.1f, Interpolation.sine)));
-		setColor(1, 1, 1, 1f);
+		update();
 		return this;
 	}
 
 	@Override
 	public GridComponent deactivate() {
 		active = false;
-		setColor(0.5f, 0.5f, 0.5f, 1f);
+		update();
 		return this;
 	}
 
@@ -50,9 +69,23 @@ public class GridImage extends Image implements GridComponent {
 	@Override
 	public void update() {
 		if (active) {
-			activate();
+			clearActions();
+			if (activeAction != null) {
+				try {
+					addAction(activeAction.call());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		} else {
-			deactivate();
+			clearActions();
+			if (inactiveAction != null) {
+				try {
+					addAction(inactiveAction.call());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
@@ -71,6 +104,18 @@ public class GridImage extends Image implements GridComponent {
 		if (runnable != null) {
 			runnable.run();
 		}
+	}
+
+	public GridImage setActiveAction(Callable<? extends Action> activeAction) {
+		this.activeAction = activeAction;
+		update();
+		return this;
+	}
+
+	public GridImage setInactiveAction(Callable<? extends Action> inactiveAction) {
+		this.inactiveAction = inactiveAction;
+		update();
+		return this;
 	}
 
 }

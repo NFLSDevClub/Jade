@@ -39,6 +39,7 @@ public class DifficultySelectScreen extends BasicScreen {
 			G.put("_difficulty", "lunatic");
 			Game.switchScreen("playerSelect", 0.5f);
 		}))).setScale(0.75f);
+		
 		grid.selectFirst();
 		grid.updateAll();
 		input.addProcessor(grid);
