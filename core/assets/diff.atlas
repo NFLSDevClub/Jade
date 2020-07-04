@@ -1,0 +1,62 @@
+
+diff.png
+size: 2048,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+easy
+  rotate: false
+  xy: 2, 2
+  size: 256, 144
+  orig: 256, 144
+  offset: 0, 0
+  index: -1
+hard
+  rotate: false
+  xy: 1292, 260
+  size: 256, 144
+  orig: 256, 144
+  offset: 0, 0
+  index: -1
+lunatic
+  rotate: false
+  xy: 1034, 260
+  size: 256, 144
+  orig: 256, 144
+  offset: 0, 0
+  index: -1
+marisa_description
+  rotate: false
+  xy: 260, 148
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+marisa_portrait
+  rotate: false
+  xy: 2, 148
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+normal
+  rotate: false
+  xy: 260, 2
+  size: 256, 144
+  orig: 256, 144
+  offset: 0, 0
+  index: -1
+reimu_description
+  rotate: false
+  xy: 518, 148
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+reimu_portrait
+  rotate: false
+  xy: 776, 148
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1

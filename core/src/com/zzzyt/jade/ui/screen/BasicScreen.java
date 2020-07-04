@@ -1,7 +1,7 @@
 package com.zzzyt.jade.ui.screen;
 
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -34,7 +34,7 @@ public class BasicScreen implements FadeableScreen {
 
 	}
 
-	public void init(String bgm, Texture background) {
+	public void init(String bgm, TextureRegion background) {
 		BGM.play(bgm);
 
 		this.st = new Stage(viewport);

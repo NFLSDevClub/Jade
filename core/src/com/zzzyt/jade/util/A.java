@@ -13,10 +13,12 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.zzzyt.jade.Config;
 
@@ -31,7 +33,7 @@ public class A {
 		A.am = new AssetManager();
 		A.am.getLogger().setLevel(Config.logLevel);
 		A.am.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(new InternalFileHandleResolver()));
-		
+
 		A.fontCache = new ObjectMap<String, BitmapFont>();
 		A.textureReflect = new ObjectMap<Texture, String>();
 	}
@@ -82,9 +84,8 @@ public class A {
 			AssetLoaderParameters<T> parameter = new AssetLoaderParameters<T>();
 			parameter.loadedCallback = new TextureReflectCallback();
 			am.load(fileName, type, parameter);
-		}
-		else {
-			am.load(fileName, type);			
+		} else {
+			am.load(fileName, type);
 		}
 	}
 
@@ -97,9 +98,8 @@ public class A {
 			LoadedCallback tmp = parameter.loadedCallback;
 			parameter.loadedCallback = new TextureReflectCallback(tmp);
 			am.load(fileName, type, parameter);
-		}
-		else {
-			am.load(fileName, type, parameter);			
+		} else {
+			am.load(fileName, type, parameter);
 		}
 	}
 
@@ -164,32 +164,43 @@ public class A {
 		tmp.magFilter = TextureFilter.Linear;
 		return tmp;
 	}
-	
+
+	public static AtlasRegion findRegion(String atlasName, String regionName) {
+		return ((TextureAtlas) A.get(atlasName)).findRegion(regionName);
+	}
+
+	public static Array<AtlasRegion> findRegions(String atlasName, String regionName) {
+		return ((TextureAtlas) A.get(atlasName)).findRegions(regionName);
+	}
+
+	public static AtlasRegion findRegion(String atlasName, String regionName, int index) {
+		return ((TextureAtlas) A.get(atlasName)).findRegion(regionName, index);
+	}
+
 	public static void putTextureReflect(Texture texture, String fileName) {
 		am.getLogger().debug("[A] Texture reflect info: " + texture.hashCode() + " <- " + fileName);
 		A.textureReflect.put(texture, fileName);
 	}
 
-	private static class TextureReflectCallback implements LoadedCallback{
+	private static class TextureReflectCallback implements LoadedCallback {
 		private LoadedCallback original;
-		
+
 		public TextureReflectCallback() {
-			
+
 		}
-		
+
 		public TextureReflectCallback(LoadedCallback original) {
-			this.original=original;
+			this.original = original;
 		}
-		
+
 		@SuppressWarnings("rawtypes")
 		@Override
 		public void finishedLoading(AssetManager assetManager, String fileName, Class type) {
 			A.putTextureReflect(assetManager.get(fileName), fileName);
-			if(original!=null) {
+			if (original != null) {
 				original.finishedLoading(assetManager, fileName, type);
 			}
 		}
-		
 	}
-	
+
 }

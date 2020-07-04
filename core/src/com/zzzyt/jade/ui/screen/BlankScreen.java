@@ -1,7 +1,6 @@
 package com.zzzyt.jade.ui.screen;
 
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -20,14 +19,10 @@ public class BlankScreen extends BasicScreen {
 
 	@Override
 	public void show() {
-		A.load("font/debug.fnt");
-		A.load("bg/bg_blank.png");
-		A.finishLoading();
-		
 		this.st = new Stage(viewport);
 		this.input = new InputMultiplexer();
 
-		this.background = new Image((Texture) A.get("bg/bg_blank.png"));
+		this.background = new Image(A.findRegion("bg.atlas", "blank"));
 		background.setZIndex(0);
 		background.setSize(Config.windowWidth, Config.windowHeight);
 		st.addActor(this.background);
@@ -48,13 +43,12 @@ public class BlankScreen extends BasicScreen {
 		st.getRoot().getColor().a = 1;
 		st.getRoot().addAction(Actions.sequence(Actions.delay(duration), Actions.run(() -> {
 			state = ScreenState.SHOWN;
-			if(G.get("_redirect")!=null) {
-				if(G.get("_redirectDelay")!=null) {
-					Game.switchScreen((String)G.get("_redirect"),(float)G.get("_redirectDelay"));
+			if (G.get("_redirect") != null) {
+				if (G.get("_redirectDelay") != null) {
+					Game.switchScreen((String) G.get("_redirect"), (float) G.get("_redirectDelay"));
 					G.remove("_redirectDelay");
-				}
-				else {
-					Game.switchScreen((String)G.get("_redirect"));
+				} else {
+					Game.switchScreen((String) G.get("_redirect"));
 				}
 				G.remove("_redirect");
 			}
@@ -62,7 +56,7 @@ public class BlankScreen extends BasicScreen {
 		onFadeIn(duration);
 		return true;
 	}
-	
+
 	@Override
 	public String getName() {
 		return "blank";

@@ -3,7 +3,7 @@ package com.zzzyt.jade.ui.widget;
 import java.util.concurrent.Callable;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -18,7 +18,7 @@ public class GridImage extends Image implements GridComponent {
 	protected boolean active;
 	protected Callable<? extends Action> activeAction, inactiveAction;
 
-	public GridImage(Texture texture, float x, float y, int gridX, int gridY, Runnable runnable) {
+	public GridImage(TextureRegion texture, float x, float y, int gridX, int gridY, Runnable runnable) {
 		super(texture);
 		setPosition(x, y);
 		this.staticX = x;
@@ -33,7 +33,7 @@ public class GridImage extends Image implements GridComponent {
 		deactivate();
 	}
 
-	public GridImage(Texture texture, float x, float y, int gridX, int gridY, Callable<? extends Action> activeAction,
+	public GridImage(TextureRegion texture, float x, float y, int gridX, int gridY, Callable<? extends Action> activeAction,
 			Callable<? extends Action> inactiveAction, Runnable runnable) {
 		super(texture);
 		setPosition(x, y);

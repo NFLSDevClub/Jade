@@ -3,16 +3,15 @@ package com.zzzyt.jade.ui.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.zzzyt.jade.Config;
 import com.zzzyt.jade.Jade;
+import com.zzzyt.jade.demo.player.PlayerMarisa;
+import com.zzzyt.jade.demo.player.PlayerReimu;
 import com.zzzyt.jade.entity.SquareBullet;
-import com.zzzyt.jade.entity.BasicPlayerBuilder;
 import com.zzzyt.jade.ui.widget.GameFrame;
 import com.zzzyt.jade.util.A;
-import com.zzzyt.jade.util.BGM;
 import com.zzzyt.jade.util.G;
 import com.zzzyt.jade.util.Game;
 
@@ -21,7 +20,6 @@ public class GameScreen extends BasicScreen {
 	public Jade jade;
 
 	private GameFrame frame;
-	private BasicPlayerBuilder reimu, marisa;
 
 	public GameScreen() {
 		super();
@@ -29,20 +27,7 @@ public class GameScreen extends BasicScreen {
 
 	@Override
 	public void show() {
-		BGM.play("mus/Idea12.ogg");
-
-		init("mus/Idea12.ogg", A.get("bg/game_bg.png"));
-
-		if (reimu == null) {
-			this.reimu = new BasicPlayerBuilder();
-			reimu.fromAtlas(A.get("player/th10_player.atlas"), "th10_reimu", 5, 2).data(2, 4.5f, 2)
-					.hitbox(new Sprite((Texture) A.get("player/hitbox.png")));
-		}
-		if (marisa == null) {
-			this.marisa = new BasicPlayerBuilder();
-			marisa.fromAtlas(A.get("player/th10_player.atlas"), "th10_marisa", 5, 2).data(3.5f, 5, 2)
-					.hitbox(new Sprite((Texture) A.get("player/hitbox.png")));
-		}
+		init("mus/Idea12.ogg", A.findRegion("bg.atlas","game"));
 
 		this.frame = new GameFrame();
 		frame.setBounds(Config.offsetX, Config.offsetY, Config.w, Config.h);
@@ -51,9 +36,9 @@ public class GameScreen extends BasicScreen {
 		this.jade = new Jade();
 
 		if ("reimu".equals(G.get("_player"))) {
-			jade.setPlayer(reimu.build());
+			jade.setPlayer(new PlayerReimu());
 		} else if ("marisa".equals(G.get("_player"))) {
-			jade.setPlayer(marisa.build());
+			jade.setPlayer(new PlayerMarisa());
 		}
 
 		frame.setJade(jade);
@@ -98,7 +83,7 @@ public class GameScreen extends BasicScreen {
 
 	@Override
 	protected void onQuit() {
-		
+
 	}
 
 	@Override

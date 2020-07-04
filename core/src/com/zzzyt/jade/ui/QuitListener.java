@@ -2,7 +2,7 @@ package com.zzzyt.jade.ui;
 
 import com.badlogic.gdx.InputAdapter;
 import com.zzzyt.jade.Config;
-import com.zzzyt.jade.util.Utils;
+import com.zzzyt.jade.util.U;
 
 public class QuitListener extends InputAdapter {
 
@@ -13,7 +13,7 @@ public class QuitListener extends InputAdapter {
 	}
 
 	public boolean keyDown(int keycode) {
-		if (Utils.matchKey(keycode, Config.keyCancel)) {
+		if (U.matchKey(keycode, Config.keyCancel)) {
 			runnable.run();
 		}
 		return false;

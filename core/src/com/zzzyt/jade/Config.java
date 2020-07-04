@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.Logger;
 
 public class Config {
 
-	public static int logLevel = Logger.DEBUG;
+	public static int logLevel = Logger.ERROR;
 
 	public static int fps = 60;
 	public static int windowWidth = 640;

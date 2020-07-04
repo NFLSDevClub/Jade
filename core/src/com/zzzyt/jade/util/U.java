@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.MathUtils;
 import com.zzzyt.jade.Config;
 
-public class Utils {
+public class U {
 
 	public static final float SQRT2 = (float) Math.sqrt(2);
 
@@ -39,15 +39,20 @@ public class Utils {
 		return false;
 	}
 
-	public static float clampAngle(float angle) {
-		if(angle>0) {
-			return angle-MathUtils.round(angle/360)*360;
+	public static float normalizeAngle(float angle) {
+		if (angle > 0) {
+			angle = angle - MathUtils.round(angle / 360) * 360;
+		} else {
+			angle = angle + MathUtils.round(-angle / 360) * 360;
 		}
-		return angle+MathUtils.round(-angle/360)*360;
+		if (angle == -180) {
+			angle = 180;
+		}
+		return angle;
 	}
-	
+
 	public static float dist2(float x1, float y1, float x2, float y2) {
-		return Utils.sqr(x1 - x2) + Utils.sqr(y1 - y2);
+		return U.sqr(x1 - x2) + U.sqr(y1 - y2);
 	}
 
 	public static float sqr(float x) {
@@ -60,5 +65,28 @@ public class Utils {
 
 	public static float screenToWorldX(float x) {
 		return x - Config.originX;
+	}
+
+	public static int difficultyToInt(String difficulty) {
+		switch (difficulty) {
+		case "easy":
+			return 1;
+		case "normal":
+			return 2;
+		case "hard":
+			return 3;
+		case "lunatic":
+			return 4;
+		case "extra":
+			return 5;
+		case "phantasm":
+			return 6;
+		default:
+			return 0;
+		}
+	}
+
+	public static int difficultyToInt() {
+		return difficultyToInt((String) G.get("_difficulty"));
 	}
 }

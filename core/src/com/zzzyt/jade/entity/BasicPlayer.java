@@ -1,9 +1,10 @@
 package com.zzzyt.jade.entity;
 
 import com.zzzyt.jade.Config;
-import com.zzzyt.jade.util.Utils;
+import com.zzzyt.jade.util.U;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
@@ -36,8 +37,8 @@ public class BasicPlayer implements Player {
 		this.radius = radius;
 		this.speedHigh = speedHigh;
 		this.speedLow = speedLow;
-		this.x = Utils.screenToWorldX(Config.w / 2);
-		this.y = Utils.screenToWorldY(32);
+		this.x = U.screenToWorldX(Config.w / 2);
+		this.y = U.screenToWorldY(32);
 		this.frameLength = frameLength;
 		this.transitionFrameLength = transitionFrameLength;
 		this.timer1 = 0;
@@ -45,30 +46,50 @@ public class BasicPlayer implements Player {
 		this.pos = 0;
 	}
 
-//	public BasicPlayer(BasicPlayer player) {
-//		this.left = player.left;
-//		this.center = player.center;
-//		this.right = player.right;
-//		this.toLeft = player.toLeft;
-//		this.toRight = player.toRight;
-//		this.hitbox = player.hitbox;
-//		this.radius = player.radius;
-//		this.speedHigh = player.speedHigh;
-//		this.speedLow = player.speedLow;
-//		this.x = player.x;
-//		this.y = player.y;
-//		this.dx = player.dx;
-//		this.dy = player.dy;
-//		this.frameLength = player.frameLength;
-//		this.timer = player.timer;
-//		this.timer2 = player.timer2;
-//		this.pos = player.pos;
-//	}
+	public BasicPlayer(TextureAtlas atlas, String regionName, int frameLength, int transitionFrameLength, float radius,
+			float speedHigh, float speedLow) {
+		this.left = atlas.findRegions(regionName + "_left");
+		this.center = atlas.findRegions(regionName + "_center");
+		this.right = atlas.findRegions(regionName + "_right");
+		this.toLeft = atlas.findRegions(regionName + "_toLeft");
+		this.toRight = atlas.findRegions(regionName + "_toRight");
+		this.hitbox = new Sprite(atlas.findRegion(regionName + "_hitbox"));
+		this.frameLength = frameLength;
+		this.transitionFrameLength = transitionFrameLength;
+		this.radius = radius;
+		this.speedHigh = speedHigh;
+		this.speedLow = speedLow;
+		this.x = U.screenToWorldX(Config.w / 2);
+		this.y = U.screenToWorldY(32);
+		this.timer1 = 0;
+		this.timer2 = 0;
+		this.pos = 0;
+	}
+
+	public BasicPlayer(TextureRegion region, float radius, float speedHigh, float speedLow) {
+		Array<TextureRegion> tmp = new Array<TextureRegion>();
+		tmp.add(region);
+		this.left = tmp;
+		this.center = tmp;
+		this.right = tmp;
+		this.toLeft = tmp;
+		this.toRight = tmp;
+		this.frameLength = 1;
+		this.transitionFrameLength = 1;
+		this.radius = radius;
+		this.speedHigh = speedHigh;
+		this.speedLow = speedLow;
+		this.x = U.screenToWorldX(Config.w / 2);
+		this.y = U.screenToWorldY(32);
+		this.timer1 = 0;
+		this.timer2 = 0;
+		this.pos = 0;
+	}
 
 	public void draw(Batch batch) {
 		TextureRegion tmp = getTexture();
 		batch.draw(tmp, x - tmp.getRegionWidth() / 2, y - tmp.getRegionHeight() / 2);
-		if (Utils.checkKey(Config.keySlow)) {
+		if (U.checkKey(Config.keySlow)) {
 			hitbox.setAlpha(MathUtils.clamp(hitbox.getColor().a + 0.1f, 0, 1));
 		} else {
 			hitbox.setAlpha(MathUtils.clamp(hitbox.getColor().a - 0.1f, 0, 1));
@@ -156,19 +177,19 @@ public class BasicPlayer implements Player {
 		dx = 0;
 		dy = 0;
 		float speed = speedHigh;
-		if (Utils.checkKey(Config.keySlow)) {
+		if (U.checkKey(Config.keySlow)) {
 			speed = speedLow;
 		}
-		if (Utils.checkKey(Config.keyUp)) {
+		if (U.checkKey(Config.keyUp)) {
 			dy++;
 		}
-		if (Utils.checkKey(Config.keyDown)) {
+		if (U.checkKey(Config.keyDown)) {
 			dy--;
 		}
-		if (Utils.checkKey(Config.keyLeft)) {
+		if (U.checkKey(Config.keyLeft)) {
 			dx--;
 		}
-		if (Utils.checkKey(Config.keyRight)) {
+		if (U.checkKey(Config.keyRight)) {
 			dx++;
 		}
 		if (Math.abs(dx) > 0 && Math.abs(dy) == 0) {
@@ -176,14 +197,14 @@ public class BasicPlayer implements Player {
 		} else if (Math.abs(dx) == 0 && Math.abs(dy) > 0) {
 			y += speed * dy;
 		} else if (Math.abs(dx) > 0 && Math.abs(dy) > 0) {
-			x += speed * dx / Utils.SQRT2;
-			y += speed * dy / Utils.SQRT2;
+			x += speed * dx / U.SQRT2;
+			y += speed * dy / U.SQRT2;
 		}
 		x = MathUtils.clamp(x, -Config.originX, Config.w - Config.originX);
 		y = MathUtils.clamp(y, -Config.originY, Config.h - Config.originY);
 
 		hitbox.setPosition(x - hitbox.getWidth() / 2, y - hitbox.getHeight() / 2);
-		hitbox.setRotation(Utils.clampAngle(hitbox.getRotation() + 4f));
+		hitbox.setRotation(U.normalizeAngle(hitbox.getRotation() + 4f));
 	}
 
 	@Override

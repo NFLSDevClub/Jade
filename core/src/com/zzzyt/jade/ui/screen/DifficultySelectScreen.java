@@ -6,6 +6,7 @@ import com.zzzyt.jade.ui.Grid;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.G;
 import com.zzzyt.jade.util.Game;
+import com.zzzyt.jade.util.U;
 import com.zzzyt.jade.ui.widget.GridImage;
 
 public class DifficultySelectScreen extends BasicScreen {
@@ -18,29 +19,34 @@ public class DifficultySelectScreen extends BasicScreen {
 
 	@Override
 	public void show() {
-		init("mus/Idea29.ogg", A.get("bg/select_bg.png"));
+		init("mus/Idea29.ogg", A.findRegion("bg.atlas", "select"));
 
 		this.grid = new Grid(true);
 		st.addActor(grid);
 
-		((GridImage) grid.add(new GridImage(A.get("diff/easy.png"), 60, 340, 0, 0, () -> {
+		((GridImage) grid.add(new GridImage(A.findRegion("diff.atlas", "easy"), 60, 340, 0, 0, () -> {
 			G.put("_difficulty", "easy");
 			Game.switchScreen("playerSelect", 0.5f);
 		}))).setScale(0.75f);
-		((GridImage) grid.add(new GridImage(A.get("diff/normal.png"), 60, 240, 0, 1, () -> {
+		((GridImage) grid.add(new GridImage(A.findRegion("diff.atlas", "normal"), 60, 240, 0, 1, () -> {
 			G.put("_difficulty", "normal");
 			Game.switchScreen("playerSelect", 0.5f);
 		}))).setScale(0.75f);
-		((GridImage) grid.add(new GridImage(A.get("diff/hard.png"), 60, 140, 0, 2, () -> {
+		((GridImage) grid.add(new GridImage(A.findRegion("diff.atlas", "hard"), 60, 140, 0, 2, () -> {
 			G.put("_difficulty", "hard");
 			Game.switchScreen("playerSelect", 0.5f);
 		}))).setScale(0.75f);
-		((GridImage) grid.add(new GridImage(A.get("diff/lunatic.png"), 60, 40, 0, 3, () -> {
+		((GridImage) grid.add(new GridImage(A.findRegion("diff.atlas", "lunatic"), 60, 40, 0, 3, () -> {
 			G.put("_difficulty", "lunatic");
 			Game.switchScreen("playerSelect", 0.5f);
 		}))).setScale(0.75f);
-		
-		grid.selectFirst();
+
+		if(G.get("_difficulty")==null) {
+			grid.selectFirst();
+		}
+		else {
+			grid.select(0, U.difficultyToInt()-1);
+		}
 		grid.updateAll();
 		input.addProcessor(grid);
 	}

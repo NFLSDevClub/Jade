@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.zzzyt.jade.Jade;
 import com.zzzyt.jade.util.Collision;
-import com.zzzyt.jade.util.Utils;
+import com.zzzyt.jade.util.U;
 
 public class SquareBullet extends Bullet implements Poolable {
 
@@ -32,7 +32,7 @@ public class SquareBullet extends Bullet implements Poolable {
 	@Override
 	public boolean collide(Player player) {
 		// I'm not sure if this is appropriate...
-		return Collision.squareSquare(player.getX(), player.getY(), player.getRadius() * Utils.SQRT2, x, y, sideLength);
+		return Collision.squareSquare(player.getX(), player.getY(), player.getRadius() * U.SQRT2, x, y, sideLength);
 	}
 
 	@Override

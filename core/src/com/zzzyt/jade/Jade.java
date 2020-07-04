@@ -15,7 +15,7 @@ import com.zzzyt.jade.entity.Bullet;
 import com.zzzyt.jade.entity.RoundBullet;
 import com.zzzyt.jade.entity.BasicPlayer;
 import com.zzzyt.jade.util.Game;
-import com.zzzyt.jade.util.Utils;
+import com.zzzyt.jade.util.U;
 
 public class Jade implements Disposable {
 
@@ -73,7 +73,7 @@ public class Jade implements Disposable {
 
 	public void draw() {
 		fbo.begin();
-		Utils.glClear();
+		U.glClear();
 		batch.begin();
 		player.draw(batch);
 		for (int i = 0; i < bullets.size; i++) {
@@ -144,14 +144,14 @@ public class Jade implements Disposable {
 
 		candidateCount = 0;
 		Bullet tmp;
-		float dst = Utils.sqr(player.radius + Config.safeDistance);
+		float dst = U.sqr(player.radius + Config.safeDistance);
 		for (int i = 0; i < bullets.size; i++) {
 			if (terminating)
 				break;
 			if (bullets.get(i) == null)
 				continue;
 			tmp = bullets.get(i);
-			if (tmp.dist2(player.x, player.y) <= Utils.sqr(tmp.getBoundingRadius()) + dst) {
+			if (tmp.dist2(player.x, player.y) <= U.sqr(tmp.getBoundingRadius()) + dst) {
 				if (candidates.size > candidateCount) {
 					candidates.set(candidateCount, tmp);
 				} else {

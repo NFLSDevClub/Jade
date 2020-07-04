@@ -23,14 +23,8 @@ public class StartScreen extends BasicScreen {
 
 	@Override
 	public void show() {
-		A.load("font/SongSC.ttf");
-		A.load("font/LBRITE.ttf");
-		A.load("font/LBRITEI.ttf");
-		A.load("bg/start_bg.png");
-		A.finishLoading();
+		init("mus/Idea29.ogg", A.findRegion("bg.atlas", "start"));
 
-		init("mus/Idea29.ogg",A.get("bg/start_bg.png"));
-		
 		this.title = new Label("Jade Demo Game", new LabelStyle(A.getFont("font/LBRITE.ttf", 60), Color.BLACK));
 		title.setPosition(90, 390);
 		this.subtitle = new Label("by Zzzyt", new LabelStyle(A.getFont("font/LBRITEI.ttf", 30), Color.BLACK));
@@ -91,7 +85,7 @@ public class StartScreen extends BasicScreen {
 		titles.setPosition(0, 200);
 		titles.addAction(Actions.moveTo(0, 0, duration, Interpolation.sineOut));
 	}
-	
+
 	@Override
 	protected void onFadeOut(float duration) {
 		grid.clearActions();
@@ -100,12 +94,12 @@ public class StartScreen extends BasicScreen {
 		titles.clearActions();
 		titles.addAction(Actions.moveTo(0, 200, duration, Interpolation.sineOut));
 	}
-	
+
 	@Override
 	protected void onQuit() {
 		Game.quit();
 	}
-	
+
 	@Override
 	public String getName() {
 		return "start";

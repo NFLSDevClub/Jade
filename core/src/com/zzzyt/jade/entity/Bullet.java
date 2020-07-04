@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.zzzyt.jade.Jade;
-import com.zzzyt.jade.util.Utils;
+import com.zzzyt.jade.util.U;
 
 public class Bullet implements Entity{
 
@@ -132,7 +132,7 @@ public class Bullet implements Entity{
 	}
 
 	public float dist2(float x2, float y2) {
-		return Utils.sqr(x - x2) + Utils.sqr(y - y2);
+		return U.sqr(x - x2) + U.sqr(y - y2);
 	}
 
 	public void draw(Batch batch) {
