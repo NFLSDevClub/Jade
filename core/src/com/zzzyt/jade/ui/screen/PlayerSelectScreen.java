@@ -19,16 +19,16 @@ public class PlayerSelectScreen extends BasicScreen {
 
 	@Override
 	public void show() {
-		init("mus/Idea29.ogg", A.findRegion("bg.atlas", "select"));
+		init("mus/Idea29.ogg", A.getRegion("bg/select.png"));
 
 		this.grid = new Grid(true);
 		st.addActor(grid);
 
-		grid.add(new GridImage(A.findRegion("diff.atlas", "marisa_description"), 720, 100, 1, 0,
+		grid.add(new GridImage(A.getRegion("diff/marisa_description.png"), 720, 100, 1, 0,
 				() -> Actions.sequence(Actions.color(Color.WHITE), Actions.moveTo(340, 100, 0.2f, Interpolation.sine)),
 				() -> Actions.sequence(Actions.color(Color.GRAY), Actions.moveTo(720, 100, 0.2f, Interpolation.sine)),
 				null));
-		grid.add(new GridImage(A.findRegion("diff.atlas", "marisa_portrait"), 360, 100, 1, 0,
+		grid.add(new GridImage(A.getRegion("diff/marisa_portrait.png"), 360, 100, 1, 0,
 				() -> Actions.sequence(Actions.color(Color.WHITE), Actions.moveTo(200, 100, 0.2f, Interpolation.sine)),
 				() -> Actions.sequence(Actions.color(Color.GRAY), Actions.moveTo(360, 100, 0.2f, Interpolation.sine)),
 				() -> {
@@ -38,11 +38,11 @@ public class PlayerSelectScreen extends BasicScreen {
 					Game.switchScreen("blank", 0.5f);
 				}));
 
-		grid.add(new GridImage(A.findRegion("diff.atlas", "reimu_description"), 120, 100, 0, 0,
+		grid.add(new GridImage(A.getRegion("diff/reimu_description.png"), 120, 100, 0, 0,
 				() -> Actions.sequence(Actions.color(Color.WHITE), Actions.moveTo(120, 100, 0.2f, Interpolation.sine)),
 				() -> Actions.sequence(Actions.color(Color.GRAY), Actions.moveTo(-360, 100, 0.2f, Interpolation.sine)),
 				null));
-		grid.add(new GridImage(A.findRegion("diff.atlas", "reimu_portrait"), 240, 100, 0, 0,
+		grid.add(new GridImage(A.getRegion("diff/reimu_portrait.png"), 240, 100, 0, 0,
 				() -> Actions.sequence(Actions.color(Color.WHITE), Actions.moveTo(240, 100, 0.2f, Interpolation.sine)),
 				() -> Actions.sequence(Actions.color(Color.GRAY), Actions.moveTo(80, 100, 0.2f, Interpolation.sine)),
 				() -> {

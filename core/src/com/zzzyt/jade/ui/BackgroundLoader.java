@@ -11,11 +11,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
 import com.zzzyt.jade.Config;
 import com.zzzyt.jade.util.A;
+import com.zzzyt.jade.util.shot.ShotSheet;
 
 public class BackgroundLoader extends Thread {
 
@@ -120,8 +120,8 @@ public class BackgroundLoader extends Thread {
 			A.load(fh.path(), BitmapFont.class);
 		else if ("ttf".equals(extension))
 			A.load(fh.path(), FreeTypeFontGenerator.class);
-		else if ("json".equals(extension))
-			A.load(fh.path(), Skin.class);
+		else if ("shot".equals(extension))
+			A.load(fh.path(), ShotSheet.class);
 		else if ("p".equals(extension))
 			A.load(fh.path(), ParticleEffect.class);
 	}

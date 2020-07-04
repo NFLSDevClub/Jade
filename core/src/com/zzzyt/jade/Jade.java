@@ -21,6 +21,8 @@ public class Jade implements Disposable {
 
 	public static Jade session;
 
+	public int frame;
+
 	private transient FrameBuffer fbo;
 	private transient TextureRegion fboRegion;
 	private transient SpriteBatch batch;
@@ -38,6 +40,8 @@ public class Jade implements Disposable {
 	private int bulletCount, blankCount;
 
 	public Jade() {
+		this.frame = 0;
+
 		this.logger = new Logger("Jade", Config.logLevel);
 
 		logger.info("Creating Jade session...");
@@ -94,6 +98,7 @@ public class Jade implements Disposable {
 		tmp.sprite = new Sprite(region);
 		tmp.tag = tag;
 		tmp.radius = radius;
+		tmp.boundingRadius = Math.max(tmp.sprite.getHeight() * tmp.sprite.getScaleX(), tmp.sprite.getWidth() * tmp.sprite.getScaleY());
 		return tmp;
 	}
 
@@ -116,7 +121,8 @@ public class Jade implements Disposable {
 	}
 
 	public void update() {
-		player.update();
+		frame++;
+		player.update(frame);
 		Bullet tmp;
 		for (int i = 0; i < candidateCount; i++) {
 			if (terminating)
@@ -133,7 +139,7 @@ public class Jade implements Disposable {
 			if (terminating)
 				break;
 			if (bullets.get(i) != null) {
-				bullets.get(i).update();
+				bullets.get(i).update(frame);
 			}
 		}
 

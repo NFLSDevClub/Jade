@@ -22,7 +22,7 @@ public class BlankScreen extends BasicScreen {
 		this.st = new Stage(viewport);
 		this.input = new InputMultiplexer();
 
-		this.background = new Image(A.findRegion("bg.atlas", "blank"));
+		this.background = new Image(A.getTexture("bg/blank.png"));
 		background.setZIndex(0);
 		background.setSize(Config.windowWidth, Config.windowHeight);
 		st.addActor(this.background);

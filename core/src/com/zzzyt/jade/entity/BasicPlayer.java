@@ -173,7 +173,7 @@ public class BasicPlayer implements Player {
 	}
 
 	@Override
-	public void update() {
+	public void update(int frame) {
 		dx = 0;
 		dy = 0;
 		float speed = speedHigh;

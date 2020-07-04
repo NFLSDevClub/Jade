@@ -19,24 +19,24 @@ public class DifficultySelectScreen extends BasicScreen {
 
 	@Override
 	public void show() {
-		init("mus/Idea29.ogg", A.findRegion("bg.atlas", "select"));
+		init("mus/Idea29.ogg", A.getRegion("bg/select.png"));
 
 		this.grid = new Grid(true);
 		st.addActor(grid);
 
-		((GridImage) grid.add(new GridImage(A.findRegion("diff.atlas", "easy"), 60, 340, 0, 0, () -> {
+		((GridImage) grid.add(new GridImage(A.getRegion("diff/easy.png"), 60, 340, 0, 0, () -> {
 			G.put("_difficulty", "easy");
 			Game.switchScreen("playerSelect", 0.5f);
 		}))).setScale(0.75f);
-		((GridImage) grid.add(new GridImage(A.findRegion("diff.atlas", "normal"), 60, 240, 0, 1, () -> {
+		((GridImage) grid.add(new GridImage(A.getRegion("diff/normal.png"), 60, 240, 0, 1, () -> {
 			G.put("_difficulty", "normal");
 			Game.switchScreen("playerSelect", 0.5f);
 		}))).setScale(0.75f);
-		((GridImage) grid.add(new GridImage(A.findRegion("diff.atlas", "hard"), 60, 140, 0, 2, () -> {
+		((GridImage) grid.add(new GridImage(A.getRegion("diff/hard.png"), 60, 140, 0, 2, () -> {
 			G.put("_difficulty", "hard");
 			Game.switchScreen("playerSelect", 0.5f);
 		}))).setScale(0.75f);
-		((GridImage) grid.add(new GridImage(A.findRegion("diff.atlas", "lunatic"), 60, 40, 0, 3, () -> {
+		((GridImage) grid.add(new GridImage(A.getRegion("diff/lunatic.png"), 60, 40, 0, 3, () -> {
 			G.put("_difficulty", "lunatic");
 			Game.switchScreen("playerSelect", 0.5f);
 		}))).setScale(0.75f);

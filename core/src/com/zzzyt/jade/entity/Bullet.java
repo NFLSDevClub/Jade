@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.zzzyt.jade.Jade;
 import com.zzzyt.jade.util.U;
+import com.zzzyt.jade.util.shot.BulletTexture;
 
 public class Bullet implements Entity{
 
@@ -16,10 +17,12 @@ public class Bullet implements Entity{
 
 	public float x, y;
 	public transient Sprite sprite;
-	public float speed, dir;
+	public float speed, angle;
 
-	private float boundingRadius;
-
+	public float boundingRadius;
+	public transient boolean animated;
+	public BulletTexture texture;
+	
 	public Bullet() {
 		
 	}
@@ -29,7 +32,7 @@ public class Bullet implements Entity{
 		this.tag = tag;
 		this.boundingRadius = Math.max(sprite.getHeight() * sprite.getScaleX(), sprite.getWidth() * sprite.getScaleY());
 		this.speed = 0;
-		this.dir = 0;
+		this.angle = 0;
 		this.x = 0;
 		this.y = 0;
 		updateSpritePosition();
@@ -40,7 +43,7 @@ public class Bullet implements Entity{
 		this.tag = tag;
 		this.boundingRadius = Math.max(sprite.getHeight() * sprite.getScaleX(), sprite.getWidth() * sprite.getScaleY());
 		this.speed = 0;
-		this.dir = 0;
+		this.angle = 0;
 		this.x = x;
 		this.y = y;
 		updateSpritePosition();
@@ -51,7 +54,7 @@ public class Bullet implements Entity{
 		this.tag = tag;
 		this.boundingRadius = Math.max(sprite.getHeight() * sprite.getScaleX(), sprite.getWidth() * sprite.getScaleY());
 		this.speed = speed;
-		this.dir = dir;
+		this.angle = dir;
 		this.x = x;
 		this.y = y;
 		updateSpritePosition();
@@ -66,8 +69,8 @@ public class Bullet implements Entity{
 		return this;
 	}
 
-	public Bullet setDir(float dir) {
-		this.dir = dir;
+	public Bullet setAngle(float angle) {
+		this.angle = angle;
 		return this;
 	}
 
@@ -141,11 +144,14 @@ public class Bullet implements Entity{
 		}
 	}
 
-	public void update() {
-		x += speed * MathUtils.cosDeg(dir);
-		y += speed * MathUtils.sinDeg(dir);
+	public void update(int frame) {
+		if(animated) {
+			sprite.setRegion(texture.getRegion(frame));
+		}
+		x += speed * MathUtils.cosDeg(angle);
+		y += speed * MathUtils.sinDeg(angle);
 		if (Jade.outOfWorld(x, y, sprite.getWidth() * sprite.getScaleX(), sprite.getHeight() * sprite.getScaleY())) {
-			Jade.session.remove(this);
+//			Jade.session.remove(this);
 			return;
 		}
 		updateSpritePosition();

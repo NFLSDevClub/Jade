@@ -1,17 +1,14 @@
 package com.zzzyt.jade.ui.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.zzzyt.jade.Config;
 import com.zzzyt.jade.Jade;
 import com.zzzyt.jade.demo.player.PlayerMarisa;
 import com.zzzyt.jade.demo.player.PlayerReimu;
-import com.zzzyt.jade.entity.SquareBullet;
 import com.zzzyt.jade.ui.widget.GameFrame;
 import com.zzzyt.jade.util.A;
+import com.zzzyt.jade.util.B;
 import com.zzzyt.jade.util.G;
 import com.zzzyt.jade.util.Game;
 
@@ -27,7 +24,7 @@ public class GameScreen extends BasicScreen {
 
 	@Override
 	public void show() {
-		init("mus/Idea12.ogg", A.findRegion("bg.atlas","game"));
+		init("mus/Idea12.ogg", A.getRegion("bg/game.png"));
 
 		this.frame = new GameFrame();
 		frame.setBounds(Config.offsetX, Config.offsetY, Config.w, Config.h);
@@ -47,12 +44,8 @@ public class GameScreen extends BasicScreen {
 	@Override
 	public void render(float delta) {
 		if (MathUtils.randomBoolean(diffToChance((String) G.get("_difficulty")))) {
-			jade.add(jade.newRoundBullet(new TextureRegion(A.get("bu/testbullet2.png", Texture.class)), 0, 4))
-					.setXY(MathUtils.random(-150, 150), MathUtils.random(-100, 0)).setDir(MathUtils.random(-150, -30))
-					.setSpeed(1).setScale(1f).setColor(new Color(MathUtils.random(), 0, 1, 1)).updateSpritePosition();
-			jade.add(new SquareBullet(new TextureRegion(A.get("bu/rectbullet.png", Texture.class)), 0, 6,
-					MathUtils.random(-150, 150), MathUtils.random(-100, 0), 1, MathUtils.random(-150, -30)))
-					.setScale(0.5f).setColor(new Color(MathUtils.random(), 0, 1, 1));
+			B.as(MathUtils.random(1, 248), 0, 2, MathUtils.random(-150, 150), MathUtils.random(-100, 0), 1,
+					MathUtils.random(-150, -30));
 		}
 
 		jade.update();

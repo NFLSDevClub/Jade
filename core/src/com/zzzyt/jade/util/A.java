@@ -6,7 +6,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.TextureLoader.TextureParameter;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
@@ -14,13 +13,15 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.zzzyt.jade.Config;
+import com.zzzyt.jade.util.shot.ShotSheet;
+import com.zzzyt.jade.util.shot.ShotSheetLoader;
 
 public class A {
 
@@ -33,6 +34,7 @@ public class A {
 		A.am = new AssetManager();
 		A.am.getLogger().setLevel(Config.logLevel);
 		A.am.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(new InternalFileHandleResolver()));
+		A.am.setLoader(ShotSheet.class, new ShotSheetLoader(new InternalFileHandleResolver()));
 
 		A.fontCache = new ObjectMap<String, BitmapFont>();
 		A.textureReflect = new ObjectMap<Texture, String>();
@@ -44,6 +46,21 @@ public class A {
 
 	public static <T> T get(String fileName, Class<T> type) {
 		return am.get(fileName, type);
+	}
+
+	public static Texture getTexture(String fileName) {
+		return am.get(fileName, Texture.class);
+	}
+
+	public static <T> TextureRegion getRegion(String fileName) {
+		T tmp = am.get(fileName);
+		if (tmp instanceof TextureRegion) {
+			return (TextureRegion) tmp;
+		} else if (tmp instanceof Texture) {
+			return new TextureRegion((Texture) tmp);
+		} else {
+			return (TextureRegion) tmp;
+		}
 	}
 
 	public static void load(String fileName) {
@@ -62,16 +79,14 @@ public class A {
 			load(fileName, Music.class);
 		else if ("ogg".equals(extension))
 			load(fileName, Music.class);
-		else if ("wav".equals(extension))
-			load(fileName, Sound.class);
 		else if ("atlas".equals(extension))
 			load(fileName, TextureAtlas.class);
 		else if ("fnt".equals(extension))
 			load(fileName, BitmapFont.class);
 		else if ("ttf".equals(extension))
 			load(fileName, FreeTypeFontGenerator.class);
-		else if ("json".equals(extension))
-			load(fileName, Skin.class);
+		else if ("shot".equals(extension))
+			load(fileName, ShotSheet.class);
 		else if ("p".equals(extension))
 			load(fileName, ParticleEffect.class);
 	}
@@ -202,5 +217,4 @@ public class A {
 			}
 		}
 	}
-
 }

@@ -17,6 +17,7 @@ import com.zzzyt.jade.ui.screen.PlayerSelectScreen;
 import com.zzzyt.jade.ui.screen.ScreenState;
 import com.zzzyt.jade.ui.screen.StartScreen;
 import com.zzzyt.jade.util.A;
+import com.zzzyt.jade.util.B;
 import com.zzzyt.jade.util.BGM;
 import com.zzzyt.jade.util.Game;
 import com.zzzyt.jade.util.U;
@@ -47,9 +48,13 @@ public class JadeDemo implements ApplicationListener {
 		A.load("font/LBRITE.ttf");
 		A.load("font/LBRITEI.ttf");
 		A.load("font/debug.fnt");
-		A.load("bg.atlas");
+		A.load("bg/blank.png");
+		A.load("bg/start.png");
+		A.load("default_shot.shot");
 		A.finishLoading();
-		
+
+		B.setSheet(A.get("default_shot.shot"));
+
 		this.blocker = new InputBlocker();
 		blocker.enable();
 

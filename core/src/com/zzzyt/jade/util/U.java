@@ -1,12 +1,15 @@
 package com.zzzyt.jade.util;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Json;
 import com.zzzyt.jade.Config;
 
 public class U {
 
+	public static final Json json = new Json();
 	public static final float SQRT2 = (float) Math.sqrt(2);
 
 	public static void glClear() {
@@ -88,5 +91,13 @@ public class U {
 
 	public static int difficultyToInt() {
 		return difficultyToInt((String) G.get("_difficulty"));
+	}
+
+	public static Json getJson() {
+		return json;
+	}
+
+	public static <T> T fromJson(FileHandle file, Class<T> type) {
+		return json.fromJson(type, file);
 	}
 }
