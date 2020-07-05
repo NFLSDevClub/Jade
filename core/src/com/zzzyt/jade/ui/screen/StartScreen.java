@@ -23,7 +23,7 @@ public class StartScreen extends BasicScreen {
 
 	@Override
 	public void show() {
-		init("mus/Idea29.ogg", A.getRegion("bg/start.png"));
+		init("mus/Idea29.ogg", "bg/start.png");
 
 		this.title = new Label("Jade Demo Game", new LabelStyle(A.getFont("font/LBRITE.ttf", 60), Color.BLACK));
 		title.setPosition(90, 390);

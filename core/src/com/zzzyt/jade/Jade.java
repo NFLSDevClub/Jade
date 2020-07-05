@@ -12,9 +12,10 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.Pool;
 import com.zzzyt.jade.entity.Bullet;
+import com.zzzyt.jade.entity.Player;
 import com.zzzyt.jade.entity.RoundBullet;
-import com.zzzyt.jade.entity.BasicPlayer;
 import com.zzzyt.jade.util.Game;
+import com.zzzyt.jade.util.M;
 import com.zzzyt.jade.util.U;
 
 public class Jade implements Disposable {
@@ -33,7 +34,7 @@ public class Jade implements Disposable {
 
 	public Array<Bullet> bullets;
 	public Array<Bullet> candidates;
-	public BasicPlayer player;
+	public Player player;
 
 	private boolean terminating;
 	private int candidateCount;
@@ -98,7 +99,8 @@ public class Jade implements Disposable {
 		tmp.sprite = new Sprite(region);
 		tmp.tag = tag;
 		tmp.radius = radius;
-		tmp.boundingRadius = Math.max(tmp.sprite.getHeight() * tmp.sprite.getScaleX(), tmp.sprite.getWidth() * tmp.sprite.getScaleY());
+		tmp.boundingRadius = Math.max(tmp.sprite.getHeight() * tmp.sprite.getScaleX(),
+				tmp.sprite.getWidth() * tmp.sprite.getScaleY());
 		return tmp;
 	}
 
@@ -150,14 +152,14 @@ public class Jade implements Disposable {
 
 		candidateCount = 0;
 		Bullet tmp;
-		float dst = U.sqr(player.radius + Config.safeDistance);
+		float dst = M.sqr(player.getRadius() + Config.safeDistance);
 		for (int i = 0; i < bullets.size; i++) {
 			if (terminating)
 				break;
 			if (bullets.get(i) == null)
 				continue;
 			tmp = bullets.get(i);
-			if (tmp.dist2(player.x, player.y) <= U.sqr(tmp.getBoundingRadius()) + dst) {
+			if (tmp.dist2(player.getX(), player.getY()) <= M.sqr(tmp.getBoundingRadius()) + dst) {
 				if (candidates.size > candidateCount) {
 					candidates.set(candidateCount, tmp);
 				} else {
@@ -182,7 +184,7 @@ public class Jade implements Disposable {
 		blankCount = 0;
 	}
 
-	public BasicPlayer setPlayer(BasicPlayer player) {
+	public Player setPlayer(Player player) {
 		this.player = player;
 		return player;
 	}
@@ -195,6 +197,10 @@ public class Jade implements Disposable {
 	public void onHit() {
 		terminate();
 		Game.switchScreen("start");
+	}
+
+	public static Player getPlayer() {
+		return Jade.session.player;
 	}
 
 	public static boolean outOfWorld(float x, float y, float rx, float ry) {

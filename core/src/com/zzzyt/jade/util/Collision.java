@@ -5,14 +5,14 @@ import com.badlogic.gdx.math.MathUtils;
 public class Collision {
 
 	public static boolean circleCircle(float x1, float y1, float r1, float x2, float y2, float r2) {
-		if (U.dist2(x1, y1, x2, y2) <= U.sqr(r1 + r2)) {
+		if (M.dist2(x1, y1, x2, y2) <= M.sqr(r1 + r2)) {
 			return true;
 		}
 		return false;
 	}
 
 	public static boolean circleCircleOrtho(float x1, float y1, float r1, float x2, float y2, float r2) {
-		if (U.dist2(x1, y1, x2, y2) <= U.sqr(r1) + U.sqr(r2)) {
+		if (M.dist2(x1, y1, x2, y2) <= M.sqr(r1) + M.sqr(r2)) {
 			return true;
 		}
 		return false;
@@ -22,7 +22,7 @@ public class Collision {
 		x2 = MathUtils.clamp(x1, x2, x2 + w);
 		y2 = MathUtils.clamp(y1, y2, y2 + h);
 
-		if (U.dist2(x1, y1, x2, y2) <= U.sqr(r)) {
+		if (M.dist2(x1, y1, x2, y2) <= M.sqr(r)) {
 			return true;
 		}
 		return false;
@@ -32,7 +32,7 @@ public class Collision {
 		x2 = MathUtils.clamp(x1, x2 - s / 2, x2 + s / 2);
 		y2 = MathUtils.clamp(y1, y2 - s / 2, y2 + s / 2);
 
-		if (U.dist2(x1, y1, x2, y2) <= U.sqr(r)) {
+		if (M.dist2(x1, y1, x2, y2) <= M.sqr(r)) {
 			return true;
 		}
 		return false;

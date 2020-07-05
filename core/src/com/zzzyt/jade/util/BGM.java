@@ -15,16 +15,19 @@ public class BGM {
 	public static void play(String name) {
 		BackgroundMusic bgm = BGM.bgm;
 		if (name == null) {
-			throw new IllegalArgumentException("BGM name can't be null");
+			stop();
+			return;
+		}
+		if ("".equals(name)) {
+			logger.debug("Keep original BGM.");
+			return;
 		}
 		if (bgm != null) {
 			if (bgm.getName().equals(name)) {
 				logger.debug("Same BGM as before. No changing.");
 				return;
 			}
-			logger.debug("Stopping \"" + bgm.getName() + "\".");
-			bgm.stop();
-			bgm.dispose();
+			stop();
 		}
 		logger.debug("Playing \"" + name + "\".");
 		BGM.bgm = bgms.get(name);
@@ -39,7 +42,7 @@ public class BGM {
 		bgms.put(music.getName(), music);
 		return music;
 	}
-	
+
 	public static void update() {
 		if (BGM.bgm != null) {
 			BGM.bgm.update();
@@ -60,7 +63,7 @@ public class BGM {
 			BGM.bgm.dispose();
 		}
 	}
-	
+
 	public static Logger getLogger() {
 		return logger;
 	}

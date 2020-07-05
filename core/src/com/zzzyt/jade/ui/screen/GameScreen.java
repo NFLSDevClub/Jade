@@ -1,16 +1,15 @@
 package com.zzzyt.jade.ui.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.MathUtils;
 import com.zzzyt.jade.Config;
 import com.zzzyt.jade.Jade;
 import com.zzzyt.jade.demo.player.PlayerMarisa;
 import com.zzzyt.jade.demo.player.PlayerReimu;
 import com.zzzyt.jade.ui.widget.GameFrame;
-import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.B;
 import com.zzzyt.jade.util.G;
 import com.zzzyt.jade.util.Game;
+import com.zzzyt.jade.util.M;
 
 public class GameScreen extends BasicScreen {
 
@@ -18,13 +17,15 @@ public class GameScreen extends BasicScreen {
 
 	private GameFrame frame;
 
+	private float tmpf;
+
 	public GameScreen() {
 		super();
 	}
 
 	@Override
 	public void show() {
-		init("mus/Idea12.ogg", A.getRegion("bg/game.png"));
+		init("mus/Idea12.ogg", "bg/game.png");
 
 		this.frame = new GameFrame();
 		frame.setBounds(Config.offsetX, Config.offsetY, Config.w, Config.h);
@@ -39,13 +40,18 @@ public class GameScreen extends BasicScreen {
 		}
 
 		frame.setJade(jade);
+
+		tmpf = 72;
 	}
 
 	@Override
 	public void render(float delta) {
-		if (MathUtils.randomBoolean(diffToChance((String) G.get("_difficulty")))) {
-			B.as(MathUtils.random(1, 248), 0, 2, MathUtils.random(-150, 150), MathUtils.random(-100, 0), 1,
-					MathUtils.random(-150, -30));
+		if (Jade.session.frame % diffToChance((String) G.get("_difficulty")) == 0) {
+			tmpf += M.sin(Jade.session.frame) * 6;
+			for (int i = 0; i < 360; i += 72) {
+				B.as(0, -100, i + tmpf, 2, "DS_MISSILE_RED", 0);
+				B.as(0, -100, i - tmpf, 2, "DS_MISSILE_BLUE", 0);
+			}
 		}
 
 		jade.update();
@@ -59,16 +65,16 @@ public class GameScreen extends BasicScreen {
 		jade.postRender();
 	}
 
-	private float diffToChance(String str) {
+	private int diffToChance(String str) {
 		switch (str) {
 		case "easy":
-			return 0.1f;
+			return 16;
 		case "normal":
-			return 0.25f;
+			return 10;
 		case "hard":
-			return 0.5f;
+			return 5;
 		case "lunatic":
-			return 1f;
+			return 2;
 		default:
 			return 0;
 		}

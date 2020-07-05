@@ -9,6 +9,7 @@ public class Config {
 	public static int logLevel = Logger.DEBUG;
 
 	public static int fps = 60;
+	public static boolean vsyncEnabled = false;
 	public static int windowWidth = 640;
 	public static int windowHeight = 480;
 	public static int w = 384;
@@ -22,6 +23,7 @@ public class Config {
 
 	public static int cleanupBulletCount = 8192;
 	public static int cleanupBlankCount = 512;
+	public static String defaultShotSheet = "default_shot.shot";
 
 	public static int[] keyDown = { Keys.DOWN };
 	public static int[] keyUp = { Keys.UP };
@@ -30,6 +32,9 @@ public class Config {
 	public static int[] keySelect = { Keys.Z, Keys.ENTER };
 	public static int[] keyCancel = { Keys.X, Keys.ESCAPE };
 	public static int[] keySlow = { Keys.SHIFT_LEFT };
+	public static int[] keyBomb = { Keys.X };
+	public static int[] keyCustom1 = { Keys.C };
+	public static int[] keyCustom2 = { Keys.V };
 
 	public static String UIFont = "font/SongSC.ttf";
 	public static Color UIFontColor = Color.WHITE;

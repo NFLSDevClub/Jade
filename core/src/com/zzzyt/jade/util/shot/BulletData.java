@@ -10,6 +10,7 @@ public class BulletData {
 	public BulletTexture texture;
 	public float angularVelocity;
 	public float radius;
+	public float rotation;
 	public Color delayColor;
 
 	public BulletData(ShotSheet parent, RawBulletData raw) {
@@ -17,12 +18,13 @@ public class BulletData {
 		this.name = raw.name;
 		this.render = raw.render;
 		this.angularVelocity = raw.angularVelocity;
+		this.radius = raw.radius;
+		this.rotation = raw.rotation;
 		this.delayColor = new Color(raw.delayColor[0], raw.delayColor[1], raw.delayColor[2], 1);
 		if (raw.animation == null) {
 			this.texture = new BulletTexture(parent.texture, raw.rect);
 		} else {
 			this.texture = new BulletTexture(parent.texture, raw.animation);
 		}
-		this.radius=Math.max((float)Math.min(texture.getRegionWidth(), texture.getRegionHeight())/3-3,3);
 	}
 }

@@ -6,27 +6,29 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.zzzyt.jade.Jade;
-import com.zzzyt.jade.util.U;
+import com.zzzyt.jade.util.M;
 import com.zzzyt.jade.util.shot.BulletTexture;
 
-public class Bullet implements Entity{
+public class Bullet implements Entity {
 
 	public int id;
 	public int type;
 	public int tag;
+	public int t;
 
 	public float x, y;
-	public transient Sprite sprite;
+	public Sprite sprite;
 	public float speed, angle;
+	public float angularVelocity;
 
 	public float boundingRadius;
-	public transient boolean animated;
+	public boolean animated;
 	public BulletTexture texture;
-	
+
 	public Bullet() {
-		
+
 	}
-	
+
 	public Bullet(TextureRegion region, int tag) {
 		this.sprite = new Sprite(region);
 		this.tag = tag;
@@ -105,7 +107,7 @@ public class Bullet implements Entity{
 	public float getY() {
 		return y;
 	}
-	
+
 	public Bullet updateSpritePosition() {
 		sprite.setPosition(x - sprite.getWidth() * sprite.getScaleX() / 2,
 				y - sprite.getHeight() * sprite.getScaleY() / 2);
@@ -135,7 +137,7 @@ public class Bullet implements Entity{
 	}
 
 	public float dist2(float x2, float y2) {
-		return U.sqr(x - x2) + U.sqr(y - y2);
+		return M.sqr(x - x2) + M.sqr(y - y2);
 	}
 
 	public void draw(Batch batch) {
@@ -145,13 +147,15 @@ public class Bullet implements Entity{
 	}
 
 	public void update(int frame) {
-		if(animated) {
+		t++;
+		if (animated) {
 			sprite.setRegion(texture.getRegion(frame));
 		}
+		sprite.setRotation(M.normalizeAngle(sprite.getRotation() + angularVelocity));
 		x += speed * MathUtils.cosDeg(angle);
 		y += speed * MathUtils.sinDeg(angle);
 		if (Jade.outOfWorld(x, y, sprite.getWidth() * sprite.getScaleX(), sprite.getHeight() * sprite.getScaleY())) {
-//			Jade.session.remove(this);
+			Jade.session.remove(this);
 			return;
 		}
 		updateSpritePosition();

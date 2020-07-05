@@ -1,6 +1,7 @@
 package com.zzzyt.jade.entity;
 
 import com.zzzyt.jade.Config;
+import com.zzzyt.jade.util.M;
 import com.zzzyt.jade.util.U;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -197,14 +198,14 @@ public class BasicPlayer implements Player {
 		} else if (Math.abs(dx) == 0 && Math.abs(dy) > 0) {
 			y += speed * dy;
 		} else if (Math.abs(dx) > 0 && Math.abs(dy) > 0) {
-			x += speed * dx / U.SQRT2;
-			y += speed * dy / U.SQRT2;
+			x += speed * dx / M.SQRT2;
+			y += speed * dy / M.SQRT2;
 		}
 		x = MathUtils.clamp(x, -Config.originX, Config.w - Config.originX);
 		y = MathUtils.clamp(y, -Config.originY, Config.h - Config.originY);
 
 		hitbox.setPosition(x - hitbox.getWidth() / 2, y - hitbox.getHeight() / 2);
-		hitbox.setRotation(U.normalizeAngle(hitbox.getRotation() + 4f));
+		hitbox.setRotation(M.normalizeAngle(hitbox.getRotation() + 4f));
 	}
 
 	@Override

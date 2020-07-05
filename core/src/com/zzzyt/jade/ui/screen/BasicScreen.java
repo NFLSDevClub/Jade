@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.zzzyt.jade.Config;
 import com.zzzyt.jade.ui.QuitListener;
 import com.zzzyt.jade.ui.widget.FPSDisplay;
+import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.BGM;
 import com.zzzyt.jade.util.Game;
 
@@ -32,6 +33,10 @@ public class BasicScreen implements FadeableScreen {
 	@Override
 	public void show() {
 
+	}
+
+	public void init(String bgm, String backgroundName) {
+		init(bgm, A.getRegion(backgroundName));
 	}
 
 	public void init(String bgm, TextureRegion background) {

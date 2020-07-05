@@ -19,7 +19,7 @@ public class PlayerSelectScreen extends BasicScreen {
 
 	@Override
 	public void show() {
-		init("mus/Idea29.ogg", A.getRegion("bg/select.png"));
+		init("mus/Idea29.ogg", "bg/select.png");
 
 		this.grid = new Grid(true);
 		st.addActor(grid);

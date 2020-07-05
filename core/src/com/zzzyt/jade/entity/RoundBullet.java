@@ -12,7 +12,7 @@ public class RoundBullet extends Bullet implements Poolable {
 	public RoundBullet() {
 		super();
 	}
-	
+
 	public RoundBullet(TextureRegion region, int tag, float radius) {
 		super(region, tag);
 		this.radius = radius;
@@ -26,7 +26,7 @@ public class RoundBullet extends Bullet implements Poolable {
 	public RoundBullet(TextureRegion region, int tag, float radius, float x, float y, float speed, float dir) {
 		super(region, tag, x, y, speed, dir);
 		this.radius = radius;
-	}	
+	}
 
 	@Override
 	public boolean collide(Player player) {
@@ -40,6 +40,18 @@ public class RoundBullet extends Bullet implements Poolable {
 
 	@Override
 	public void reset() {
-		this.radius = -1;
+		id = -1;
+		type = 0;
+		tag = 0;
+		x = 0;
+		y = 0;
+		sprite = null;
+		speed = 0;
+		angle = 0;
+		angularVelocity = 0;
+		boundingRadius = 0;
+		animated = false;
+		texture = null;
+		radius = -1;
 	}
 }

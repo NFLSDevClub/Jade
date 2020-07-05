@@ -9,17 +9,19 @@ public class BackgroundMusic {
 	public String name;
 	public Music music;
 
-	public boolean isLooping;
+	public boolean isPlaying, isLooping;
 	public float loopStart, loopEnd;
 
 	public BackgroundMusic(String name) {
 		this.name = name;
 		this.isLooping = false;
+		this.isPlaying = false;
 	}
 
 	public BackgroundMusic(String name, float loopStart, float loopEnd) {
 		this.name = name;
 		this.isLooping = true;
+		this.isPlaying = false;
 		this.loopStart = loopStart;
 		this.loopEnd = loopEnd;
 	}
@@ -29,6 +31,7 @@ public class BackgroundMusic {
 	}
 
 	public void stop() {
+		isPlaying = false;
 		music.stop();
 	}
 
@@ -54,17 +57,18 @@ public class BackgroundMusic {
 
 	public void play() {
 		load();
+		isPlaying = true;
 		music.setLooping(false);
 		music.play();
 	}
 
 	public void update() {
-		if (music != null && isLooping) {
+		if (music != null && isPlaying && isLooping) {
 			if (!music.isPlaying()) {
 				music.setPosition(loopStart);
 				music.play();
 			} else if (music.getPosition() >= loopEnd) {
-				music.setPosition(loopStart+(music.getPosition()-loopEnd));
+				music.setPosition(loopStart + (music.getPosition() - loopEnd));
 			}
 		}
 	}

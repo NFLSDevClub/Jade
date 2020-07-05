@@ -13,7 +13,7 @@ public class DesktopLauncher {
 		config.foregroundFPS = Config.fps;
 		config.backgroundFPS = Config.fps;
 		config.resizable = false;
-		config.vSyncEnabled = false;
+		config.vSyncEnabled = Config.vsyncEnabled;
 		config.samples = 3;
 		new LwjglApplication(new JadeDemo(), config);
 	}

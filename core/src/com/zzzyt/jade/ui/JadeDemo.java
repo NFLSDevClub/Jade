@@ -53,7 +53,7 @@ public class JadeDemo implements ApplicationListener {
 		A.load("default_shot.shot");
 		A.finishLoading();
 
-		B.setSheet(A.get("default_shot.shot"));
+		B.setSheet(Config.defaultShotSheet);
 
 		this.blocker = new InputBlocker();
 		blocker.enable();

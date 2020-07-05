@@ -10,8 +10,6 @@ import com.zzzyt.jade.Config;
 public class U {
 
 	public static final Json json = new Json();
-	public static final float SQRT2 = (float) Math.sqrt(2);
-
 	public static void glClear() {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT
@@ -40,26 +38,6 @@ public class U {
 				return true;
 		}
 		return false;
-	}
-
-	public static float normalizeAngle(float angle) {
-		if (angle > 0) {
-			angle = angle - MathUtils.round(angle / 360) * 360;
-		} else {
-			angle = angle + MathUtils.round(-angle / 360) * 360;
-		}
-		if (angle == -180) {
-			angle = 180;
-		}
-		return angle;
-	}
-
-	public static float dist2(float x1, float y1, float x2, float y2) {
-		return U.sqr(x1 - x2) + U.sqr(y1 - y2);
-	}
-
-	public static float sqr(float x) {
-		return x * x;
 	}
 
 	public static float screenToWorldY(float y) {
