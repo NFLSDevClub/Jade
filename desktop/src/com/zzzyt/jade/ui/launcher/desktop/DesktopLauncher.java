@@ -3,7 +3,7 @@ package com.zzzyt.jade.ui.launcher.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.zzzyt.jade.Config;
-import com.zzzyt.jade.ui.JadeDemo;
+import com.zzzyt.jade.demo.JadeDemo;
 
 public class DesktopLauncher {
 	public static void main(String[] arg) {

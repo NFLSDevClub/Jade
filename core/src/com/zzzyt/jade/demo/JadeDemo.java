@@ -1,4 +1,4 @@
-package com.zzzyt.jade.ui;
+package com.zzzyt.jade.demo;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -9,6 +9,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
 import com.zzzyt.jade.Config;
 import com.zzzyt.jade.music.BackgroundMusic;
+import com.zzzyt.jade.ui.BackgroundLoader;
+import com.zzzyt.jade.ui.InputBlocker;
 import com.zzzyt.jade.ui.screen.BlankScreen;
 import com.zzzyt.jade.ui.screen.DifficultySelectScreen;
 import com.zzzyt.jade.ui.screen.FadeableScreen;

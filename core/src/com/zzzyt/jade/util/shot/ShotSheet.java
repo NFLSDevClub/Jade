@@ -5,6 +5,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.util.U;
 
 public class ShotSheet {
@@ -42,7 +43,11 @@ public class ShotSheet {
 	}
 
 	public int getId(String name) {
-		return nameToId.get(name);
+		Integer tmp=nameToId.get(name);
+		if(tmp==null) {
+			J.getLogger().error("Shot data of name\""+name+"\" not found!");
+		}
+		return tmp;
 	}
 	
 	public BulletData findBullet(int id) {

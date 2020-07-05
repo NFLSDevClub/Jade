@@ -3,6 +3,7 @@ package com.zzzyt.jade.ui.widget;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.zzzyt.jade.Jade;
+import com.zzzyt.jade.util.J;
 
 public class GameFrame extends Actor {
 
@@ -23,9 +24,9 @@ public class GameFrame extends Actor {
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		if (jade == null)
-			jade = Jade.session;
+			jade = J.getSession();
 		if (jade != null)
-			batch.draw(jade.getFrame(), getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(),
+			batch.draw(jade.getFrameTexture(), getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(),
 					getScaleX(), getScaleY(), getRotation());
 	}
 }

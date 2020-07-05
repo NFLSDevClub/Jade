@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Logger;
@@ -14,6 +13,7 @@ import com.badlogic.gdx.utils.Pool;
 import com.zzzyt.jade.entity.Bullet;
 import com.zzzyt.jade.entity.Player;
 import com.zzzyt.jade.entity.RoundBullet;
+import com.zzzyt.jade.game.Difficulty;
 import com.zzzyt.jade.util.Game;
 import com.zzzyt.jade.util.M;
 import com.zzzyt.jade.util.U;
@@ -22,7 +22,7 @@ public class Jade implements Disposable {
 
 	public static Jade session;
 
-	public int frame;
+	private int frame;
 
 	private transient FrameBuffer fbo;
 	private transient TextureRegion fboRegion;
@@ -30,13 +30,15 @@ public class Jade implements Disposable {
 	private transient OrthographicCamera cam;
 	private transient Logger logger;
 
+	public Difficulty game;
+
 	public Pool<RoundBullet> roundBulletPool;
 
 	public Array<Bullet> bullets;
 	public Array<Bullet> candidates;
 	public Player player;
 
-	private boolean terminating;
+	private boolean running;
 	private int candidateCount;
 	private int bulletCount, blankCount;
 
@@ -73,7 +75,7 @@ public class Jade implements Disposable {
 		}
 		Jade.session = this;
 
-		this.terminating = false;
+		this.running = true;
 	}
 
 	public void draw() {
@@ -90,8 +92,12 @@ public class Jade implements Disposable {
 		fbo.end();
 	}
 
-	public TextureRegion getFrame() {
+	public TextureRegion getFrameTexture() {
 		return fboRegion;
+	}
+
+	public RoundBullet newRoundBullet() {
+		return roundBulletPool.obtain();
 	}
 
 	public RoundBullet newRoundBullet(TextureRegion region, int tag, float radius) {
@@ -123,12 +129,12 @@ public class Jade implements Disposable {
 	}
 
 	public void update() {
+		if (!running)
+			return;
 		frame++;
 		player.update(frame);
 		Bullet tmp;
 		for (int i = 0; i < candidateCount; i++) {
-			if (terminating)
-				break;
 			tmp = candidates.get(i);
 			if (tmp.collide(player)) {
 				tmp.onHit();
@@ -137,9 +143,10 @@ public class Jade implements Disposable {
 	}
 
 	public void postRender() {
+		if (!running)
+			return;
+		game.update(frame);
 		for (int i = 0; i < bullets.size; i++) {
-			if (terminating)
-				break;
 			if (bullets.get(i) != null) {
 				bullets.get(i).update(frame);
 			}
@@ -154,8 +161,6 @@ public class Jade implements Disposable {
 		Bullet tmp;
 		float dst = M.sqr(player.getRadius() + Config.safeDistance);
 		for (int i = 0; i < bullets.size; i++) {
-			if (terminating)
-				break;
 			if (bullets.get(i) == null)
 				continue;
 			tmp = bullets.get(i);
@@ -184,51 +189,45 @@ public class Jade implements Disposable {
 		blankCount = 0;
 	}
 
-	public Player setPlayer(Player player) {
-		this.player = player;
-		return player;
+	public void terminate() {
+		logger.info("Terminating Jade session...");
+		running = false;
 	}
 
-	public void terminate() {
-		logger.info("Terminating Jade session.");
-		terminating = true;
+	private void pause() {
+		logger.info("Pausing Jade session...");
+		running = false;
 	}
 
 	public void onHit() {
-		terminate();
+		pause();
 		Game.switchScreen("start");
 	}
 
-	public static Player getPlayer() {
-		return Jade.session.player;
+	public int frame() {
+		return frame;
 	}
 
-	public static boolean outOfWorld(float x, float y, float rx, float ry) {
-		if (x + rx < -Config.originX - Config.deleteDistance)
-			return true;
-		if (x - rx > Config.w + Config.deleteDistance - Config.originX)
-			return true;
-		if (y + ry < -Config.originY - Config.deleteDistance)
-			return true;
-		if (y - ry > Config.h + Config.deleteDistance - Config.originY)
-			return true;
-		return false;
+	public Jade setDifficulty(Difficulty difficulty) {
+		this.game = difficulty;
+		return this;
 	}
 
-	public static boolean outOfFrame(float x, float y, float rx, float ry) {
-		if (x + rx < -Config.originX)
-			return true;
-		if (x - rx > Config.w - Config.originX)
-			return true;
-		if (y + ry < -Config.originY)
-			return true;
-		if (y - ry > Config.h - Config.originY)
-			return true;
-		return false;
+	public Difficulty getDifficulty() {
+		return game;
 	}
 
-	public static Rectangle getWorld() {
-		return new Rectangle(-Config.originX, -Config.originY, Config.w, Config.h);
+	public Jade setPlayer(Player player) {
+		this.player = player;
+		return this;
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public Logger getLogger() {
+		return logger;
 	}
 
 	@Override
@@ -237,5 +236,9 @@ public class Jade implements Disposable {
 		logger.info("Disposing Jade session.");
 		fbo.dispose();
 		Jade.session = null;
+	}
+
+	public boolean isRunning() {
+		return running;
 	}
 }

@@ -1,6 +1,5 @@
 package com.zzzyt.jade.util;
 
-import com.zzzyt.jade.Jade;
 import com.zzzyt.jade.entity.RoundBullet;
 import com.zzzyt.jade.util.shot.BulletData;
 import com.zzzyt.jade.util.shot.ShotSheet;
@@ -20,7 +19,7 @@ public class B {
 	public static RoundBullet as(float x, float y, float angle, float speed, int id, int tag) {
 		angle = M.normalizeAngle(angle);
 		BulletData data = sheet.findBullet(id);
-		RoundBullet bullet = Jade.session.newRoundBullet(data.texture, tag, data.radius);
+		RoundBullet bullet = J.newRoundBullet(data.texture, tag, data.radius);
 		if (data.texture.isAnimated()) {
 			bullet.animated = true;
 			bullet.texture = data.texture;
@@ -31,7 +30,7 @@ public class B {
 		bullet.setXY(x, y);
 		bullet.setSpeed(speed);
 		bullet.setAngle(angle);
-		Jade.session.add(bullet);
+		J.add(bullet);
 		return bullet;
 	}
 
@@ -48,7 +47,7 @@ public class B {
 	}
 
 	public static RoundBullet at(float x, float y, float speed, int id, int tag) {
-		return at(x, y, Jade.getPlayer().getX(), Jade.getPlayer().getY(), speed, id, tag);
+		return at(x, y, J.playerX(), J.playerY(), speed, id, tag);
 	}
 
 	public static RoundBullet at(float x, float y, float speed, String name, int tag) {

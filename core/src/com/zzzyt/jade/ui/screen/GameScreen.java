@@ -3,21 +3,18 @@ package com.zzzyt.jade.ui.screen;
 import com.badlogic.gdx.Gdx;
 import com.zzzyt.jade.Config;
 import com.zzzyt.jade.Jade;
+import com.zzzyt.jade.demo.difficulty.DifficultyAll;
 import com.zzzyt.jade.demo.player.PlayerMarisa;
 import com.zzzyt.jade.demo.player.PlayerReimu;
 import com.zzzyt.jade.ui.widget.GameFrame;
-import com.zzzyt.jade.util.B;
 import com.zzzyt.jade.util.G;
 import com.zzzyt.jade.util.Game;
-import com.zzzyt.jade.util.M;
 
 public class GameScreen extends BasicScreen {
 
 	public Jade jade;
 
 	private GameFrame frame;
-
-	private float tmpf;
 
 	public GameScreen() {
 		super();
@@ -41,19 +38,11 @@ public class GameScreen extends BasicScreen {
 
 		frame.setJade(jade);
 
-		tmpf = 72;
+		jade.setDifficulty(new DifficultyAll((String) G.get("_difficulty")));
 	}
 
 	@Override
 	public void render(float delta) {
-		if (Jade.session.frame % diffToChance((String) G.get("_difficulty")) == 0) {
-			tmpf += M.sin(Jade.session.frame) * 6;
-			for (int i = 0; i < 360; i += 72) {
-				B.as(0, -100, i + tmpf, 2, "DS_MISSILE_RED", 0);
-				B.as(0, -100, i - tmpf, 2, "DS_MISSILE_BLUE", 0);
-			}
-		}
-
 		jade.update();
 		jade.draw();
 
@@ -63,21 +52,6 @@ public class GameScreen extends BasicScreen {
 		st.act();
 		st.draw();
 		jade.postRender();
-	}
-
-	private int diffToChance(String str) {
-		switch (str) {
-		case "easy":
-			return 16;
-		case "normal":
-			return 10;
-		case "hard":
-			return 5;
-		case "lunatic":
-			return 2;
-		default:
-			return 0;
-		}
 	}
 
 	@Override

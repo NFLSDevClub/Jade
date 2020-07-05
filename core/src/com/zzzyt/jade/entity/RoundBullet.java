@@ -2,8 +2,8 @@ package com.zzzyt.jade.entity;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Pool.Poolable;
-import com.zzzyt.jade.Jade;
 import com.zzzyt.jade.util.Collision;
+import com.zzzyt.jade.util.J;
 
 public class RoundBullet extends Bullet implements Poolable {
 
@@ -35,7 +35,7 @@ public class RoundBullet extends Bullet implements Poolable {
 
 	@Override
 	public void onHit() {
-		Jade.session.onHit();
+		J.onHit();
 	}
 
 	@Override

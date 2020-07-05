@@ -3,7 +3,7 @@ package com.zzzyt.jade.util;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.utils.Array;
-import com.zzzyt.jade.ui.JadeDemo;
+import com.zzzyt.jade.demo.JadeDemo;
 import com.zzzyt.jade.ui.screen.FadeableScreen;
 import com.zzzyt.jade.ui.screen.ScreenState;
 

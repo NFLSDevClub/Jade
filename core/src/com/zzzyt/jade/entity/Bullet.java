@@ -5,8 +5,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
-import com.zzzyt.jade.Jade;
+import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.util.M;
+import com.zzzyt.jade.util.U;
 import com.zzzyt.jade.util.shot.BulletTexture;
 
 public class Bullet implements Entity {
@@ -141,7 +142,7 @@ public class Bullet implements Entity {
 	}
 
 	public void draw(Batch batch) {
-		if (!Jade.outOfFrame(x, y, boundingRadius, boundingRadius)) {
+		if (!U.outOfFrame(x, y, boundingRadius, boundingRadius)) {
 			sprite.draw(batch);
 		}
 	}
@@ -154,8 +155,8 @@ public class Bullet implements Entity {
 		sprite.setRotation(M.normalizeAngle(sprite.getRotation() + angularVelocity));
 		x += speed * MathUtils.cosDeg(angle);
 		y += speed * MathUtils.sinDeg(angle);
-		if (Jade.outOfWorld(x, y, sprite.getWidth() * sprite.getScaleX(), sprite.getHeight() * sprite.getScaleY())) {
-			Jade.session.remove(this);
+		if (U.outOfWorld(x, y, sprite.getWidth() * sprite.getScaleX(), sprite.getHeight() * sprite.getScaleY())) {
+			J.remove(this);
 			return;
 		}
 		updateSpritePosition();
@@ -166,7 +167,7 @@ public class Bullet implements Entity {
 	}
 
 	public void onHit() {
-
+		
 	}
 
 }

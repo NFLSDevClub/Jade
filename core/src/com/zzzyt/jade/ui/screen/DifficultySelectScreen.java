@@ -6,7 +6,7 @@ import com.zzzyt.jade.ui.Grid;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.G;
 import com.zzzyt.jade.util.Game;
-import com.zzzyt.jade.util.U;
+import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.ui.widget.GridImage;
 
 public class DifficultySelectScreen extends BasicScreen {
@@ -45,7 +45,7 @@ public class DifficultySelectScreen extends BasicScreen {
 			grid.selectFirst();
 		}
 		else {
-			grid.select(0, U.difficultyToInt()-1);
+			grid.select(0, J.difficultyInt()-1);
 		}
 		grid.updateAll();
 		input.addProcessor(grid);

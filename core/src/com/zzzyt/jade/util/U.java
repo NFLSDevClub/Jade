@@ -4,12 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Json;
 import com.zzzyt.jade.Config;
 
 public class U {
 
 	public static final Json json = new Json();
+
 	public static void glClear() {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT
@@ -48,34 +50,39 @@ public class U {
 		return x - Config.originX;
 	}
 
-	public static int difficultyToInt(String difficulty) {
-		switch (difficulty) {
-		case "easy":
-			return 1;
-		case "normal":
-			return 2;
-		case "hard":
-			return 3;
-		case "lunatic":
-			return 4;
-		case "extra":
-			return 5;
-		case "phantasm":
-			return 6;
-		default:
-			return 0;
-		}
-	}
-
-	public static int difficultyToInt() {
-		return difficultyToInt((String) G.get("_difficulty"));
-	}
-
 	public static Json getJson() {
 		return json;
 	}
 
 	public static <T> T fromJson(FileHandle file, Class<T> type) {
 		return json.fromJson(type, file);
+	}
+
+	public static boolean outOfWorld(float x, float y, float rx, float ry) {
+		if (x + rx < -Config.originX - Config.deleteDistance)
+			return true;
+		if (x - rx > Config.w + Config.deleteDistance - Config.originX)
+			return true;
+		if (y + ry < -Config.originY - Config.deleteDistance)
+			return true;
+		if (y - ry > Config.h + Config.deleteDistance - Config.originY)
+			return true;
+		return false;
+	}
+
+	public static boolean outOfFrame(float x, float y, float rx, float ry) {
+		if (x + rx < -Config.originX)
+			return true;
+		if (x - rx > Config.w - Config.originX)
+			return true;
+		if (y + ry < -Config.originY)
+			return true;
+		if (y - ry > Config.h - Config.originY)
+			return true;
+		return false;
+	}
+
+	public static Rectangle getWorldRectangle() {
+		return new Rectangle(-Config.originX, -Config.originY, Config.w, Config.h);
 	}
 }
