@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Logger;
 import com.zzzyt.jade.entity.Bullet;
 import com.zzzyt.jade.entity.Player;
 import com.zzzyt.jade.game.Jade;
+import com.zzzyt.jade.game.operator.Operator;
 
 public class J {
 
@@ -37,6 +38,18 @@ public class J {
 
 	public static Array<Bullet> getBullets() {
 		return Jade.session.getBullets();
+	}
+	
+	public static Operator addOperator(Operator operator) {
+		return Jade.session.addOperator(operator);
+	}
+	
+	public static Operator removeOperator(Operator operator) {
+		return Jade.session.removeOperator(operator);
+	}
+	
+	public static Array<Operator> getOperators(int tag){
+		return Jade.session.getOperators(tag);
 	}
 
 	public static int frame() {

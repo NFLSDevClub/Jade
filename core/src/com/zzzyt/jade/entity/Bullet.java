@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Array;
+import com.zzzyt.jade.game.operator.Operator;
 import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.util.M;
 import com.zzzyt.jade.util.U;
@@ -149,8 +151,18 @@ public class Bullet implements Entity {
 
 	public void update(int frame) {
 		t++;
+		Array<Operator> tmp = J.getOperators(tag);
+		if (tmp != null) {
+			for (int i = 0; i < tmp.size; i++) {
+				tmp.get(i).apply(this, t);
+				if (id == -1)
+					return;
+			}
+			if (id == -1)
+				return;
+		}
 		if (animated) {
-			sprite.setRegion(texture.getRegion(frame));
+			sprite.setRegion(texture.getRegion(t));
 		}
 		sprite.setRotation(M.normalizeAngle(sprite.getRotation() + spriteRotationVelocity));
 		x += speed * MathUtils.cosDeg(angle);
@@ -167,7 +179,7 @@ public class Bullet implements Entity {
 	}
 
 	public void onHit() {
-		
+
 	}
 
 }

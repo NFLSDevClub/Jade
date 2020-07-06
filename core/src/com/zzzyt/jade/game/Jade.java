@@ -8,10 +8,12 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Logger;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.zzzyt.jade.Config;
 import com.zzzyt.jade.entity.Bullet;
 import com.zzzyt.jade.entity.Player;
 import com.zzzyt.jade.entity.RoundBullet;
+import com.zzzyt.jade.game.operator.Operator;
 import com.zzzyt.jade.util.B;
 import com.zzzyt.jade.util.Game;
 import com.zzzyt.jade.util.M;
@@ -31,6 +33,7 @@ public class Jade implements Disposable {
 
 	public Difficulty difficulty;
 
+	public ObjectMap<Integer, Array<Operator>> operators;
 	public Array<Bullet> bullets;
 	public Array<Bullet> candidates;
 	public Player player;
@@ -57,6 +60,7 @@ public class Jade implements Disposable {
 		this.batch = new SpriteBatch();
 		batch.setProjectionMatrix(cam.combined);
 
+		this.operators = new ObjectMap<Integer, Array<Operator>>();
 		this.bullets = new Array<Bullet>(false, 1024);
 		this.candidates = new Array<Bullet>(false, 256);
 
@@ -80,28 +84,6 @@ public class Jade implements Disposable {
 		}
 		batch.end();
 		fbo.end();
-	}
-
-	public TextureRegion getFrameTexture() {
-		return fboRegion;
-	}
-
-	public Bullet add(Bullet bullet) {
-		bulletCount++;
-		bullet.id = bullets.size;
-		bullets.add(bullet);
-		return bullet;
-	}
-
-	public Bullet remove(Bullet bullet) {
-		if (bullet.id != bullets.size - 1)
-			blankCount++;
-		bulletCount--;
-		bullets.set(bullet.id, null);
-		if (bullet.getClass() == RoundBullet.class) {
-			B.freeRoundBullet((RoundBullet) bullet);
-		}
-		return bullet;
 	}
 
 	public void update() {
@@ -158,6 +140,54 @@ public class Jade implements Disposable {
 		}
 	}
 
+	public TextureRegion getFrameTexture() {
+		return fboRegion;
+	}
+
+	public Bullet add(Bullet bullet) {
+		bulletCount++;
+		bullet.id = bullets.size;
+		bullets.add(bullet);
+		return bullet;
+	}
+
+	public Bullet remove(Bullet bullet) {
+		if (bullet.id != bullets.size - 1)
+			blankCount++;
+		bulletCount--;
+		bullets.set(bullet.id, null);
+		bullet.id = -1;
+		if (bullet.getClass() == RoundBullet.class) {
+			B.freeRoundBullet((RoundBullet) bullet);
+		}
+		return bullet;
+	}
+
+	public Operator addOperator(Operator operator) {
+		int tag = operator.getTag();
+		Array<Operator> tmp = operators.get(tag);
+		if (tmp == null) {
+			tmp = new Array<Operator>(false, 8);
+			tmp.add(operator);
+			operators.put(tag, tmp);
+		} else {
+			tmp.add(operator);
+		}
+		return operator;
+	}
+
+	public Operator removeOperator(Operator operator) {
+		Array<Operator> tmp = operators.get(operator.getTag());
+		if (tmp != null) {
+			tmp.removeValue(operator, true);
+		}
+		return operator;
+	}
+
+	public Array<Operator> getOperators(int tag) {
+		return operators.get(tag);
+	}
+
 	private void clanupBulletArray() {
 		logger.info("Cleaning up blanks in bullet array: bulletCount=" + bulletCount + " blankCount=" + blankCount);
 		int j = 0;
@@ -183,8 +213,8 @@ public class Jade implements Disposable {
 	}
 
 	public void onHit() {
-		if(!Config.invulnerable) {
-			pause();			
+		if (!Config.invulnerable) {
+			pause();
 		}
 	}
 
@@ -217,11 +247,11 @@ public class Jade implements Disposable {
 	public Array<Bullet> getBullets() {
 		return bullets;
 	}
-	
+
 	public int getBulletCount() {
 		return bulletCount;
 	}
-	
+
 	@Override
 	public void dispose() {
 		terminate();

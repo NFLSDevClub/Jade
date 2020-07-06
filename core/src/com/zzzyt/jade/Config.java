@@ -18,8 +18,8 @@ public class Config {
 	public static float offsetY = 16;
 	public static float originX = w / 2;
 	public static float originY = h;
-	public static float deleteDistance = 32;
-	public static float safeDistance = 8;
+	public static float deleteDistance = 64;
+	public static float safeDistance = 16;
 
 	public static boolean invulnerable = true;
 	public static int cleanupBulletCount = 8192;
