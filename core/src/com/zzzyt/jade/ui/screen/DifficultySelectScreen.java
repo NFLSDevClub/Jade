@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.zzzyt.jade.ui.Grid;
 import com.zzzyt.jade.util.A;
-import com.zzzyt.jade.util.G;
+import com.zzzyt.jade.util.Global;
 import com.zzzyt.jade.util.Game;
 import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.ui.widget.GridImage;
@@ -25,27 +25,26 @@ public class DifficultySelectScreen extends BasicScreen {
 		st.addActor(grid);
 
 		((GridImage) grid.add(new GridImage(A.getRegion("diff/easy.png"), 60, 340, 0, 0, () -> {
-			G.put("_difficulty", "easy");
+			Global.put("_difficulty", J.EASY);
 			Game.switchScreen("playerSelect", 0.5f);
 		}))).setScale(0.75f);
 		((GridImage) grid.add(new GridImage(A.getRegion("diff/normal.png"), 60, 240, 0, 1, () -> {
-			G.put("_difficulty", "normal");
+			Global.put("_difficulty", J.NORMAL);
 			Game.switchScreen("playerSelect", 0.5f);
 		}))).setScale(0.75f);
 		((GridImage) grid.add(new GridImage(A.getRegion("diff/hard.png"), 60, 140, 0, 2, () -> {
-			G.put("_difficulty", "hard");
+			Global.put("_difficulty", J.HARD);
 			Game.switchScreen("playerSelect", 0.5f);
 		}))).setScale(0.75f);
 		((GridImage) grid.add(new GridImage(A.getRegion("diff/lunatic.png"), 60, 40, 0, 3, () -> {
-			G.put("_difficulty", "lunatic");
+			Global.put("_difficulty", J.LUNATIC);
 			Game.switchScreen("playerSelect", 0.5f);
 		}))).setScale(0.75f);
 
-		if(G.get("_difficulty")==null) {
+		if (Global.get("_difficulty") == null) {
 			grid.selectFirst();
-		}
-		else {
-			grid.select(0, J.difficultyInt()-1);
+		} else {
+			grid.select(0, J.difficulty() - 1);
 		}
 		grid.updateAll();
 		input.addProcessor(grid);

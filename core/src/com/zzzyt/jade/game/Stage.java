@@ -1,6 +1,8 @@
 package com.zzzyt.jade.game;
 
-public class Stage extends MultiSequence {
+import com.zzzyt.jade.game.sequence.Plural;
+
+public class Stage extends Plural {
 	public String stageName;
 
 	public Stage() {

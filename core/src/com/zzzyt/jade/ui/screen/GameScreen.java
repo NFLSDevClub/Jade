@@ -1,13 +1,15 @@
 package com.zzzyt.jade.ui.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.zzzyt.jade.Config;
-import com.zzzyt.jade.Jade;
-import com.zzzyt.jade.demo.difficulty.DifficultyAll;
+import com.zzzyt.jade.demo.difficulty.DifficultyRegular;
+import com.zzzyt.jade.demo.difficulty.DifficultyExtra;
 import com.zzzyt.jade.demo.player.PlayerMarisa;
 import com.zzzyt.jade.demo.player.PlayerReimu;
+import com.zzzyt.jade.game.Jade;
 import com.zzzyt.jade.ui.widget.GameFrame;
-import com.zzzyt.jade.util.G;
+import com.zzzyt.jade.util.Global;
 import com.zzzyt.jade.util.Game;
 
 public class GameScreen extends BasicScreen {
@@ -22,7 +24,7 @@ public class GameScreen extends BasicScreen {
 
 	@Override
 	public void show() {
-		init("mus/Idea12.ogg", "bg/game.png");
+		init(null, "bg/game.png");
 
 		this.frame = new GameFrame();
 		frame.setBounds(Config.offsetX, Config.offsetY, Config.w, Config.h);
@@ -30,19 +32,28 @@ public class GameScreen extends BasicScreen {
 
 		this.jade = new Jade();
 
-		if ("reimu".equals(G.get("_player"))) {
+		if ("reimu".equals(Global.get("_player"))) {
 			jade.setPlayer(new PlayerReimu());
-		} else if ("marisa".equals(G.get("_player"))) {
+		} else if ("marisa".equals(Global.get("_player"))) {
 			jade.setPlayer(new PlayerMarisa());
 		}
 
 		frame.setJade(jade);
 
-		jade.setDifficulty(new DifficultyAll((String) G.get("_difficulty")));
+		if("regular".equals(Global.get("_gameMode"))) {
+			jade.setDifficulty(new DifficultyRegular((int) Global.get("_difficulty")));			
+		}
+		else if("extra".equals(Global.get("_gameMode"))) {
+			jade.setDifficulty(new DifficultyExtra());
+		}
 	}
 
 	@Override
 	public void render(float delta) {
+		if(Gdx.input.isKeyPressed(Keys.CONTROL_LEFT)) {
+			jade.update();
+			jade.postRender();
+		}
 		jade.update();
 		jade.draw();
 

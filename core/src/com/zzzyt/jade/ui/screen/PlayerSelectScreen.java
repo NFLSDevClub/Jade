@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.zzzyt.jade.ui.Grid;
 import com.zzzyt.jade.ui.widget.GridImage;
 import com.zzzyt.jade.util.A;
-import com.zzzyt.jade.util.G;
+import com.zzzyt.jade.util.Global;
 import com.zzzyt.jade.util.Game;
 
 public class PlayerSelectScreen extends BasicScreen {
@@ -32,9 +32,9 @@ public class PlayerSelectScreen extends BasicScreen {
 				() -> Actions.sequence(Actions.color(Color.WHITE), Actions.moveTo(200, 100, 0.2f, Interpolation.sine)),
 				() -> Actions.sequence(Actions.color(Color.GRAY), Actions.moveTo(360, 100, 0.2f, Interpolation.sine)),
 				() -> {
-					G.put("_player", "marisa");
-					G.put("_redirect", "game");
-					G.put("_redirectDelay", 0.5f);
+					Global.put("_player", "marisa");
+					Global.put("_redirect", "game");
+					Global.put("_redirectDelay", 0.5f);
 					Game.switchScreen("blank", 0.5f);
 				}));
 
@@ -46,17 +46,17 @@ public class PlayerSelectScreen extends BasicScreen {
 				() -> Actions.sequence(Actions.color(Color.WHITE), Actions.moveTo(240, 100, 0.2f, Interpolation.sine)),
 				() -> Actions.sequence(Actions.color(Color.GRAY), Actions.moveTo(80, 100, 0.2f, Interpolation.sine)),
 				() -> {
-					G.put("_player", "reimu");
-					G.put("_redirect", "game");
-					G.put("_redirectDelay", 0.5f);
+					Global.put("_player", "reimu");
+					Global.put("_redirect", "game");
+					Global.put("_redirectDelay", 0.5f);
 					Game.switchScreen("blank", 0.5f);
 				}));
 
-		if (G.get("_player") == null) {
+		if (Global.get("_player") == null) {
 			grid.selectLast();
-		} else if ("reimu".equals(G.get("_player"))) {
+		} else if ("reimu".equals(Global.get("_player"))) {
 			grid.select(0, 0);
-		} else if ("marisa".equals(G.get("_player"))) {
+		} else if ("marisa".equals(Global.get("_player"))) {
 			grid.select(1, 0);
 		}
 

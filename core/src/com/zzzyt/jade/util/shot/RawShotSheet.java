@@ -26,7 +26,7 @@ public class RawShotSheet {
 		public int[][] animation;
 		public float radius;
 		public float rotation;
-		public float angularVelocity;
+		public float spinSpeed;
 
 		public RawBulletData() {
 

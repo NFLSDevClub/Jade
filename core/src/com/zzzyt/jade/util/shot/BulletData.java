@@ -8,7 +8,7 @@ public class BulletData {
 	public String render;
 	public String name;
 	public BulletTexture texture;
-	public float angularVelocity;
+	public float spinSpeed;
 	public float radius;
 	public float rotation;
 	public Color delayColor;
@@ -17,7 +17,7 @@ public class BulletData {
 		this.id = raw.id;
 		this.name = raw.name;
 		this.render = raw.render;
-		this.angularVelocity = raw.angularVelocity;
+		this.spinSpeed = raw.spinSpeed;
 		this.radius = raw.radius;
 		this.rotation = raw.rotation;
 		this.delayColor = new Color(raw.delayColor[0], raw.delayColor[1], raw.delayColor[2], 1);

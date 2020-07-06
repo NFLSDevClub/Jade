@@ -18,6 +18,34 @@ public class M {
 		return angle;
 	}
 
+	public static float max(float a, float b) {
+		return Math.max(a, b);
+	}
+
+	public static float min(float a, float b) {
+		return Math.min(a, b);
+	}
+
+	public static int max(int a, int b) {
+		return Math.max(a, b);
+	}
+
+	public static int min(int a, int b) {
+		return Math.min(a, b);
+	}
+	
+	public static int round(float a) {
+		return MathUtils.round(a);
+	}
+	
+	public static int floor(float a) {
+		return MathUtils.floor(a);
+	}
+	
+	public static int ceil(float a) {
+		return MathUtils.ceil(a);
+	}
+
 	public static float dist2(float x1, float y1, float x2, float y2) {
 		return M.sqr(x1 - x2) + M.sqr(y1 - y2);
 	}
@@ -45,7 +73,7 @@ public class M {
 	public static float tan(float degrees) {
 		return (float) (MathUtils.radiansToDegrees * Math.tan(degrees * MathUtils.degreesToRadians));
 	}
-	
+
 	public static float sqr(float x) {
 		return x * x;
 	}

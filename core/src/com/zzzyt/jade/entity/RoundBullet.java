@@ -48,7 +48,7 @@ public class RoundBullet extends Bullet implements Poolable {
 		sprite = null;
 		speed = 0;
 		angle = 0;
-		angularVelocity = 0;
+		spriteRotationVelocity = 0;
 		boundingRadius = 0;
 		animated = false;
 		texture = null;

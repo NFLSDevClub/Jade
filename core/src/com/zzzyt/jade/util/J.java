@@ -1,13 +1,19 @@
 package com.zzzyt.jade.util;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
-import com.zzzyt.jade.Jade;
 import com.zzzyt.jade.entity.Bullet;
 import com.zzzyt.jade.entity.Player;
-import com.zzzyt.jade.entity.RoundBullet;
+import com.zzzyt.jade.game.Jade;
 
 public class J {
+
+	public static final int EASY = 1;
+	public static final int NORMAL = 2;
+	public static final int HARD = 3;
+	public static final int LUNATIC = 4;
+	public static final int EXTRA = 5;
+	public static final int PHANTASM = 6;
 
 	public static Jade getSession() {
 		return Jade.session;
@@ -27,6 +33,10 @@ public class J {
 
 	public static float playerY() {
 		return Jade.session.getPlayer().getY();
+	}
+
+	public static Array<Bullet> getBullets() {
+		return Jade.session.getBullets();
 	}
 
 	public static int frame() {
@@ -49,39 +59,39 @@ public class J {
 		return Jade.session.isRunning();
 	}
 
-	public static RoundBullet newRoundBullet() {
-		return Jade.session.newRoundBullet();
+	public static int difficulty() {
+		return (int) Global.get("_difficulty");
 	}
 
-	public static RoundBullet newRoundBullet(TextureRegion region, int tag, float radius) {
-		return Jade.session.newRoundBullet(region, tag, radius);
-	}
-
-	public static String difficulty() {
-		return (String) G.get("_difficulty");
-	}
-
-	public static int difficultyInt() {
-		return J.difficultyInt(difficulty());
-	}
-
-	public static int difficultyInt(String difficulty) {
-		switch (difficulty) {
-		case "easy":
-			return 1;
-		case "normal":
-			return 2;
-		case "hard":
-			return 3;
-		case "lunatic":
-			return 4;
-		case "extra":
-			return 5;
-		case "phantasm":
-			return 6;
+	public static int diffSelect(int easy, int normal, int hard, int lunatic) {
+		switch (difficulty()) {
+		case EASY:
+			return easy;
+		case NORMAL:
+			return normal;
+		case HARD:
+			return hard;
+		case LUNATIC:
+			return lunatic;
 		default:
-			return 0;
+			getLogger().error("diffSelect: difficulty id \"" + difficulty() + "\" doesn't exist");
+			return -1;
 		}
 	}
 
+	public static float diffSelectFloat(float easy, float normal, float hard, float lunatic) {
+		switch (difficulty()) {
+		case EASY:
+			return easy;
+		case NORMAL:
+			return normal;
+		case HARD:
+			return hard;
+		case LUNATIC:
+			return lunatic;
+		default:
+			getLogger().error("diffSelect: difficulty id \"" + difficulty() + "\" doesn't exist");
+			return -1;
+		}
+	}
 }

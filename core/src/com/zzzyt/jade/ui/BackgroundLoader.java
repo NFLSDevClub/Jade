@@ -44,7 +44,7 @@ public class BackgroundLoader extends Thread {
 
 	private void loadInternal() {
 		// this is too violent.....
-		URL tmp = getClass().getResource("/com/zzzyt/jade/Jade.class");
+		URL tmp = getClass().getResource("/com/");
 		if (tmp.getPath().contains(".jar!")) {
 			logger.debug("Reading resources inside a jar file");
 			try {

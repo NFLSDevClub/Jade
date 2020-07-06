@@ -2,7 +2,7 @@ package com.zzzyt.jade.ui.widget;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.zzzyt.jade.Jade;
+import com.zzzyt.jade.game.Jade;
 import com.zzzyt.jade.util.J;
 
 public class GameFrame extends Actor {

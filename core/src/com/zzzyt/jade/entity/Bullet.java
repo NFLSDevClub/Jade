@@ -20,7 +20,7 @@ public class Bullet implements Entity {
 	public float x, y;
 	public Sprite sprite;
 	public float speed, angle;
-	public float angularVelocity;
+	public float spriteRotationVelocity;
 
 	public float boundingRadius;
 	public boolean animated;
@@ -152,7 +152,7 @@ public class Bullet implements Entity {
 		if (animated) {
 			sprite.setRegion(texture.getRegion(frame));
 		}
-		sprite.setRotation(M.normalizeAngle(sprite.getRotation() + angularVelocity));
+		sprite.setRotation(M.normalizeAngle(sprite.getRotation() + spriteRotationVelocity));
 		x += speed * MathUtils.cosDeg(angle);
 		y += speed * MathUtils.sinDeg(angle);
 		if (U.outOfWorld(x, y, sprite.getWidth() * sprite.getScaleX(), sprite.getHeight() * sprite.getScaleY())) {

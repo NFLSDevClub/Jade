@@ -46,6 +46,7 @@ public class JadeDemo implements ApplicationListener {
 
 		BGM.register(new BackgroundMusic("mus/Idea12.ogg", 0, 12));
 		BGM.register(new BackgroundMusic("mus/Idea29.ogg", 10, 26));
+		BGM.register(new BackgroundMusic("mus/Yet Another Tetris (Piano ver.).ogg", 0, Float.MAX_VALUE));
 		A.load("font/SongSC.ttf");
 		A.load("font/LBRITE.ttf");
 		A.load("font/LBRITEI.ttf");
@@ -91,6 +92,7 @@ public class JadeDemo implements ApplicationListener {
 				Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 			}
 		}
+		
 		fpsCounter.addValue(Gdx.graphics.getDeltaTime());
 
 		U.glClear();

@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.zzzyt.jade.ui.Grid;
 import com.zzzyt.jade.ui.widget.GridLabel;
 import com.zzzyt.jade.util.A;
+import com.zzzyt.jade.util.Global;
 import com.zzzyt.jade.util.Game;
 
 public class StartScreen extends BasicScreen {
@@ -37,19 +38,23 @@ public class StartScreen extends BasicScreen {
 		this.grid = new Grid(true);
 		st.addActor(grid);
 		grid.add(new GridLabel("Game Start", 24, 430, 290, 200, 30, 0, 1, () -> {
+			Global.put("_gameMode","regular");
 			Game.switchScreen("difficultySelect", 0.5f);
 		}));
 		grid.add(new GridLabel("Extra Start", 24, 420, 260, 200, 30, 0, 2, () -> {
-
+			Global.put("_gameMode","extra");
+			Game.switchScreen("playerSelect", 0.5f);
 		}));
-		grid.add(new GridLabel("Stage Practise", 24, 410, 230, 2001, 30, 0, 3, () -> {
-
+		grid.add(new GridLabel("Stage Practice", 24, 410, 230, 2001, 30, 0, 3, () -> {
+//			Global.put("_gameMode","stagePractice");
+//			Game.switchScreen("difficultySelect", 0.5f);
 		}));
-		grid.add(new GridLabel("Spell Practise", 24, 400, 200, 200, 30, 0, 4, () -> {
-
+		grid.add(new GridLabel("Spell Practice", 24, 400, 200, 200, 30, 0, 4, () -> {
+//			Global.put("_gameMode","spellPractice");
+//			Game.switchScreen("difficultySelect", 0.5f);
 		}));
 		grid.add(new GridLabel("Replay", 24, 390, 170, 200, 30, 0, 5, () -> {
-
+			
 		}));
 		grid.add(new GridLabel("Player Data", 24, 380, 140, 200, 30, 0, 6, () -> {
 

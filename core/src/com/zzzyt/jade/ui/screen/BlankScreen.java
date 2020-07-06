@@ -8,7 +8,7 @@ import com.zzzyt.jade.Config;
 import com.zzzyt.jade.ui.QuitListener;
 import com.zzzyt.jade.ui.widget.FPSDisplay;
 import com.zzzyt.jade.util.A;
-import com.zzzyt.jade.util.G;
+import com.zzzyt.jade.util.Global;
 import com.zzzyt.jade.util.Game;
 
 public class BlankScreen extends BasicScreen {
@@ -43,14 +43,14 @@ public class BlankScreen extends BasicScreen {
 		st.getRoot().getColor().a = 1;
 		st.getRoot().addAction(Actions.sequence(Actions.delay(duration), Actions.run(() -> {
 			state = ScreenState.SHOWN;
-			if (G.get("_redirect") != null) {
-				if (G.get("_redirectDelay") != null) {
-					Game.switchScreen((String) G.get("_redirect"), (float) G.get("_redirectDelay"));
-					G.remove("_redirectDelay");
+			if (Global.get("_redirect") != null) {
+				if (Global.get("_redirectDelay") != null) {
+					Game.switchScreen((String) Global.get("_redirect"), (float) Global.get("_redirectDelay"));
+					Global.remove("_redirectDelay");
 				} else {
-					Game.switchScreen((String) G.get("_redirect"));
+					Game.switchScreen((String) Global.get("_redirect"));
 				}
-				G.remove("_redirect");
+				Global.remove("_redirect");
 			}
 		})));
 		onFadeIn(duration);

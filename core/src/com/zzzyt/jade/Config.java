@@ -21,6 +21,7 @@ public class Config {
 	public static float deleteDistance = 32;
 	public static float safeDistance = 8;
 
+	public static boolean invulnerable = true;
 	public static int cleanupBulletCount = 8192;
 	public static int cleanupBlankCount = 512;
 	public static String defaultShotSheet = "default_shot.shot";

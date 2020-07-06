@@ -1,20 +1,22 @@
 package com.zzzyt.jade.game;
 
-public class Difficulty extends MultiSequence{
+import com.zzzyt.jade.game.sequence.Plural;
 
-	public String difficulty;
+public class Difficulty extends Plural {
+
+	public int difficulty;
 
 	public Difficulty() {
 		super();
 	}
 
-	public Difficulty(String difficulty) {
+	public Difficulty(int difficulty) {
 		super();
 		this.difficulty = difficulty;
 	}
 
-	public String getDifficulty() {
+	public int getDifficulty() {
 		return difficulty;
 	}
-	
+
 }
