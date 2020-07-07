@@ -7,8 +7,8 @@ import com.zzzyt.jade.game.sequence.WaitForBulletClear;
 
 public class Stage1 extends Stage {
 
-	public Stage1() {
-		super();
+	@Override
+	public void init() {
 		add(new Delay(120));
 		add(new SwitchBGM("mus/Idea12.ogg"));
 		add(new Stage1Mid1());

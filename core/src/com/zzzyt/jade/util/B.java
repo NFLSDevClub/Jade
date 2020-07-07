@@ -3,16 +3,16 @@ package com.zzzyt.jade.util;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Pool;
-import com.zzzyt.jade.game.entity.RoundBullet;
+import com.zzzyt.jade.game.entity.Bullet;
 import com.zzzyt.jade.game.shot.BulletData;
 import com.zzzyt.jade.game.shot.ShotSheet;
 
 public class B {
 
-	public static Pool<RoundBullet> roundBulletPool = new Pool<RoundBullet>() {
+	public static Pool<Bullet> BulletPool = new Pool<Bullet>() {
 		@Override
-		protected RoundBullet newObject() {
-			return new RoundBullet();
+		protected Bullet newObject() {
+			return new Bullet();
 		}
 	};
 	public static ShotSheet sheet;
@@ -26,12 +26,12 @@ public class B {
 		B.sheet = A.get(sheet);
 	}
 
-	public static RoundBullet newRoundBullet() {
-		return roundBulletPool.obtain();
+	public static Bullet newBullet() {
+		return BulletPool.obtain();
 	}
 
-	public static RoundBullet newRoundBullet(TextureRegion region, int tag, float radius) {
-		RoundBullet tmp = roundBulletPool.obtain();
+	public static Bullet newBullet(TextureRegion region, int tag, float radius) {
+		Bullet tmp = BulletPool.obtain();
 		tmp.sprite = new Sprite(region);
 		tmp.tag = tag;
 		tmp.radius = radius;
@@ -40,21 +40,21 @@ public class B {
 		return tmp;
 	}
 
-	public static RoundBullet freeRoundBullet(RoundBullet bullet) {
-		roundBulletPool.free(bullet);
+	public static Bullet freeBullet(Bullet bullet) {
+		BulletPool.free(bullet);
 		return bullet;
 	}
 
-	public static RoundBullet as(float x, float y, float angle, float speed, int id, int tag) {
+	public static Bullet as(float x, float y, float angle, float speed, int id, int tag) {
 		angle = M.normalizeAngle(angle);
 		BulletData data = sheet.findBullet(id);
-		RoundBullet bullet = newRoundBullet(data.texture, tag, data.radius);
+		Bullet bullet = newBullet(data.texture, tag, data.radius);
 		if (data.texture.isAnimated()) {
 			bullet.animated = true;
 			bullet.texture = data.texture;
 		}
 		bullet.sprite.setRotation(angle - data.rotation);
-		bullet.spriteRotationVelocity = data.spinSpeed;
+		bullet.spinSpeed = data.spinSpeed;
 		bullet.type = id;
 		bullet.setXY(x, y);
 		bullet.setSpeed(speed);
@@ -63,23 +63,23 @@ public class B {
 		return bullet;
 	}
 
-	public static RoundBullet as(float x, float y, float angle, float speed, String name, int tag) {
+	public static Bullet as(float x, float y, float angle, float speed, String name, int tag) {
 		return as(x, y, angle, speed, sheet.getId(name), tag);
 	}
 
-	public static RoundBullet at(float x, float y, float targetX, float targetY, float speed, int id, int tag) {
+	public static Bullet at(float x, float y, float targetX, float targetY, float speed, int id, int tag) {
 		return as(x, y, M.atan2(x, y, targetX, targetY), speed, id, tag);
 	}
 
-	public static RoundBullet at(float x, float y, float targetX, float targetY, float speed, String name, int tag) {
+	public static Bullet at(float x, float y, float targetX, float targetY, float speed, String name, int tag) {
 		return at(x, y, targetX, targetY, speed, sheet.getId(name), tag);
 	}
 
-	public static RoundBullet at(float x, float y, float speed, int id, int tag) {
+	public static Bullet at(float x, float y, float speed, int id, int tag) {
 		return at(x, y, J.playerX(), J.playerY(), speed, id, tag);
 	}
 
-	public static RoundBullet at(float x, float y, float speed, String name, int tag) {
+	public static Bullet at(float x, float y, float speed, String name, int tag) {
 		return at(x, y, speed, sheet.getId(name), tag);
 	}
 }

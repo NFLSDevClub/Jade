@@ -1,7 +1,7 @@
 package com.zzzyt.jade.game.shot;
 
 import com.badlogic.gdx.files.FileHandle;
-import com.zzzyt.jade.util.U;
+import com.zzzyt.jade.util.Util;
 
 public class RawShotSheet {
 	public String image;
@@ -14,7 +14,7 @@ public class RawShotSheet {
 	}
 
 	public static RawShotSheet fromJson(FileHandle file) {
-		return U.fromJson(file, RawShotSheet.class);
+		return Util.fromJson(file, RawShotSheet.class);
 	}
 
 	public static class RawBulletData {

@@ -14,7 +14,7 @@ import com.zzzyt.jade.util.A;
 public class GridLabel extends Label implements GridComponent {
 
 	public Runnable runnable;
-	public boolean active;
+	public boolean active, enabled;
 
 	protected int gridX, gridY;
 	protected float staticX, staticY;
@@ -44,6 +44,7 @@ public class GridLabel extends Label implements GridComponent {
 						Actions.moveTo(staticX, staticY, 0.1f, Interpolation.sine)));
 		this.inactiveAction = () -> Actions.parallel(Actions.alpha(1f),
 				Actions.moveTo(staticX, staticY, 0.1f, Interpolation.sine));
+		this.enabled = true;
 		setBounds(x, y, width, height);
 	}
 
@@ -61,17 +62,25 @@ public class GridLabel extends Label implements GridComponent {
 		this.inactiveStyle = inactiveStyle;
 		this.activeAction = activeAction;
 		this.inactiveAction = inactiveAction;
+		this.enabled = true;
 		setBounds(x, y, width, height);
 	}
 
 	@Override
 	public void trigger() {
-		runnable.run();
+		if (enabled && runnable != null) {
+			runnable.run();
+		}
 	}
 
 	@Override
 	public void update() {
-		if (active) {
+		if (enabled) {
+			setColor(Color.WHITE);
+		} else {
+			setColor(Color.GRAY);
+		}
+		if (enabled && active) {
 			if (activeStyle != null)
 				setStyle(activeStyle);
 			getActions().clear();
@@ -152,6 +161,25 @@ public class GridLabel extends Label implements GridComponent {
 	@Override
 	public boolean isActive() {
 		return active;
+	}
+
+	@Override
+	public GridLabel enable() {
+		this.enabled = true;
+		update();
+		return this;
+	}
+
+	@Override
+	public GridLabel disable() {
+		this.enabled = false;
+		update();
+		return this;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return enabled;
 	}
 
 }

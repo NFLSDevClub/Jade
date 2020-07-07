@@ -15,7 +15,7 @@ public class GridImage extends Image implements GridComponent {
 	protected float staticX, staticY;
 	protected int gridX, gridY;
 	protected Runnable runnable;
-	protected boolean active;
+	protected boolean active, enabled;
 	protected Callable<? extends Action> activeAction, inactiveAction;
 
 	public GridImage(TextureRegion texture, float x, float y, int gridX, int gridY, Runnable runnable) {
@@ -30,11 +30,12 @@ public class GridImage extends Image implements GridComponent {
 				Actions.sequence(Actions.moveTo(staticX - 10, staticY, 0.1f, Interpolation.sine),
 						Actions.moveTo(staticX, staticY, 0.1f, Interpolation.sine)));
 		this.inactiveAction = () -> Actions.forever(Actions.color(Color.GRAY));
+		this.enabled = true;
 		deactivate();
 	}
 
-	public GridImage(TextureRegion texture, float x, float y, int gridX, int gridY, Callable<? extends Action> activeAction,
-			Callable<? extends Action> inactiveAction, Runnable runnable) {
+	public GridImage(TextureRegion texture, float x, float y, int gridX, int gridY,
+			Callable<? extends Action> activeAction, Callable<? extends Action> inactiveAction, Runnable runnable) {
 		super(texture);
 		setPosition(x, y);
 		this.staticX = x;
@@ -44,6 +45,7 @@ public class GridImage extends Image implements GridComponent {
 		this.runnable = runnable;
 		this.activeAction = activeAction;
 		this.inactiveAction = inactiveAction;
+		this.enabled = true;
 		deactivate();
 	}
 
@@ -68,7 +70,12 @@ public class GridImage extends Image implements GridComponent {
 
 	@Override
 	public void update() {
-		if (active) {
+		if (enabled) {
+			setColor(Color.WHITE);
+		} else {
+			setColor(Color.GRAY);
+		}
+		if (enabled && active) {
 			clearActions();
 			if (activeAction != null) {
 				try {
@@ -101,7 +108,7 @@ public class GridImage extends Image implements GridComponent {
 
 	@Override
 	public void trigger() {
-		if (runnable != null) {
+		if (enabled && runnable != null) {
 			runnable.run();
 		}
 	}
@@ -116,6 +123,25 @@ public class GridImage extends Image implements GridComponent {
 		this.inactiveAction = inactiveAction;
 		update();
 		return this;
+	}
+
+	@Override
+	public GridImage enable() {
+		this.enabled = true;
+		update();
+		return null;
+	}
+
+	@Override
+	public GridImage disable() {
+		this.enabled = false;
+		update();
+		return this;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return enabled;
 	}
 
 }

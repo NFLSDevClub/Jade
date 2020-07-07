@@ -9,10 +9,10 @@ public class Stage1Mid2 extends Single {
 
 	private float tmpf;
 
-	public Stage1Mid2() {
-		super();
+	@Override
+	public void init() {
 		setUpdateFunc((frame) -> {
-			if (frame >= 30 * 60) {
+			if (frame >= 36 * 60) {
 				terminate();
 				return;
 			}
@@ -21,7 +21,7 @@ public class Stage1Mid2 extends Single {
 					B.as(0, -100, i + tmpf, 2, "DS_RICE_S_RED", 0);
 					B.as(0, -100, i - tmpf, 2, "DS_RICE_S_BLUE", 0);
 				}
-				tmpf += M.sin(frame) * 6;
+				tmpf += M.sin(frame / 2f) * 6;
 			}
 		});
 		this.tmpf = 72;

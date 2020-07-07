@@ -22,7 +22,7 @@ import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.B;
 import com.zzzyt.jade.util.BGM;
 import com.zzzyt.jade.util.Game;
-import com.zzzyt.jade.util.U;
+import com.zzzyt.jade.util.Util;
 
 public class JadeDemo implements ApplicationListener {
 
@@ -45,7 +45,7 @@ public class JadeDemo implements ApplicationListener {
 		A.init();
 
 		BGM.register(new BackgroundMusic("mus/Idea12.ogg", 0, 12));
-		BGM.register(new BackgroundMusic("mus/Idea29.ogg", 10, 26));
+		BGM.register(new BackgroundMusic("mus/E.0107.ogg", 10, Float.MAX_VALUE));
 		BGM.register(new BackgroundMusic("mus/Yet Another Tetris (Piano ver.).ogg", 0, Float.MAX_VALUE));
 		A.load("font/SongSC.ttf");
 		A.load("font/LBRITE.ttf");
@@ -95,26 +95,26 @@ public class JadeDemo implements ApplicationListener {
 		
 		fpsCounter.addValue(Gdx.graphics.getDeltaTime());
 
-		U.glClear();
+		Util.glClear();
 
 		boolean flag1 = false;
 		boolean flag2 = false;
 		for (int i = 0; i < screens.size; i++) {
 			if (screens.get(i).getState() == ScreenState.FADING_IN) {
 				flag1 = true;
-				screens.get(i).render(U.safeDeltaTime());
+				screens.get(i).render(Util.safeDeltaTime());
 			}
 		}
 		for (int i = 0; i < screens.size; i++) {
 			if (screens.get(i).getState() == ScreenState.SHOWN) {
 				flag2 = true;
-				screens.get(i).render(U.safeDeltaTime());
+				screens.get(i).render(Util.safeDeltaTime());
 			}
 		}
 		for (int i = 0; i < screens.size; i++) {
 			if (screens.get(i).getState() == ScreenState.FADING_OUT) {
 				flag1 = true;
-				screens.get(i).render(U.safeDeltaTime());
+				screens.get(i).render(Util.safeDeltaTime());
 			}
 		}
 		if (flag1) {

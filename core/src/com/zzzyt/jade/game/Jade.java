@@ -12,12 +12,11 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.zzzyt.jade.Config;
 import com.zzzyt.jade.game.entity.Bullet;
 import com.zzzyt.jade.game.entity.Player;
-import com.zzzyt.jade.game.entity.RoundBullet;
 import com.zzzyt.jade.game.operator.Operator;
 import com.zzzyt.jade.util.B;
 import com.zzzyt.jade.util.Game;
 import com.zzzyt.jade.util.M;
-import com.zzzyt.jade.util.U;
+import com.zzzyt.jade.util.Util;
 
 public class Jade implements Disposable {
 
@@ -74,7 +73,7 @@ public class Jade implements Disposable {
 
 	public void draw() {
 		fbo.begin();
-		U.glClear();
+		Util.glClear();
 		batch.begin();
 		player.draw(batch);
 		for (int i = 0; i < bullets.size; i++) {
@@ -157,9 +156,7 @@ public class Jade implements Disposable {
 		bulletCount--;
 		bullets.set(bullet.id, null);
 		bullet.id = -1;
-		if (bullet.getClass() == RoundBullet.class) {
-			B.freeRoundBullet((RoundBullet) bullet);
-		}
+		B.freeBullet(bullet);
 		return bullet;
 	}
 

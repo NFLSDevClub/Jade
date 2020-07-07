@@ -1,8 +1,30 @@
 package com.zzzyt.jade.util;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.zzzyt.jade.Config;
 
 public class Collision {
+
+	public static enum CollisionMode {
+		squareSquare, squareCircle, circleSquare, circleCircle, circleCircleOrtho;
+	}
+
+	public static boolean collide(float x1, float y1, float r1, float x2, float y2, float r2) {
+		switch (Config.collisionMode) {
+		case circleCircleOrtho:
+			return circleCircleOrtho(x1, y1, r1, x2, y2, r2);
+		case squareSquare:
+			return squareSquare(x1, y1, r1, x2, y2, r2);
+		case circleCircle:
+			return circleCircle(x1, y1, r1, x2, y2, r2);
+		case circleSquare:
+			return circleSquare(x1, y1, r1, x2, y2, r2);
+		case squareCircle:
+			return circleSquare(x2, y2, r2, x1, y1, r1);
+		default:
+			return circleCircleOrtho(x1, y1, r1, x2, y2, r2);
+		}
+	}
 
 	public static boolean circleCircle(float x1, float y1, float r1, float x2, float y2, float r2) {
 		if (M.dist2(x1, y1, x2, y2) <= M.sqr(r1 + r2)) {

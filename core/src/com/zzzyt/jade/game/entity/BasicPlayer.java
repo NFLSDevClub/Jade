@@ -2,7 +2,7 @@ package com.zzzyt.jade.game.entity;
 
 import com.zzzyt.jade.Config;
 import com.zzzyt.jade.util.M;
-import com.zzzyt.jade.util.U;
+import com.zzzyt.jade.util.Util;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -38,8 +38,8 @@ public class BasicPlayer implements Player {
 		this.radius = radius;
 		this.speedHigh = speedHigh;
 		this.speedLow = speedLow;
-		this.x = U.screenToWorldX(Config.w / 2);
-		this.y = U.screenToWorldY(32);
+		this.x = Util.screenToWorldX(Config.w / 2);
+		this.y = Util.screenToWorldY(32);
 		this.frameLength = frameLength;
 		this.transitionFrameLength = transitionFrameLength;
 		this.timer1 = 0;
@@ -60,8 +60,8 @@ public class BasicPlayer implements Player {
 		this.radius = radius;
 		this.speedHigh = speedHigh;
 		this.speedLow = speedLow;
-		this.x = U.screenToWorldX(Config.w / 2);
-		this.y = U.screenToWorldY(32);
+		this.x = Util.screenToWorldX(Config.w / 2);
+		this.y = Util.screenToWorldY(32);
 		this.timer1 = 0;
 		this.timer2 = 0;
 		this.pos = 0;
@@ -80,8 +80,8 @@ public class BasicPlayer implements Player {
 		this.radius = radius;
 		this.speedHigh = speedHigh;
 		this.speedLow = speedLow;
-		this.x = U.screenToWorldX(Config.w / 2);
-		this.y = U.screenToWorldY(32);
+		this.x = Util.screenToWorldX(Config.w / 2);
+		this.y = Util.screenToWorldY(32);
 		this.timer1 = 0;
 		this.timer2 = 0;
 		this.pos = 0;
@@ -90,7 +90,7 @@ public class BasicPlayer implements Player {
 	public void draw(Batch batch) {
 		TextureRegion tmp = getTexture();
 		batch.draw(tmp, x - tmp.getRegionWidth() / 2, y - tmp.getRegionHeight() / 2);
-		if (U.checkKey(Config.keySlow)) {
+		if (Util.checkKey(Config.keySlow)) {
 			hitbox.setAlpha(MathUtils.clamp(hitbox.getColor().a + 0.1f, 0, 1));
 		} else {
 			hitbox.setAlpha(MathUtils.clamp(hitbox.getColor().a - 0.1f, 0, 1));
@@ -104,38 +104,6 @@ public class BasicPlayer implements Player {
 	}
 
 	public TextureRegion getTexture() {
-		timer1 = (timer1 + 1) % frameLength;
-		if (dx < 0) {
-			if (pos > -toLeft.size * transitionFrameLength) {
-				pos--;
-				timer2 = 0;
-			} else {
-				if (timer1 == 0) {
-					timer2 = (timer2 + 1) % left.size;
-				}
-			}
-		} else if (dx > 0) {
-			if (pos < toRight.size * transitionFrameLength) {
-				pos++;
-				timer2 = 0;
-			} else {
-				if (timer1 == 0) {
-					timer2 = (timer2 + 1) % right.size;
-				}
-			}
-		} else {
-			if (pos > 0) {
-				pos--;
-				timer2 = 0;
-			} else if (pos < 0) {
-				pos++;
-				timer2 = 0;
-			} else {
-				if (timer1 == 0) {
-					timer2 = (timer2 + 1) % center.size;
-				}
-			}
-		}
 		if (pos == -toLeft.size * transitionFrameLength) {
 			return left.get(timer2);
 		}
@@ -178,19 +146,19 @@ public class BasicPlayer implements Player {
 		dx = 0;
 		dy = 0;
 		float speed = speedHigh;
-		if (U.checkKey(Config.keySlow)) {
+		if (Util.checkKey(Config.keySlow)) {
 			speed = speedLow;
 		}
-		if (U.checkKey(Config.keyUp)) {
+		if (Util.checkKey(Config.keyUp)) {
 			dy++;
 		}
-		if (U.checkKey(Config.keyDown)) {
+		if (Util.checkKey(Config.keyDown)) {
 			dy--;
 		}
-		if (U.checkKey(Config.keyLeft)) {
+		if (Util.checkKey(Config.keyLeft)) {
 			dx--;
 		}
-		if (U.checkKey(Config.keyRight)) {
+		if (Util.checkKey(Config.keyRight)) {
 			dx++;
 		}
 		if (Math.abs(dx) > 0 && Math.abs(dy) == 0) {
@@ -201,11 +169,44 @@ public class BasicPlayer implements Player {
 			x += speed * dx / M.SQRT2;
 			y += speed * dy / M.SQRT2;
 		}
-		x = MathUtils.clamp(x, -Config.originX, Config.w - Config.originX);
-		y = MathUtils.clamp(y, -Config.originY, Config.h - Config.originY);
+		x = MathUtils.clamp(x, radius - Config.originX, Config.w - radius - Config.originX);
+		y = MathUtils.clamp(y, radius - Config.originY, Config.h - radius - Config.originY);
 
 		hitbox.setPosition(x - hitbox.getWidth() / 2, y - hitbox.getHeight() / 2);
 		hitbox.setRotation(M.normalizeAngle(hitbox.getRotation() + 4f));
+
+		timer1 = frame % frameLength;
+		if (dx < 0) {
+			if (pos > -toLeft.size * transitionFrameLength) {
+				pos--;
+				timer2 = 0;
+			} else {
+				if (timer1 == 0) {
+					timer2 = (timer2 + 1) % left.size;
+				}
+			}
+		} else if (dx > 0) {
+			if (pos < toRight.size * transitionFrameLength) {
+				pos++;
+				timer2 = 0;
+			} else {
+				if (timer1 == 0) {
+					timer2 = (timer2 + 1) % right.size;
+				}
+			}
+		} else {
+			if (pos > 0) {
+				pos--;
+				timer2 = 0;
+			} else if (pos < 0) {
+				pos++;
+				timer2 = 0;
+			} else {
+				if (timer1 == 0) {
+					timer2 = (timer2 + 1) % center.size;
+				}
+			}
+		}
 	}
 
 	@Override

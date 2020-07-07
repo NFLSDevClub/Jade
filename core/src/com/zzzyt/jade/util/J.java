@@ -39,17 +39,25 @@ public class J {
 	public static Array<Bullet> getBullets() {
 		return Jade.session.getBullets();
 	}
-	
+
 	public static Operator addOperator(Operator operator) {
 		return Jade.session.addOperator(operator);
 	}
-	
+
 	public static Operator removeOperator(Operator operator) {
 		return Jade.session.removeOperator(operator);
 	}
-	
-	public static Array<Operator> getOperators(int tag){
+
+	public static Array<Operator> getOperators(int tag) {
 		return Jade.session.getOperators(tag);
+	}
+
+	public static void clearOperators(int tag) {
+		Jade.session.getOperators(tag).clear();
+	}
+
+	public static void clearOperators() {
+		Jade.session.operators.clear();
 	}
 
 	public static int frame() {
@@ -64,12 +72,40 @@ public class J {
 		return Jade.session.remove(bullet);
 	}
 
+	public static void clearBullets() {
+		Array<Bullet> tmp = J.getBullets();
+		for (int i = tmp.size - 1; i >= 0; i--) {
+			if (tmp.get(i) != null)
+				J.remove(tmp.get(i));
+		}
+	}
+
 	public static void onHit() {
 		Jade.session.onHit();
 	}
 
 	public static boolean isRunning() {
 		return Jade.session.isRunning();
+	}
+
+	public static String gameMode() {
+		return (String) Global.get("_gameMode");
+	}
+
+	public static boolean isGameModeRegular() {
+		return "regular".equals(Global.get("_gameMode"));
+	}
+	
+	public static boolean isGameModeExtra() {
+		return "extra".equals(Global.get("_gameMode"));
+	}
+	
+	public static boolean isGameModeSpellPractice() {
+		return "spellPractice".equals(Global.get("_gameMode"));
+	}
+	
+	public static boolean isGameModeStagePractice() {
+		return "stagePractice".equals(Global.get("_gameMode"));
 	}
 
 	public static int difficulty() {

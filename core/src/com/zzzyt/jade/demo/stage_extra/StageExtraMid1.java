@@ -10,10 +10,11 @@ public class StageExtraMid1 extends Single {
 
 	private float tmpf;
 
-	public StageExtraMid1() {
-		super();
+	@Override
+	public void init() {
 		setUpdateFunc((frame) -> {
-			if (frame >= 16 * 60) {
+			if (frame >= 15 * 60) {
+				J.clearOperators();
 				terminate();
 				return;
 			}

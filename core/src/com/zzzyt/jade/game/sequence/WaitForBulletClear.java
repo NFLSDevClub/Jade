@@ -15,4 +15,9 @@ public class WaitForBulletClear implements Sequence {
 
 	}
 
+	@Override
+	public void init() {
+		
+	}
+
 }

@@ -19,7 +19,7 @@ public class PlayerSelectScreen extends BasicScreen {
 
 	@Override
 	public void show() {
-		init("mus/Idea29.ogg", "bg/select.png");
+		init("mus/E.0107.ogg", "bg/select.png");
 
 		this.grid = new Grid(true);
 		st.addActor(grid);
@@ -51,7 +51,7 @@ public class PlayerSelectScreen extends BasicScreen {
 					Global.put("_redirectDelay", 0.5f);
 					Game.switchScreen("blank", 0.5f);
 				}));
-
+		grid.activate();
 		if (Global.get("_player") == null) {
 			grid.selectLast();
 		} else if ("reimu".equals(Global.get("_player"))) {
@@ -59,8 +59,7 @@ public class PlayerSelectScreen extends BasicScreen {
 		} else if ("marisa".equals(Global.get("_player"))) {
 			grid.select(1, 0);
 		}
-
-		grid.updateAll();
+		grid.update();
 		input.addProcessor(grid);
 	}
 
@@ -80,7 +79,11 @@ public class PlayerSelectScreen extends BasicScreen {
 
 	@Override
 	protected void onQuit() {
-		Game.switchScreen("difficultySelect", 0.5f);
+		if ("extra".equals(Global.get("_gameMode"))) {
+			Game.switchScreen("start", 0.5f);
+		} else {
+			Game.switchScreen("difficultySelect", 0.5f);
+		}
 	}
 
 	@Override

@@ -19,7 +19,7 @@ public class DifficultySelectScreen extends BasicScreen {
 
 	@Override
 	public void show() {
-		init("mus/Idea29.ogg", "bg/select.png");
+		init("mus/E.0107.ogg", "bg/select.png");
 
 		this.grid = new Grid(true);
 		st.addActor(grid);
@@ -40,13 +40,13 @@ public class DifficultySelectScreen extends BasicScreen {
 			Global.put("_difficulty", J.LUNATIC);
 			Game.switchScreen("playerSelect", 0.5f);
 		}))).setScale(0.75f);
-
+		grid.activate();
 		if (Global.get("_difficulty") == null) {
 			grid.selectFirst();
 		} else {
 			grid.select(0, J.difficulty() - 1);
 		}
-		grid.updateAll();
+		grid.update();
 		input.addProcessor(grid);
 	}
 

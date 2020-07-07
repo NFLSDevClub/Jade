@@ -8,7 +8,6 @@ public class SwitchBGM implements Sequence {
 	private String bgmName;
 
 	public SwitchBGM(String bgmName) {
-		super();
 		this.bgmName = bgmName;
 	}
 
@@ -20,6 +19,11 @@ public class SwitchBGM implements Sequence {
 	@Override
 	public void update(int frame) {
 		BGM.play(bgmName);
+	}
+
+	@Override
+	public void init() {
+		
 	}
 
 }

@@ -24,7 +24,7 @@ public class StartScreen extends BasicScreen {
 
 	@Override
 	public void show() {
-		init("mus/Idea29.ogg", "bg/start.png");
+		init("mus/E.0107.ogg", "bg/start.png");
 
 		this.title = new Label("Jade Demo Game", new LabelStyle(A.getFont("font/LBRITE.ttf", 60), Color.BLACK));
 		title.setPosition(90, 390);
@@ -48,28 +48,29 @@ public class StartScreen extends BasicScreen {
 		grid.add(new GridLabel("Stage Practice", 24, 410, 230, 2001, 30, 0, 3, () -> {
 //			Global.put("_gameMode","stagePractice");
 //			Game.switchScreen("difficultySelect", 0.5f);
-		}));
+		})).disable();
 		grid.add(new GridLabel("Spell Practice", 24, 400, 200, 200, 30, 0, 4, () -> {
-//			Global.put("_gameMode","spellPractice");
-//			Game.switchScreen("difficultySelect", 0.5f);
+			Global.put("_gameMode","spellPractice");
+			Game.switchScreen("difficultySelect", 0.5f);
 		}));
 		grid.add(new GridLabel("Replay", 24, 390, 170, 200, 30, 0, 5, () -> {
 			
-		}));
+		})).disable();
 		grid.add(new GridLabel("Player Data", 24, 380, 140, 200, 30, 0, 6, () -> {
 
-		}));
+		})).disable();
 		grid.add(new GridLabel("Music Room", 24, 370, 110, 200, 30, 0, 7, () -> {
 
-		}));
+		})).disable();
 		grid.add(new GridLabel("Settings", 24, 360, 80, 200, 30, 0, 8, () -> {
 
-		}));
+		})).disable();
 		grid.add(new GridLabel("Quit", 24, 350, 50, 200, 30, 0, 9, () -> {
 			Game.quit();
 		}));
+		grid.activate();
 		grid.selectFirst();
-		grid.updateAll();
+		grid.update();
 		input.addProcessor(grid);
 	}
 

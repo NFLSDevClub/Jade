@@ -3,6 +3,7 @@ package com.zzzyt.jade;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.Logger;
+import com.zzzyt.jade.util.Collision.CollisionMode;
 
 public class Config {
 
@@ -12,6 +13,7 @@ public class Config {
 	public static boolean vsyncEnabled = false;
 	public static int windowWidth = 640;
 	public static int windowHeight = 480;
+
 	public static int w = 384;
 	public static int h = 448;
 	public static float offsetX = 32;
@@ -20,8 +22,8 @@ public class Config {
 	public static float originY = h;
 	public static float deleteDistance = 64;
 	public static float safeDistance = 16;
-
-	public static boolean invulnerable = true;
+	public static CollisionMode collisionMode = CollisionMode.circleCircleOrtho;
+	public static boolean invulnerable = false;
 	public static int cleanupBulletCount = 8192;
 	public static int cleanupBlankCount = 512;
 	public static String defaultShotSheet = "default_shot.shot";

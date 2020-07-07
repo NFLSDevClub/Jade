@@ -40,17 +40,18 @@ public class GameScreen extends BasicScreen {
 
 		frame.setJade(jade);
 
-		if("regular".equals(Global.get("_gameMode"))) {
-			jade.setDifficulty(new DifficultyRegular((int) Global.get("_difficulty")));			
-		}
-		else if("extra".equals(Global.get("_gameMode"))) {
+		if ("regular".equals(Global.get("_gameMode"))) {
+			jade.setDifficulty(new DifficultyRegular((int) Global.get("_difficulty")));
+		} else if ("extra".equals(Global.get("_gameMode"))) {
 			jade.setDifficulty(new DifficultyExtra());
 		}
+
+		jade.getDifficulty().init();
 	}
 
 	@Override
 	public void render(float delta) {
-		if(Gdx.input.isKeyPressed(Keys.CONTROL_LEFT)) {
+		if (Gdx.input.isKeyPressed(Keys.CONTROL_LEFT)) {
 			jade.update();
 			jade.postRender();
 		}

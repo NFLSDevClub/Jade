@@ -1,12 +1,10 @@
 package com.zzzyt.jade.game.sequence;
 
-import java.util.function.IntConsumer;
-
 import com.zzzyt.jade.game.Sequence;
 
 public class Single implements Sequence {
 
-	private IntConsumer updateFunc;
+	private Updateable updateFunc;
 	private boolean finished;
 	private int firstFrame;
 
@@ -15,7 +13,7 @@ public class Single implements Sequence {
 		this.firstFrame = -1;
 	}
 
-	public Single(IntConsumer updateFunc) {
+	public Single(Updateable updateFunc) {
 		this.updateFunc = updateFunc;
 		this.finished = false;
 		this.firstFrame = -1;
@@ -25,7 +23,7 @@ public class Single implements Sequence {
 		this.finished = true;
 	}
 
-	public Single setUpdateFunc(IntConsumer updateFunc) {
+	public Single setUpdateFunc(Updateable updateFunc) {
 		this.updateFunc = updateFunc;
 		return this;
 	}
@@ -40,7 +38,16 @@ public class Single implements Sequence {
 		if (firstFrame == -1) {
 			firstFrame = frame;
 		}
-		updateFunc.accept(frame - firstFrame);
+		updateFunc.update(frame - firstFrame);
 	}
 
+	@FunctionalInterface
+	public static interface Updateable {
+		public void update(int frame);
+	}
+
+	@Override
+	public void init() {
+		
+	}
 }

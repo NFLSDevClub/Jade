@@ -5,8 +5,13 @@ import com.zzzyt.jade.game.Difficulty;
 import com.zzzyt.jade.util.J;
 
 public class DifficultyExtra extends Difficulty {
+
 	public DifficultyExtra() {
 		super(J.EXTRA);
+	}
+
+	@Override
+	public void init() {
 		add(new StageExtra());
 	}
 }

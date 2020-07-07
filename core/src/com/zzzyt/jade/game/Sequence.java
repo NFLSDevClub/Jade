@@ -6,4 +6,6 @@ public interface Sequence {
 
 	public void update(int frame);
 
+	public void init();
+	
 }

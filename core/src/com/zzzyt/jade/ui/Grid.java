@@ -7,16 +7,16 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.zzzyt.jade.Config;
-import com.zzzyt.jade.util.U;
+import com.zzzyt.jade.util.Util;
 
-public class Grid extends Group implements InputProcessor {
+public class Grid extends Group implements InputProcessor, GridComponent {
 
 	public List<GridComponent> grid;
 	public int x, y;
 	public boolean cycle;
 
 	private int minX, minY, maxX, maxY;
-	private boolean enabled;
+	private boolean enabled, active;
 
 	public Grid(boolean cycle) {
 		this.cycle = cycle;
@@ -28,6 +28,7 @@ public class Grid extends Group implements InputProcessor {
 		this.maxX = Integer.MIN_VALUE;
 		this.maxY = Integer.MIN_VALUE;
 		this.enabled = true;
+		deactivate();
 	}
 
 	public GridComponent add(GridComponent component) {
@@ -48,7 +49,7 @@ public class Grid extends Group implements InputProcessor {
 		GridComponent button = grid.get(0);
 		x = button.getGridX();
 		y = button.getGridY();
-		select(x,y);
+		select(x, y);
 	}
 
 	public void selectLast() {
@@ -57,36 +58,69 @@ public class Grid extends Group implements InputProcessor {
 		GridComponent button = grid.get(grid.size() - 1);
 		x = button.getGridX();
 		y = button.getGridY();
-		select(x,y);
+		select(x, y);
+	}
+
+	public void select(int nx, int ny, int dx, int dy) {
+		GridComponent closest = null;
+		int dist = Integer.MAX_VALUE;
+		for (GridComponent button : grid) {
+			if (button.isEnabled()) {
+				if (dx != 0) {
+					if (distanceX(nx, button.getGridX(), dx) < dist) {
+						closest = button;
+						dist = distanceX(nx, button.getGridX(), dx);
+					}
+				} else {
+					if (distanceY(ny, button.getGridY(), dy) < dist) {
+						closest = button;
+						dist = distanceY(ny, button.getGridY(), dy);
+					}
+				}
+			}
+		}
+		if (closest == null) {
+			return;
+		}
+		for (GridComponent button : grid) {
+			if (button.isActive()) {
+				button.deactivate();
+			}
+		}
+		x = closest.getGridX();
+		y = closest.getGridY();
+		for (GridComponent button : grid) {
+			if (button.isEnabled() && button.getGridX() == x && button.getGridY() == y) {
+				button.activate();
+			}
+		}
 	}
 
 	public void select(int nx, int ny) {
 		GridComponent closest = null;
 		int dist = Integer.MAX_VALUE;
 		for (GridComponent button : grid) {
-			if (button.isActive()) {
-				button.deactivate();
-			}
-			if (distance(nx, ny, button.getGridX(), button.getGridY()) < dist) {
-				closest = button;
-				dist = distance(nx, ny, button.getGridX(), button.getGridY());
+			if (button.isEnabled()) {
+				if (distance(nx, ny, button.getGridX(), button.getGridY()) < dist) {
+					closest = button;
+					dist = distance(nx, ny, button.getGridX(), button.getGridY());
+				}
 			}
 		}
 		if (closest == null) {
 			return;
 		}
+		for (GridComponent button : grid) {
+			if (button.isActive()) {
+				button.deactivate();
+			}
+		}
 		x = closest.getGridX();
 		y = closest.getGridY();
 		for (GridComponent button : grid) {
-			if (button.getGridX() == x && button.getGridY() == y) {
+			if (button.isEnabled() && button.getGridX() == x && button.getGridY() == y) {
 				button.activate();
 			}
-		}
-	}
-
-	public void updateAll() {
-		for (GridComponent button : grid) {
-			button.update();
 		}
 	}
 
@@ -104,24 +138,101 @@ public class Grid extends Group implements InputProcessor {
 		return Math.abs(x1 - x2) + Math.abs(y1 - y2);
 	}
 
-	@Override
-	public boolean keyDown(int keycode) {
-		if (!enabled)
-			return false;
-		if (U.matchKey(keycode, Config.keyUp)) {
-			select(x, y - 1);
-		} else if (U.matchKey(keycode, Config.keyDown)) {
-			select(x, y + 1);
-		} else if (U.matchKey(keycode, Config.keyLeft)) {
-			select(x - 1, y);
-		} else if (U.matchKey(keycode, Config.keyRight)) {
-			select(x + 1, y);
-		} else if (U.matchKey(keycode, Config.keySelect)) {
-			for (GridComponent button : grid) {
-				if(button.isActive()) {
-					button.trigger();					
+	private int distanceX(int x1, int x2, int dx) {
+		if (cycle) {
+			if (x1 < minX)
+				x1 = maxX;
+			if (x1 > maxX)
+				x1 = minX;
+			if (dx > 0) {
+				if (x1 <= x2) {
+					return x2 - x1;
+				} else {
+					return x2 - x1 + maxX - minX + 1;
+				}
+			} else {
+				if (x1 >= x2) {
+					return x1 - x2;
+				} else {
+					return x1 - x2 + maxX - minX + 1;
 				}
 			}
+		} else {
+			if (dx > 0) {
+				if (x1 <= x2) {
+					return x2 - x1;
+				} else {
+					return Integer.MAX_VALUE;
+				}
+			} else {
+				if (x1 >= x2) {
+					return x1 - x2;
+				} else {
+					return Integer.MAX_VALUE;
+				}
+			}
+		}
+	}
+
+	private int distanceY(int y1, int y2, int dy) {
+		if (cycle) {
+			if (y1 < minY)
+				y1 = maxY;
+			if (y1 > maxY)
+				y1 = minY;
+			if (dy > 0) {
+				if (y1 <= y2) {
+					return y2 - y1;
+				} else {
+					return y2 - y1 + maxY - minY + 1;
+				}
+			} else {
+				if (y1 >= y2) {
+					return y1 - y2;
+				} else {
+					return y1 - y2 + maxY - minY + 1;
+				}
+			}
+		} else {
+			if (dy > 0) {
+				if (y1 <= y2) {
+					return y2 - y1;
+				} else {
+					return Integer.MAX_VALUE;
+				}
+			} else {
+				if (y1 >= y2) {
+					return y1 - y2;
+				} else {
+					return Integer.MAX_VALUE;
+				}
+			}
+		}
+	}
+
+	@Override
+	public boolean keyDown(int keycode) {
+		if (!enabled || !active)
+			return false;
+		if (Util.matchKey(keycode, Config.keyUp)) {
+			select(x, y - 1, 0, -1);
+			return true;
+		} else if (Util.matchKey(keycode, Config.keyDown)) {
+			select(x, y + 1, 0, 1);
+			return true;
+		} else if (Util.matchKey(keycode, Config.keyLeft)) {
+			select(x - 1, y, -1, 0);
+			return true;
+		} else if (Util.matchKey(keycode, Config.keyRight)) {
+			select(x + 1, y, 1, 0);
+			return true;
+		} else if (Util.matchKey(keycode, Config.keySelect)) {
+			for (GridComponent button : grid) {
+				if (button.isActive()) {
+					button.trigger();
+				}
+			}
+			return true;
 		}
 		return false;
 	}
@@ -161,15 +272,62 @@ public class Grid extends Group implements InputProcessor {
 		return false;
 	}
 
-	public void enable() {
+	@Override
+	public Grid enable() {
 		enabled = true;
+		return this;
 	}
 
-	public void disable() {
+	@Override
+	public Grid disable() {
 		enabled = false;
+		return this;
 	}
 
+	@Override
 	public boolean isEnabled() {
 		return enabled;
+	}
+
+	@Override
+	public Grid activate() {
+		active = true;
+		return this;
+	}
+
+	@Override
+	public Grid deactivate() {
+		active = false;
+		return this;
+	}
+
+	@Override
+	public boolean isActive() {
+		return active;
+	}
+
+	@Override
+	public void update() {
+		for (GridComponent button : grid) {
+			button.update();
+		}
+	}
+
+	@Override
+	public int getGridX() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getGridY() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void trigger() {
+		// TODO Auto-generated method stub
+
 	}
 }

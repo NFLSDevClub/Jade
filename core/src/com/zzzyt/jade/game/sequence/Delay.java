@@ -29,4 +29,9 @@ public class Delay implements Sequence {
 		}
 	}
 
+	@Override
+	public void init() {
+		
+	}
+
 }

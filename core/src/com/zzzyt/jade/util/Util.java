@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Json;
 import com.zzzyt.jade.Config;
 
-public class U {
+public class Util {
 
 	public static final Json json = new Json();
 
