@@ -1,4 +1,4 @@
-package com.zzzyt.jade.util.shot;
+package com.zzzyt.jade.game.shot;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetLoaderParameters;

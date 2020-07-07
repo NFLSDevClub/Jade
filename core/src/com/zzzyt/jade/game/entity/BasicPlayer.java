@@ -1,4 +1,4 @@
-package com.zzzyt.jade.entity;
+package com.zzzyt.jade.game.entity;
 
 import com.zzzyt.jade.Config;
 import com.zzzyt.jade.util.M;

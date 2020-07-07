@@ -14,8 +14,8 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
 import com.zzzyt.jade.Config;
+import com.zzzyt.jade.game.shot.ShotSheet;
 import com.zzzyt.jade.util.A;
-import com.zzzyt.jade.util.shot.ShotSheet;
 
 public class BackgroundLoader extends Thread {
 

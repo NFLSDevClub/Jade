@@ -1,4 +1,4 @@
-package com.zzzyt.jade.util.shot;
+package com.zzzyt.jade.game.shot;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

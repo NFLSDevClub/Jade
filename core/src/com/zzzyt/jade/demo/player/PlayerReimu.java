@@ -1,6 +1,6 @@
 package com.zzzyt.jade.demo.player;
 
-import com.zzzyt.jade.entity.BasicPlayer;
+import com.zzzyt.jade.game.entity.BasicPlayer;
 import com.zzzyt.jade.util.A;
 
 public class PlayerReimu extends BasicPlayer {

@@ -1,7 +1,7 @@
-package com.zzzyt.jade.util.shot;
+package com.zzzyt.jade.game.shot;
 
 import com.badlogic.gdx.graphics.Color;
-import com.zzzyt.jade.util.shot.RawShotSheet.RawBulletData;
+import com.zzzyt.jade.game.shot.RawShotSheet.RawBulletData;
 
 public class BulletData {
 	public int id;

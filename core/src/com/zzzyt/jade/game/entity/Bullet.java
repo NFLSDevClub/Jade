@@ -1,4 +1,4 @@
-package com.zzzyt.jade.entity;
+package com.zzzyt.jade.game.entity;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -7,10 +7,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.zzzyt.jade.game.operator.Operator;
+import com.zzzyt.jade.game.shot.BulletTexture;
 import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.util.M;
 import com.zzzyt.jade.util.U;
-import com.zzzyt.jade.util.shot.BulletTexture;
 
 public class Bullet implements Entity {
 

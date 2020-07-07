@@ -2,9 +2,9 @@ package com.zzzyt.jade.util;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
-import com.zzzyt.jade.entity.Bullet;
-import com.zzzyt.jade.entity.Player;
 import com.zzzyt.jade.game.Jade;
+import com.zzzyt.jade.game.entity.Bullet;
+import com.zzzyt.jade.game.entity.Player;
 import com.zzzyt.jade.game.operator.Operator;
 
 public class J {

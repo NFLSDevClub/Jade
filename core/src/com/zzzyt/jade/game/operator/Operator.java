@@ -1,6 +1,6 @@
 package com.zzzyt.jade.game.operator;
 
-import com.zzzyt.jade.entity.Bullet;
+import com.zzzyt.jade.game.entity.Bullet;
 
 public interface Operator {
 	

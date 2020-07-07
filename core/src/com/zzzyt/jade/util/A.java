@@ -20,8 +20,8 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.zzzyt.jade.Config;
-import com.zzzyt.jade.util.shot.ShotSheet;
-import com.zzzyt.jade.util.shot.ShotSheetLoader;
+import com.zzzyt.jade.game.shot.ShotSheet;
+import com.zzzyt.jade.game.shot.ShotSheetLoader;
 
 public class A {
 

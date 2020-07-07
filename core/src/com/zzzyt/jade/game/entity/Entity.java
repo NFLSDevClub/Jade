@@ -1,4 +1,4 @@
-package com.zzzyt.jade.entity;
+package com.zzzyt.jade.game.entity;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 
