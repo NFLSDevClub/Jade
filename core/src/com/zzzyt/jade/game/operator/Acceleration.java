@@ -2,12 +2,12 @@ package com.zzzyt.jade.game.operator;
 
 import com.zzzyt.jade.game.entity.Bullet;
 
-public class AccelerationOperator implements Operator {
+public class Acceleration implements Operator {
 
 	private int tag;
 	private float acceleration, target;
 
-	public AccelerationOperator(int tag, float acceleration, int target) {
+	public Acceleration(int tag, float acceleration, int target) {
 		this.tag = tag;
 		this.acceleration = acceleration;
 		this.target = target;

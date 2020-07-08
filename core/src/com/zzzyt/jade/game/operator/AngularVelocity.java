@@ -2,12 +2,12 @@ package com.zzzyt.jade.game.operator;
 
 import com.zzzyt.jade.game.entity.Bullet;
 
-public class AngularVelocityOperator implements Operator {
+public class AngularVelocity implements Operator {
 
 	private int tag;
 	private float delta, duration;
 
-	public AngularVelocityOperator(int tag, float delta, int duration) {
+	public AngularVelocity(int tag, float delta, int duration) {
 		this.tag = tag;
 		this.delta = delta;
 		this.duration = duration;

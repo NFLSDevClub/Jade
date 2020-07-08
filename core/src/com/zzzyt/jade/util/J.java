@@ -3,6 +3,7 @@ package com.zzzyt.jade.util;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
 import com.zzzyt.jade.game.Jade;
+import com.zzzyt.jade.game.Task;
 import com.zzzyt.jade.game.entity.Bullet;
 import com.zzzyt.jade.game.entity.Player;
 import com.zzzyt.jade.game.operator.Operator;
@@ -40,11 +41,11 @@ public class J {
 		return Jade.session.getBullets();
 	}
 
-	public static Operator addOperator(Operator operator) {
+	public static Jade addOperator(Operator operator) {
 		return Jade.session.addOperator(operator);
 	}
 
-	public static Operator removeOperator(Operator operator) {
+	public static Jade removeOperator(Operator operator) {
 		return Jade.session.removeOperator(operator);
 	}
 
@@ -60,15 +61,33 @@ public class J {
 		Jade.session.operators.clear();
 	}
 
+	public static Jade addTask(Task Task) {
+		return Jade.session.addTask(Task);
+	}
+
+	public static Jade removeTask(Task task) {
+		return Jade.session.removeTask(task);
+	}
+
+	public static Array<Task> getTasks() {
+		return Jade.session.getTasks();
+	}
+
+	public static void clearTasks() {
+		Task tmp = Jade.session.getTask(0);
+		Jade.session.getTasks().clear();
+		Jade.session.addTask(tmp);
+	}
+
 	public static int frame() {
 		return Jade.session.frame();
 	}
 
-	public static Bullet add(Bullet bullet) {
+	public static Jade add(Bullet bullet) {
 		return Jade.session.add(bullet);
 	}
 
-	public static Bullet remove(Bullet bullet) {
+	public static Jade remove(Bullet bullet) {
 		return Jade.session.remove(bullet);
 	}
 
@@ -95,17 +114,21 @@ public class J {
 	public static boolean isGameModeRegular() {
 		return "regular".equals(Global.get("_gameMode"));
 	}
-	
+
 	public static boolean isGameModeExtra() {
 		return "extra".equals(Global.get("_gameMode"));
 	}
-	
+
 	public static boolean isGameModeSpellPractice() {
 		return "spellPractice".equals(Global.get("_gameMode"));
 	}
-	
+
 	public static boolean isGameModeStagePractice() {
 		return "stagePractice".equals(Global.get("_gameMode"));
+	}
+
+	public static boolean isGameModeReplay() {
+		return "replay".equals(Global.get("_gameMode"));
 	}
 
 	public static int difficulty() {
@@ -128,7 +151,23 @@ public class J {
 		}
 	}
 
-	public static float diffSelectFloat(float easy, float normal, float hard, float lunatic) {
+	public static int diffSelect(int difficulty, int easy, int normal, int hard, int lunatic) {
+		switch (difficulty) {
+		case EASY:
+			return easy;
+		case NORMAL:
+			return normal;
+		case HARD:
+			return hard;
+		case LUNATIC:
+			return lunatic;
+		default:
+			getLogger().error("diffSelect: difficulty id \"" + difficulty() + "\" doesn't exist");
+			return -1;
+		}
+	}
+
+	public static float diffSelect(float easy, float normal, float hard, float lunatic) {
 		switch (difficulty()) {
 		case EASY:
 			return easy;
@@ -141,6 +180,54 @@ public class J {
 		default:
 			getLogger().error("diffSelect: difficulty id \"" + difficulty() + "\" doesn't exist");
 			return -1;
+		}
+	}
+
+	public static float diffSelect(int difficulty, float easy, float normal, float hard, float lunatic) {
+		switch (difficulty) {
+		case EASY:
+			return easy;
+		case NORMAL:
+			return normal;
+		case HARD:
+			return hard;
+		case LUNATIC:
+			return lunatic;
+		default:
+			getLogger().error("diffSelect: difficulty id \"" + difficulty() + "\" doesn't exist");
+			return -1;
+		}
+	}
+
+	public static <T> T diffSelect(T easy, T normal, T hard, T lunatic) {
+		switch (difficulty()) {
+		case EASY:
+			return easy;
+		case NORMAL:
+			return normal;
+		case HARD:
+			return hard;
+		case LUNATIC:
+			return lunatic;
+		default:
+			getLogger().error("diffSelect: difficulty id \"" + difficulty() + "\" doesn't exist");
+			return null;
+		}
+	}
+
+	public static <T> T diffSelect(int difficulty, T easy, T normal, T hard, T lunatic) {
+		switch (difficulty) {
+		case EASY:
+			return easy;
+		case NORMAL:
+			return normal;
+		case HARD:
+			return hard;
+		case LUNATIC:
+			return lunatic;
+		default:
+			getLogger().error("diffSelect: difficulty id \"" + difficulty() + "\" doesn't exist");
+			return null;
 		}
 	}
 }

@@ -52,7 +52,7 @@ public class StartScreen extends BasicScreen {
 		grid.add(new GridLabel("Spell Practice", 24, 400, 200, 200, 30, 0, 4, () -> {
 			Global.put("_gameMode","spellPractice");
 			Game.switchScreen("difficultySelect", 0.5f);
-		}));
+		})).disable();
 		grid.add(new GridLabel("Replay", 24, 390, 170, 200, 30, 0, 5, () -> {
 			
 		})).disable();

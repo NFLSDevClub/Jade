@@ -88,7 +88,7 @@ public class Bullet implements Entity, Poolable {
 		texture = null;
 		radius = -1;
 	}
-	
+
 	public float getBoundingRadius() {
 		return boundingRadius;
 	}
@@ -178,9 +178,11 @@ public class Bullet implements Entity, Poolable {
 		Array<Operator> tmp = J.getOperators(tag);
 		if (tmp != null) {
 			for (int i = 0; i < tmp.size; i++) {
-				tmp.get(i).apply(this, t);
-				if (id == -1)
-					return;
+				if (tmp.get(i) != null) {
+					tmp.get(i).apply(this, t);
+					if (id == -1)
+						return;
+				}
 			}
 			if (id == -1)
 				return;

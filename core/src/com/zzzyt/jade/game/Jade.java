@@ -30,7 +30,7 @@ public class Jade implements Disposable {
 	private transient OrthographicCamera cam;
 	private transient Logger logger;
 
-	public Difficulty difficulty;
+	public Array<Task> tasks;
 
 	public ObjectMap<Integer, Array<Operator>> operators;
 	public Array<Bullet> bullets;
@@ -62,6 +62,7 @@ public class Jade implements Disposable {
 		this.operators = new ObjectMap<Integer, Array<Operator>>();
 		this.bullets = new Array<Bullet>(false, 1024);
 		this.candidates = new Array<Bullet>(false, 256);
+		this.tasks = new Array<Task>(true, 16);
 
 		if (Jade.session != null) {
 			logger.error("[WARN] There's another existing Jade session!");
@@ -104,12 +105,21 @@ public class Jade implements Disposable {
 			Game.switchScreen("start");
 			return;
 		}
-		if (difficulty.isFinished()) {
+		if (tasks.size == 0) {
 			terminate();
 			Game.switchScreen("start");
 			return;
 		}
-		difficulty.update(frame);
+		for (int i = 0; i < tasks.size; i++) {
+			if (tasks.get(i) != null) {
+				tasks.get(i).update(frame);
+				if (tasks.get(i).isFinished()) {
+					tasks.set(i, null);
+				}
+			}
+		}
+		Util.cleanupArray(tasks);
+
 		for (int i = 0; i < bullets.size; i++) {
 			if (bullets.get(i) != null) {
 				bullets.get(i).update(frame);
@@ -118,7 +128,12 @@ public class Jade implements Disposable {
 
 		if ((bulletCount <= Config.cleanupBulletCount && blankCount >= Config.cleanupBlankCount)
 				|| (bullets.size >= 1048576)) {
-			clanupBulletArray();
+			logger.info("Cleaning up blanks in bullet array: bulletCount=" + bulletCount + " blankCount=" + blankCount);
+			Util.cleanupArray(bullets);
+			for (int i = 0; i < bullets.size; i++) {
+				bullets.get(i).id = i;
+			}
+			blankCount = 0;
 		}
 
 		candidateCount = 0;
@@ -143,24 +158,24 @@ public class Jade implements Disposable {
 		return fboRegion;
 	}
 
-	public Bullet add(Bullet bullet) {
+	public Jade add(Bullet bullet) {
 		bulletCount++;
 		bullet.id = bullets.size;
 		bullets.add(bullet);
-		return bullet;
+		return this;
 	}
 
-	public Bullet remove(Bullet bullet) {
+	public Jade remove(Bullet bullet) {
 		if (bullet.id != bullets.size - 1)
 			blankCount++;
 		bulletCount--;
 		bullets.set(bullet.id, null);
 		bullet.id = -1;
 		B.freeBullet(bullet);
-		return bullet;
+		return this;
 	}
 
-	public Operator addOperator(Operator operator) {
+	public Jade addOperator(Operator operator) {
 		int tag = operator.getTag();
 		Array<Operator> tmp = operators.get(tag);
 		if (tmp == null) {
@@ -170,33 +185,19 @@ public class Jade implements Disposable {
 		} else {
 			tmp.add(operator);
 		}
-		return operator;
+		return this;
 	}
 
-	public Operator removeOperator(Operator operator) {
+	public Jade removeOperator(Operator operator) {
 		Array<Operator> tmp = operators.get(operator.getTag());
 		if (tmp != null) {
 			tmp.removeValue(operator, true);
 		}
-		return operator;
+		return this;
 	}
 
 	public Array<Operator> getOperators(int tag) {
 		return operators.get(tag);
-	}
-
-	private void clanupBulletArray() {
-		logger.info("Cleaning up blanks in bullet array: bulletCount=" + bulletCount + " blankCount=" + blankCount);
-		int j = 0;
-		for (int i = 0; i < bullets.size; i++) {
-			if (bullets.get(i) != null) {
-				bullets.set(j, bullets.get(i));
-				bullets.get(j).id = j;
-				j++;
-			}
-		}
-		bullets.truncate(j);
-		blankCount = 0;
 	}
 
 	public void terminate() {
@@ -219,13 +220,23 @@ public class Jade implements Disposable {
 		return frame;
 	}
 
-	public Jade setDifficulty(Difficulty difficulty) {
-		this.difficulty = difficulty;
+	public Jade addTask(Task task) {
+		tasks.add(task);
 		return this;
 	}
 
-	public Difficulty getDifficulty() {
-		return difficulty;
+	public Jade removeTask(Task task) {
+		int index = tasks.indexOf(task, true);
+		tasks.set(index, null);
+		return this;
+	}
+
+	public Array<Task> getTasks() {
+		return tasks;
+	}
+
+	public Task getTask(int index) {
+		return tasks.get(index);
 	}
 
 	public Jade setPlayer(Player player) {

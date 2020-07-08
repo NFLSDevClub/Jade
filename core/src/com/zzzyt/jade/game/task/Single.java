@@ -1,26 +1,34 @@
-package com.zzzyt.jade.game.sequence;
+package com.zzzyt.jade.game.task;
 
-import com.zzzyt.jade.game.Sequence;
+import com.zzzyt.jade.game.Task;
 
-public class Single implements Sequence {
+public class Single implements Task {
 
 	private Updateable updateFunc;
 	private boolean finished;
 	private int firstFrame;
+	private int delay;
 
 	public Single() {
-		this.finished = false;
-		this.firstFrame = -1;
+
 	}
 
 	public Single(Updateable updateFunc) {
+		this(0, updateFunc);
+	}
+
+	public Single(int delay, Updateable updateFunc) {
 		this.updateFunc = updateFunc;
-		this.finished = false;
-		this.firstFrame = -1;
+		this.delay = delay;
 	}
 
 	public void terminate() {
 		this.finished = true;
+	}
+
+	public Single setDelay(int delay) {
+		this.delay = delay;
+		return this;
 	}
 
 	public Single setUpdateFunc(Updateable updateFunc) {
@@ -38,7 +46,10 @@ public class Single implements Sequence {
 		if (firstFrame == -1) {
 			firstFrame = frame;
 		}
-		updateFunc.update(frame - firstFrame);
+		if (frame - firstFrame >= delay) {
+			updateFunc.update(frame - firstFrame - delay);
+		}
+
 	}
 
 	@FunctionalInterface
@@ -48,6 +59,7 @@ public class Single implements Sequence {
 
 	@Override
 	public void init() {
-		
+		this.finished = false;
+		this.firstFrame = -1;
 	}
 }

@@ -23,10 +23,12 @@ public class Config {
 	public static float deleteDistance = 64;
 	public static float safeDistance = 16;
 	public static CollisionMode collisionMode = CollisionMode.circleCircleOrtho;
-	public static boolean invulnerable = false;
+	public static boolean invulnerable = true;
 	public static int cleanupBulletCount = 8192;
 	public static int cleanupBlankCount = 512;
 	public static String defaultShotSheet = "default_shot.shot";
+	public static boolean allowSpeedUpOutOfReplay = true;
+	public static int speedUpMultiplier = 4;
 
 	public static int[] keyDown = { Keys.DOWN };
 	public static int[] keyUp = { Keys.UP };

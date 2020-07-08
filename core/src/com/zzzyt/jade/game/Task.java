@@ -1,6 +1,6 @@
 package com.zzzyt.jade.game;
 
-public interface Sequence {
+public interface Task {
 
 	public boolean isFinished();
 

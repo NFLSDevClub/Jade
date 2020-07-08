@@ -1,9 +1,9 @@
-package com.zzzyt.jade.game.sequence;
+package com.zzzyt.jade.game.task;
 
-import com.zzzyt.jade.game.Sequence;
+import com.zzzyt.jade.game.Task;
 import com.zzzyt.jade.util.BGM;
 
-public class SwitchBGM implements Sequence {
+public class SwitchBGM implements Task {
 
 	private String bgmName;
 

@@ -1,10 +1,10 @@
-package com.zzzyt.jade.game.sequence;
+package com.zzzyt.jade.game.task;
 
-import com.zzzyt.jade.game.Sequence;
+import com.zzzyt.jade.game.Task;
 import com.zzzyt.jade.game.operator.Operator;
 import com.zzzyt.jade.util.J;
 
-public class AddOperator implements Sequence {
+public class AddOperator implements Task {
 
 	public Operator operator;
 

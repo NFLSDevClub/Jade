@@ -1,6 +1,6 @@
 package com.zzzyt.jade.demo.stage1;
 
-import com.zzzyt.jade.game.sequence.Single;
+import com.zzzyt.jade.game.task.Single;
 import com.zzzyt.jade.util.B;
 import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.util.M;
@@ -11,6 +11,7 @@ public class Stage1Mid2 extends Single {
 
 	@Override
 	public void init() {
+		super.init();
 		setUpdateFunc((frame) -> {
 			if (frame >= 36 * 60) {
 				terminate();

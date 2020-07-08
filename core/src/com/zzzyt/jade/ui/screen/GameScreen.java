@@ -10,6 +10,7 @@ import com.zzzyt.jade.demo.player.PlayerReimu;
 import com.zzzyt.jade.game.Jade;
 import com.zzzyt.jade.ui.widget.GameFrame;
 import com.zzzyt.jade.util.Global;
+import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.util.Game;
 
 public class GameScreen extends BasicScreen {
@@ -41,19 +42,21 @@ public class GameScreen extends BasicScreen {
 		frame.setJade(jade);
 
 		if ("regular".equals(Global.get("_gameMode"))) {
-			jade.setDifficulty(new DifficultyRegular((int) Global.get("_difficulty")));
+			jade.addTask(new DifficultyRegular((int) Global.get("_difficulty")));
 		} else if ("extra".equals(Global.get("_gameMode"))) {
-			jade.setDifficulty(new DifficultyExtra());
+			jade.addTask(new DifficultyExtra());
 		}
 
-		jade.getDifficulty().init();
+		jade.getTask(0).init();
 	}
 
 	@Override
 	public void render(float delta) {
-		if (Gdx.input.isKeyPressed(Keys.CONTROL_LEFT)) {
-			jade.update();
-			jade.postRender();
+		if (Gdx.input.isKeyPressed(Keys.CONTROL_LEFT) && (!J.isGameModeReplay() || Config.allowSpeedUpOutOfReplay)) {
+			for (int i = 0; i < Config.speedUpMultiplier - 1; i++) {
+				jade.update();
+				jade.postRender();
+			}
 		}
 		jade.update();
 		jade.draw();

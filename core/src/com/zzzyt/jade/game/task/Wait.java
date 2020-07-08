@@ -1,17 +1,15 @@
-package com.zzzyt.jade.game.sequence;
+package com.zzzyt.jade.game.task;
 
-import com.zzzyt.jade.game.Sequence;
+import com.zzzyt.jade.game.Task;
 
-public class Delay implements Sequence {
+public class Wait implements Task {
 
 	private int frameCount;
 	private int firstFrame;
 	private boolean finished;
 
-	public Delay(int frameCount) {
+	public Wait(int frameCount) {
 		this.frameCount = frameCount;
-		this.finished = false;
-		this.firstFrame = -1;
 	}
 
 	@Override
@@ -31,7 +29,8 @@ public class Delay implements Sequence {
 
 	@Override
 	public void init() {
-		
+		this.finished = false;
+		this.firstFrame = -1;
 	}
 
 }

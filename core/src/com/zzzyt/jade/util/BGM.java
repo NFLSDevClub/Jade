@@ -13,17 +13,17 @@ public class BGM {
 	private static Logger logger = new Logger("BGM", Config.logLevel);
 
 	public static void play(String name) {
-		BackgroundMusic bgm = BGM.bgm;
 		if (name == null) {
 			stop();
+			BGM.bgm = null;
 			return;
 		}
 		if ("".equals(name)) {
 			logger.debug("Keep original BGM.");
 			return;
 		}
-		if (bgm != null) {
-			if (bgm.getName().equals(name)) {
+		if (BGM.bgm != null) {
+			if (BGM.bgm.getName().equals(name)) {
 				logger.debug("Same BGM as before. No changing.");
 				return;
 			}

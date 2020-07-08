@@ -5,6 +5,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.zzzyt.jade.Config;
 
@@ -84,5 +85,16 @@ public class Util {
 
 	public static Rectangle getWorldRectangle() {
 		return new Rectangle(-Config.originX, -Config.originY, Config.w, Config.h);
+	}
+	
+	public static <T> void cleanupArray(Array<T> array) {
+		int j = 0;
+		for (int i = 0; i < array.size; i++) {
+			if (array.get(i) != null) {
+				array.set(j, array.get(i));
+				j++;
+			}
+		}
+		array.truncate(j);
 	}
 }

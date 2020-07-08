@@ -1,7 +1,7 @@
 package com.zzzyt.jade.demo.stage_extra;
 
-import com.zzzyt.jade.game.operator.AngularVelocityOperator;
-import com.zzzyt.jade.game.sequence.Single;
+import com.zzzyt.jade.game.operator.AngularVelocity;
+import com.zzzyt.jade.game.task.Single;
 import com.zzzyt.jade.util.B;
 import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.util.M;
@@ -12,6 +12,7 @@ public class StageExtraMid1 extends Single {
 
 	@Override
 	public void init() {
+		super.init();
 		setUpdateFunc((frame) -> {
 			if (frame >= 15 * 60) {
 				J.clearOperators();
@@ -19,7 +20,7 @@ public class StageExtraMid1 extends Single {
 				return;
 			}
 			if (frame == 8 * 60) {
-				J.addOperator(new AngularVelocityOperator(0, 0.5f, 180));
+				J.addOperator(new AngularVelocity(0, 0.5f, 180));
 			}
 			if (frame % 3 == 0) {
 				for (int i = 0; i < 7; i++) {
