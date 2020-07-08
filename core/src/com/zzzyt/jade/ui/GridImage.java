@@ -1,4 +1,4 @@
-package com.zzzyt.jade.ui.widget;
+package com.zzzyt.jade.ui;
 
 import java.util.concurrent.Callable;
 
@@ -8,10 +8,10 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.zzzyt.jade.ui.GridComponent;
 
 public class GridImage extends Image implements GridComponent {
 
+	protected Grid parent;
 	protected float staticX, staticY;
 	protected int gridX, gridY;
 	protected Runnable runnable;
@@ -142,6 +142,17 @@ public class GridImage extends Image implements GridComponent {
 	@Override
 	public boolean isEnabled() {
 		return enabled;
+	}
+
+	@Override
+	public GridImage setParent(Grid parent) {
+		this.parent = parent;
+		return this;
+	}
+
+	@Override
+	public Grid getPartent() {
+		return parent;
 	}
 
 }

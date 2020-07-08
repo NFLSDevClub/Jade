@@ -1,4 +1,4 @@
-package com.zzzyt.jade.ui.widget;
+package com.zzzyt.jade.ui;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -13,13 +13,14 @@ public class FPSDisplay extends Actor {
 
 	public FPSDisplay() {
 		this.font = A.get("font/debug.fnt");
-		setPosition(Config.windowWidth - 72, 15);
+		setBounds(Config.windowWidth - 72, 0, 72, 15);
 	}
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		if (Game.game.fpsCounter.hasEnoughData()) {
-			font.draw(batch, String.format("%.2f fps", 1 / Game.game.fpsCounter.getMean()), getX(), getY());
+			font.draw(batch, String.format("%.2f fps", 1 / Game.game.fpsCounter.getMean()), getX(),
+					getY() + getHeight());
 		} else {
 			font.draw(batch, "----- fps", getX(), getY());
 		}

@@ -2,8 +2,10 @@ package com.zzzyt.jade.ui;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.zzzyt.jade.Config;
@@ -15,11 +17,25 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 	public int x, y;
 	public boolean cycle;
 
-	private int minX, minY, maxX, maxY;
-	private boolean enabled, active;
+	protected Grid parent;
+	protected Runnable onTrigger;
+	protected Callable<? extends Action> activeAction, inactiveAction;
+	protected int gridX, gridY;
+	protected int minX, minY, maxX, maxY;
+	protected boolean enabled, active;
 
 	public Grid(boolean cycle) {
+		this(0, 0, cycle, null, null, null);
+	}
+
+	public Grid(int gridX, int gridY, boolean cycle, Runnable onTrigger, Callable<? extends Action> activeAction,
+			Callable<? extends Action> inactiveAction) {
 		this.cycle = cycle;
+		this.gridX = gridX;
+		this.gridY = gridY;
+		this.onTrigger = onTrigger;
+		this.activeAction = activeAction;
+		this.inactiveAction = inactiveAction;
 		grid = new ArrayList<GridComponent>();
 		this.x = 0;
 		this.y = 0;
@@ -33,6 +49,7 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 
 	public GridComponent add(GridComponent component) {
 		grid.add(component);
+		component.setParent(this);
 		minX = Math.min(minX, component.getGridX());
 		minY = Math.min(minY, component.getGridY());
 		maxX = Math.max(maxX, component.getGridX());
@@ -216,23 +233,18 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 			return false;
 		if (Util.matchKey(keycode, Config.keyUp)) {
 			select(x, y - 1, 0, -1);
-			return true;
 		} else if (Util.matchKey(keycode, Config.keyDown)) {
 			select(x, y + 1, 0, 1);
-			return true;
 		} else if (Util.matchKey(keycode, Config.keyLeft)) {
 			select(x - 1, y, -1, 0);
-			return true;
 		} else if (Util.matchKey(keycode, Config.keyRight)) {
 			select(x + 1, y, 1, 0);
-			return true;
 		} else if (Util.matchKey(keycode, Config.keySelect)) {
 			for (GridComponent button : grid) {
 				if (button.isActive()) {
 					button.trigger();
 				}
 			}
-			return true;
 		}
 		return false;
 	}
@@ -275,12 +287,14 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 	@Override
 	public Grid enable() {
 		enabled = true;
+		update();
 		return this;
 	}
 
 	@Override
 	public Grid disable() {
 		enabled = false;
+		update();
 		return this;
 	}
 
@@ -292,12 +306,14 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 	@Override
 	public Grid activate() {
 		active = true;
+		update();
 		return this;
 	}
 
 	@Override
 	public Grid deactivate() {
 		active = false;
+		update();
 		return this;
 	}
 
@@ -311,23 +327,57 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 		for (GridComponent button : grid) {
 			button.update();
 		}
+		if (enabled && active) {
+			clearActions();
+			if (activeAction != null) {
+				try {
+					addAction(activeAction.call());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		} else {
+			clearActions();
+			if (inactiveAction != null) {
+				try {
+					addAction(inactiveAction.call());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	@Override
 	public int getGridX() {
-		// TODO Auto-generated method stub
-		return 0;
+		return gridX;
 	}
 
 	@Override
 	public int getGridY() {
-		// TODO Auto-generated method stub
-		return 0;
+		return gridY;
 	}
 
 	@Override
 	public void trigger() {
-		// TODO Auto-generated method stub
+		if(enabled) {
+			if (parent != null) {
+				parent.disable();
+			}
+			if (onTrigger != null) {
+				onTrigger.run();
+			}			
+		}
+	}
 
+	@Override
+	public Grid setParent(Grid parent) {
+		this.parent = parent;
+		return this;
+	}
+
+	@Override
+	public Grid getPartent() {
+		return parent;
 	}
 }

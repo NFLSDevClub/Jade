@@ -1,4 +1,4 @@
-package com.zzzyt.jade.ui.widget;
+package com.zzzyt.jade.ui;
 
 import java.util.concurrent.Callable;
 
@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.zzzyt.jade.Config;
-import com.zzzyt.jade.ui.GridComponent;
 import com.zzzyt.jade.util.A;
 
 public class GridLabel extends Label implements GridComponent {
@@ -16,6 +15,7 @@ public class GridLabel extends Label implements GridComponent {
 	public Runnable runnable;
 	public boolean active, enabled;
 
+	protected Grid parent;
 	protected int gridX, gridY;
 	protected float staticX, staticY;
 	protected LabelStyle activeStyle, inactiveStyle;
@@ -28,15 +28,15 @@ public class GridLabel extends Label implements GridComponent {
 
 	public GridLabel(CharSequence text, int fontSize, float x, float y, float width, float height, int gridX, int gridY,
 			Runnable runnable) {
-		super(text, new LabelStyle(A.getFont(Config.UIFont, 24, 2, Color.BLACK), Config.UIFontColor));
+		super(text, new LabelStyle(A.getFont(Config.UIFont, fontSize, 2, Color.BLACK), Config.UIFontColor));
 		this.staticX = x;
 		this.staticY = y;
 		this.gridX = gridX;
 		this.gridY = gridY;
 		this.runnable = runnable;
 		this.active = false;
-		this.activeStyle = new LabelStyle(A.getFont(Config.UIFont, 24, 2, Color.BLACK), Config.UIFontColor);
-		this.inactiveStyle = new LabelStyle(A.getFont(Config.UIFont, 24, 2, Color.BLACK), Config.UIFontColor);
+		this.activeStyle = new LabelStyle(A.getFont(Config.UIFont, fontSize, 2, Color.BLACK), Config.UIFontColor);
+		this.inactiveStyle = new LabelStyle(A.getFont(Config.UIFont, fontSize, 2, Color.BLACK), Config.UIFontColor);
 		this.activeAction = () -> Actions.parallel(
 				Actions.forever(Actions.sequence(Actions.alpha(0.6f, 0.1f, Interpolation.fade),
 						Actions.alpha(1f, 0.1f, Interpolation.fade))),
@@ -51,7 +51,7 @@ public class GridLabel extends Label implements GridComponent {
 	public GridLabel(CharSequence text, int fontSize, float x, float y, float width, float height, int gridX, int gridY,
 			Callable<? extends Action> activeAction, Callable<? extends Action> inactiveAction, LabelStyle activeStyle,
 			LabelStyle inactiveStyle, Runnable runnable) {
-		super(text, new LabelStyle(A.getFont(Config.UIFont, 24, 2, Color.BLACK), Config.UIFontColor));
+		super(text, new LabelStyle(A.getFont(Config.UIFont, fontSize, 2, Color.BLACK), Config.UIFontColor));
 		this.staticX = x;
 		this.staticY = y;
 		this.gridX = gridX;
@@ -180,6 +180,17 @@ public class GridLabel extends Label implements GridComponent {
 	@Override
 	public boolean isEnabled() {
 		return enabled;
+	}
+
+	@Override
+	public GridLabel setParent(Grid parent) {
+		this.parent = parent;
+		return this;
+	}
+
+	@Override
+	public Grid getPartent() {
+		return parent;
 	}
 
 }

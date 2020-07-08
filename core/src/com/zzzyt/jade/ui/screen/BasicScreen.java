@@ -9,8 +9,8 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.zzzyt.jade.Config;
-import com.zzzyt.jade.ui.QuitListener;
-import com.zzzyt.jade.ui.widget.FPSDisplay;
+import com.zzzyt.jade.ui.FPSDisplay;
+import com.zzzyt.jade.ui.KeyListener;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.BGM;
 import com.zzzyt.jade.util.Game;
@@ -43,6 +43,7 @@ public class BasicScreen implements FadeableScreen {
 		BGM.play(bgm);
 
 		this.st = new Stage(viewport);
+		st.setDebugAll(Config.debugActorLayout);
 		this.input = new InputMultiplexer();
 
 		this.background = new Image(background);
@@ -53,7 +54,7 @@ public class BasicScreen implements FadeableScreen {
 		st.addActor(fps);
 
 		input.addProcessor(st);
-		input.addProcessor(new QuitListener(() -> {
+		input.addProcessor(new KeyListener(Config.keyCancel, () -> {
 			onQuit();
 		}));
 

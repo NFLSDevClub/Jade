@@ -38,6 +38,14 @@ public class BGM {
 		}
 	}
 
+	public static BackgroundMusic getBGM() {
+		return BGM.bgm;
+	}
+
+	public static BackgroundMusic getBGM(String name) {
+		return BGM.bgms.get(name);
+	}
+
 	public static BackgroundMusic register(BackgroundMusic music) {
 		bgms.put(music.getName(), music);
 		return music;
@@ -66,6 +74,18 @@ public class BGM {
 
 	public static Logger getLogger() {
 		return logger;
+	}
+
+	public static void pause() {
+		if (bgm != null) {
+			bgm.pause();
+		}
+	}
+
+	public static void resume() {
+		if (bgm != null) {
+			bgm.resume();
+		}
 	}
 
 }

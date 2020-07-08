@@ -38,9 +38,10 @@ public class Config {
 	public static int[] keyCancel = { Keys.X, Keys.ESCAPE };
 	public static int[] keySlow = { Keys.SHIFT_LEFT };
 	public static int[] keyBomb = { Keys.X };
-	public static int[] keyCustom1 = { Keys.C };
-	public static int[] keyCustom2 = { Keys.V };
+	public static int[] keyPause = { Keys.ESCAPE };
+	public static int[] keyCustom = { Keys.C };
 
 	public static String UIFont = "font/SongSC.ttf";
 	public static Color UIFontColor = Color.WHITE;
+	public static boolean debugActorLayout = false;
 }

@@ -1,6 +1,10 @@
 package com.zzzyt.jade.ui;
 
 public interface GridComponent {
+	public GridComponent setParent(Grid parent);
+	
+	public Grid getPartent();
+	
 	public GridComponent activate();
 
 	public GridComponent deactivate();

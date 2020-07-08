@@ -5,8 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.zzzyt.jade.Config;
-import com.zzzyt.jade.ui.QuitListener;
-import com.zzzyt.jade.ui.widget.FPSDisplay;
+import com.zzzyt.jade.ui.FPSDisplay;
+import com.zzzyt.jade.ui.KeyListener;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.Global;
 import com.zzzyt.jade.util.Game;
@@ -20,6 +20,7 @@ public class BlankScreen extends BasicScreen {
 	@Override
 	public void show() {
 		this.st = new Stage(viewport);
+		st.setDebugAll(Config.debugActorLayout);
 		this.input = new InputMultiplexer();
 
 		this.background = new Image(A.getTexture("bg/blank.png"));
@@ -31,7 +32,7 @@ public class BlankScreen extends BasicScreen {
 		st.addActor(fps);
 
 		input.addProcessor(st);
-		input.addProcessor(new QuitListener(() -> {
+		input.addProcessor(new KeyListener(Config.keyCancel, () -> {
 			onQuit();
 		}));
 	}

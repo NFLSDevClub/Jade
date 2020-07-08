@@ -62,10 +62,8 @@ public class Plural implements Task {
 				getCurrentTask().update(frame);
 				if (getCurrentTask().isFinished()) {
 					currentTask++;
-					System.out.println(getClass().getName() + ":" + currentTask);
 					if (currentTask >= tasks.size) {
 						loopCounter++;
-						System.out.println(getClass().getName() + ":" + loopCounter);
 						if (loopCounter >= loopCount) {
 							break;
 						}

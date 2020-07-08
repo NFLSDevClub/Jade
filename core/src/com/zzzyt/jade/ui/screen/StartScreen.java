@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.zzzyt.jade.ui.Grid;
-import com.zzzyt.jade.ui.widget.GridLabel;
+import com.zzzyt.jade.ui.GridLabel;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.Global;
 import com.zzzyt.jade.util.Game;
@@ -45,7 +45,7 @@ public class StartScreen extends BasicScreen {
 			Global.put("_gameMode","extra");
 			Game.switchScreen("playerSelect", 0.5f);
 		}));
-		grid.add(new GridLabel("Stage Practice", 24, 410, 230, 2001, 30, 0, 3, () -> {
+		grid.add(new GridLabel("Stage Practice", 24, 410, 230, 200, 30, 0, 3, () -> {
 //			Global.put("_gameMode","stagePractice");
 //			Game.switchScreen("difficultySelect", 0.5f);
 		})).disable();

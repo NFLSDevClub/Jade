@@ -1,19 +1,20 @@
 package com.zzzyt.jade.ui;
 
 import com.badlogic.gdx.InputAdapter;
-import com.zzzyt.jade.Config;
 import com.zzzyt.jade.util.Util;
 
-public class QuitListener extends InputAdapter {
+public class KeyListener extends InputAdapter {
 
 	private Runnable runnable;
+	private int[] keycodes;
 
-	public QuitListener(Runnable runnable) {
+	public KeyListener(int[] keycodes, Runnable runnable) {
 		this.runnable = runnable;
+		this.keycodes = keycodes;
 	}
 
 	public boolean keyDown(int keycode) {
-		if (Util.matchKey(keycode, Config.keyCancel)) {
+		if (Util.matchKey(keycode, keycodes)) {
 			runnable.run();
 		}
 		return false;

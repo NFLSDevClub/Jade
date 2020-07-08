@@ -30,6 +30,10 @@ public class BackgroundMusic {
 		return name;
 	}
 
+	public Music getMusic() {
+		return music;
+	}
+
 	public void stop() {
 		isPlaying = false;
 		music.stop();
@@ -59,6 +63,16 @@ public class BackgroundMusic {
 		load();
 		isPlaying = true;
 		music.setLooping(false);
+		music.play();
+	}
+
+	public void pause() {
+		isPlaying = false;
+		music.pause();
+	}
+
+	public void resume() {
+		isPlaying = true;
 		music.play();
 	}
 

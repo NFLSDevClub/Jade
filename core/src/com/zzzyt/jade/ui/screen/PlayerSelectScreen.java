@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.zzzyt.jade.ui.Grid;
-import com.zzzyt.jade.ui.widget.GridImage;
+import com.zzzyt.jade.ui.GridImage;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.Global;
 import com.zzzyt.jade.util.Game;
