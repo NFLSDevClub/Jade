@@ -6,8 +6,8 @@ import com.zzzyt.jade.ui.Grid;
 import com.zzzyt.jade.ui.GridImage;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.Global;
-import com.zzzyt.jade.util.Game;
 import com.zzzyt.jade.util.J;
+import com.zzzyt.jade.util.U;
 
 public class DifficultySelectScreen extends BasicScreen {
 
@@ -26,19 +26,19 @@ public class DifficultySelectScreen extends BasicScreen {
 
 		((GridImage) grid.add(new GridImage(A.getRegion("diff/easy.png"), 60, 340, 0, 0, () -> {
 			Global.put("_difficulty", J.EASY);
-			Game.switchScreen("playerSelect", 0.5f);
+			U.switchScreen("playerSelect", 0.5f);
 		}))).setScale(0.75f);
 		((GridImage) grid.add(new GridImage(A.getRegion("diff/normal.png"), 60, 240, 0, 1, () -> {
 			Global.put("_difficulty", J.NORMAL);
-			Game.switchScreen("playerSelect", 0.5f);
+			U.switchScreen("playerSelect", 0.5f);
 		}))).setScale(0.75f);
 		((GridImage) grid.add(new GridImage(A.getRegion("diff/hard.png"), 60, 140, 0, 2, () -> {
 			Global.put("_difficulty", J.HARD);
-			Game.switchScreen("playerSelect", 0.5f);
+			U.switchScreen("playerSelect", 0.5f);
 		}))).setScale(0.75f);
 		((GridImage) grid.add(new GridImage(A.getRegion("diff/lunatic.png"), 60, 40, 0, 3, () -> {
 			Global.put("_difficulty", J.LUNATIC);
-			Game.switchScreen("playerSelect", 0.5f);
+			U.switchScreen("playerSelect", 0.5f);
 		}))).setScale(0.75f);
 		grid.activate();
 		if (Global.get("_difficulty") == null) {
@@ -66,7 +66,7 @@ public class DifficultySelectScreen extends BasicScreen {
 
 	@Override
 	protected void onQuit() {
-		Game.switchScreen("start", 0.5f);
+		U.switchScreen("start", 0.5f);
 	}
 
 	@Override

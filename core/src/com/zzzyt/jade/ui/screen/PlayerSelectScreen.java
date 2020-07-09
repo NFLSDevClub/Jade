@@ -7,7 +7,7 @@ import com.zzzyt.jade.ui.Grid;
 import com.zzzyt.jade.ui.GridImage;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.Global;
-import com.zzzyt.jade.util.Game;
+import com.zzzyt.jade.util.U;
 
 public class PlayerSelectScreen extends BasicScreen {
 
@@ -35,7 +35,7 @@ public class PlayerSelectScreen extends BasicScreen {
 					Global.put("_player", "marisa");
 					Global.put("_redirect", "game");
 					Global.put("_redirectDelay", 0.5f);
-					Game.switchScreen("blank", 0.5f);
+					U.switchScreen("blank", 0.5f);
 				}));
 
 		grid.add(new GridImage(A.getRegion("diff/reimu_description.png"), 120, 100, 0, 0,
@@ -49,7 +49,7 @@ public class PlayerSelectScreen extends BasicScreen {
 					Global.put("_player", "reimu");
 					Global.put("_redirect", "game");
 					Global.put("_redirectDelay", 0.5f);
-					Game.switchScreen("blank", 0.5f);
+					U.switchScreen("blank", 0.5f);
 				}));
 		grid.activate();
 		if (Global.get("_player") == null) {
@@ -80,9 +80,9 @@ public class PlayerSelectScreen extends BasicScreen {
 	@Override
 	protected void onQuit() {
 		if ("extra".equals(Global.get("_gameMode"))) {
-			Game.switchScreen("start", 0.5f);
+			U.switchScreen("start", 0.5f);
 		} else {
-			Game.switchScreen("difficultySelect", 0.5f);
+			U.switchScreen("difficultySelect", 0.5f);
 		}
 	}
 

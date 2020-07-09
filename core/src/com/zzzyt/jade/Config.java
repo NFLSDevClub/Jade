@@ -3,45 +3,98 @@ package com.zzzyt.jade;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.Logger;
+import com.badlogic.gdx.utils.Scaling;
 import com.zzzyt.jade.util.Collision.CollisionMode;
 
 public class Config {
 
-	public static int logLevel = Logger.DEBUG;
+	public static Config config;
 
-	public static int fps = 60;
-	public static boolean vsyncEnabled = false;
-	public static int windowWidth = 640;
-	public static int windowHeight = 480;
+	public int logLevel;
 
-	public static int w = 384;
-	public static int h = 448;
-	public static float offsetX = 32;
-	public static float offsetY = 16;
-	public static float originX = w / 2;
-	public static float originY = h;
-	public static float deleteDistance = 64;
-	public static float safeDistance = 16;
-	public static CollisionMode collisionMode = CollisionMode.circleCircleOrtho;
-	public static boolean invulnerable = true;
-	public static int cleanupBulletCount = 8192;
-	public static int cleanupBlankCount = 512;
-	public static String defaultShotSheet = "default_shot.shot";
-	public static boolean allowSpeedUpOutOfReplay = true;
-	public static int speedUpMultiplier = 4;
+	public int fps;
+	public boolean vsyncEnabled;
+	public int windowWidth;
+	public int windowHeight;
+	public boolean allowFullScreen;
+	public boolean allowResize;
+	public Scaling windowScaling;
 
-	public static int[] keyDown = { Keys.DOWN };
-	public static int[] keyUp = { Keys.UP };
-	public static int[] keyLeft = { Keys.LEFT };
-	public static int[] keyRight = { Keys.RIGHT };
-	public static int[] keySelect = { Keys.Z, Keys.ENTER };
-	public static int[] keyCancel = { Keys.X, Keys.ESCAPE };
-	public static int[] keySlow = { Keys.SHIFT_LEFT };
-	public static int[] keyBomb = { Keys.X };
-	public static int[] keyPause = { Keys.ESCAPE };
-	public static int[] keyCustom = { Keys.C };
+	public int w;
+	public int h;
+	public float offsetX;
+	public float offsetY;
+	public float originX;
+	public float originY;
+	public float deleteDistance;
+	public float safeDistance;
+	public CollisionMode collisionMode;
+	public boolean invulnerable;
+	public int cleanupBulletCount;
+	public int cleanupBlankCount;
+	public String defaultShotSheet;
+	public boolean allowSpeedUpOutOfReplay;
+	public int speedUpMultiplier;
 
-	public static String UIFont = "font/SongSC.ttf";
-	public static Color UIFontColor = Color.WHITE;
-	public static boolean debugActorLayout = false;
+	public int[] keyDown;
+	public int[] keyUp;
+	public int[] keyLeft;
+	public int[] keyRight;
+	public int[] keySelect;
+	public int[] keyCancel;
+	public int[] keySlow;
+	public int[] keyBomb;
+	public int[] keyPause;
+	public int[] keyCustom;
+
+	public String UIFont;
+	public Color UIFontColor;
+	public boolean debugActorLayout;
+
+	public Config() {
+
+	}
+
+	public void setDefault() {
+		logLevel = Logger.DEBUG;
+
+		fps = 60;
+		vsyncEnabled = false;
+		windowWidth = 640;
+		windowHeight = 480;
+		allowFullScreen = true;
+		allowResize = true;
+		windowScaling = Scaling.fit;
+
+		w = 384;
+		h = 448;
+		offsetX = 32;
+		offsetY = 16;
+		originX = w / 2;
+		originY = h;
+		deleteDistance = 64;
+		safeDistance = 16;
+		collisionMode = CollisionMode.circleCircleOrtho;
+		invulnerable = false;
+		cleanupBulletCount = 8192;
+		cleanupBlankCount = 512;
+		defaultShotSheet = "default_shot.shot";
+		allowSpeedUpOutOfReplay = true;
+		speedUpMultiplier = 4;
+
+		keyDown = new int[] { Keys.DOWN };
+		keyUp = new int[] { Keys.UP };
+		keyLeft = new int[] { Keys.LEFT };
+		keyRight = new int[] { Keys.RIGHT };
+		keySelect = new int[] { Keys.Z, Keys.ENTER };
+		keyCancel = new int[] { Keys.X, Keys.ESCAPE };
+		keySlow = new int[] { Keys.SHIFT_LEFT };
+		keyBomb = new int[] { Keys.X };
+		keyPause = new int[] { Keys.ESCAPE };
+		keyCustom = new int[] { Keys.C };
+
+		UIFont = "font/SongSC.ttf";
+		UIFontColor = Color.WHITE;
+		debugActorLayout = false;
+	}
 }

@@ -5,15 +5,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.zzzyt.jade.Config;
 import com.zzzyt.jade.ui.FPSDisplay;
 import com.zzzyt.jade.ui.KeyListener;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.BGM;
-import com.zzzyt.jade.util.Game;
+import com.zzzyt.jade.util.U;
 
 public class BasicScreen implements FadeableScreen {
 
@@ -26,7 +24,8 @@ public class BasicScreen implements FadeableScreen {
 	protected ScreenState state;
 
 	public BasicScreen() {
-		this.viewport = new ScalingViewport(Scaling.none, Config.windowWidth, Config.windowHeight);
+		this.viewport = new ScalingViewport(U.getConfig().windowScaling, U.getConfig().windowWidth,
+				U.getConfig().windowHeight);
 		this.state = ScreenState.HIDDEN;
 	}
 
@@ -43,7 +42,7 @@ public class BasicScreen implements FadeableScreen {
 		BGM.play(bgm);
 
 		this.st = new Stage(viewport);
-		st.setDebugAll(Config.debugActorLayout);
+		st.setDebugAll(U.getConfig().debugActorLayout);
 		this.input = new InputMultiplexer();
 
 		this.background = new Image(background);
@@ -54,11 +53,11 @@ public class BasicScreen implements FadeableScreen {
 		st.addActor(fps);
 
 		input.addProcessor(st);
-		input.addProcessor(new KeyListener(Config.keyCancel, () -> {
+		input.addProcessor(new KeyListener(U.getConfig().keyCancel, () -> {
 			onQuit();
 		}));
 
-		Game.addProcessor(input);
+		U.addProcessor(input);
 	}
 
 	protected void onFadeIn(float duration) {
@@ -96,7 +95,7 @@ public class BasicScreen implements FadeableScreen {
 
 	@Override
 	public void hide() {
-		Game.removeProcessor(input);
+		U.removeProcessor(input);
 		state = ScreenState.HIDDEN;
 		if (st != null)
 			st.dispose();

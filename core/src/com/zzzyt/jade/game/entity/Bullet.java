@@ -12,7 +12,7 @@ import com.zzzyt.jade.game.shot.BulletTexture;
 import com.zzzyt.jade.util.Collision;
 import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.util.M;
-import com.zzzyt.jade.util.Util;
+import com.zzzyt.jade.util.U;
 
 public class Bullet implements Entity, Poolable {
 
@@ -168,7 +168,7 @@ public class Bullet implements Entity, Poolable {
 	}
 
 	public void draw(Batch batch) {
-		if (!Util.outOfFrame(x, y, boundingRadius, boundingRadius)) {
+		if (!U.outOfFrame(x, y, boundingRadius, boundingRadius)) {
 			sprite.draw(batch);
 		}
 	}
@@ -193,7 +193,7 @@ public class Bullet implements Entity, Poolable {
 		sprite.setRotation(M.normalizeAngle(sprite.getRotation() + spinSpeed));
 		x += speed * MathUtils.cosDeg(angle);
 		y += speed * MathUtils.sinDeg(angle);
-		if (Util.outOfWorld(x, y, sprite.getWidth() * sprite.getScaleX(), sprite.getHeight() * sprite.getScaleY())) {
+		if (U.outOfWorld(x, y, sprite.getWidth() * sprite.getScaleX(), sprite.getHeight() * sprite.getScaleY())) {
 			J.remove(this);
 			return;
 		}

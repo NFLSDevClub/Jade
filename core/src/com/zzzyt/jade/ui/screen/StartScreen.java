@@ -10,7 +10,7 @@ import com.zzzyt.jade.ui.Grid;
 import com.zzzyt.jade.ui.GridLabel;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.Global;
-import com.zzzyt.jade.util.Game;
+import com.zzzyt.jade.util.U;
 
 public class StartScreen extends BasicScreen {
 
@@ -39,11 +39,11 @@ public class StartScreen extends BasicScreen {
 		st.addActor(grid);
 		grid.add(new GridLabel("Game Start", 24, 430, 290, 200, 30, 0, 1, () -> {
 			Global.put("_gameMode","regular");
-			Game.switchScreen("difficultySelect", 0.5f);
+			U.switchScreen("difficultySelect", 0.5f);
 		}));
 		grid.add(new GridLabel("Extra Start", 24, 420, 260, 200, 30, 0, 2, () -> {
 			Global.put("_gameMode","extra");
-			Game.switchScreen("playerSelect", 0.5f);
+			U.switchScreen("playerSelect", 0.5f);
 		}));
 		grid.add(new GridLabel("Stage Practice", 24, 410, 230, 200, 30, 0, 3, () -> {
 //			Global.put("_gameMode","stagePractice");
@@ -51,7 +51,7 @@ public class StartScreen extends BasicScreen {
 		})).disable();
 		grid.add(new GridLabel("Spell Practice", 24, 400, 200, 200, 30, 0, 4, () -> {
 			Global.put("_gameMode","spellPractice");
-			Game.switchScreen("difficultySelect", 0.5f);
+			U.switchScreen("difficultySelect", 0.5f);
 		})).disable();
 		grid.add(new GridLabel("Replay", 24, 390, 170, 200, 30, 0, 5, () -> {
 			
@@ -66,7 +66,7 @@ public class StartScreen extends BasicScreen {
 
 		})).disable();
 		grid.add(new GridLabel("Quit", 24, 350, 50, 200, 30, 0, 9, () -> {
-			Game.quit();
+			U.quit();
 		}));
 		grid.activate();
 		grid.selectFirst();
@@ -103,7 +103,7 @@ public class StartScreen extends BasicScreen {
 
 	@Override
 	protected void onQuit() {
-		Game.quit();
+		U.quit();
 	}
 
 	@Override

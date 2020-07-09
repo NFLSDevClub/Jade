@@ -8,8 +8,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.zzzyt.jade.Config;
-import com.zzzyt.jade.util.Util;
+import com.zzzyt.jade.util.U;
 
 public class Grid extends Group implements InputProcessor, GridComponent {
 
@@ -231,15 +230,15 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 	public boolean keyDown(int keycode) {
 		if (!enabled || !active)
 			return false;
-		if (Util.matchKey(keycode, Config.keyUp)) {
+		if (U.matchKey(keycode, U.getConfig().keyUp)) {
 			select(x, y - 1, 0, -1);
-		} else if (Util.matchKey(keycode, Config.keyDown)) {
+		} else if (U.matchKey(keycode, U.getConfig().keyDown)) {
 			select(x, y + 1, 0, 1);
-		} else if (Util.matchKey(keycode, Config.keyLeft)) {
+		} else if (U.matchKey(keycode, U.getConfig().keyLeft)) {
 			select(x - 1, y, -1, 0);
-		} else if (Util.matchKey(keycode, Config.keyRight)) {
+		} else if (U.matchKey(keycode, U.getConfig().keyRight)) {
 			select(x + 1, y, 1, 0);
-		} else if (Util.matchKey(keycode, Config.keySelect)) {
+		} else if (U.matchKey(keycode, U.getConfig().keySelect)) {
 			for (GridComponent button : grid) {
 				if (button.isActive()) {
 					button.trigger();

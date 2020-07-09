@@ -19,7 +19,6 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.zzzyt.jade.Config;
 import com.zzzyt.jade.game.shot.ShotSheet;
 import com.zzzyt.jade.game.shot.ShotSheetLoader;
 
@@ -32,7 +31,7 @@ public class A {
 
 	public static void init() {
 		A.am = new AssetManager();
-		A.am.getLogger().setLevel(Config.logLevel);
+		A.am.getLogger().setLevel(U.getConfig().logLevel);
 		A.am.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(new InternalFileHandleResolver()));
 		A.am.setLoader(ShotSheet.class, new ShotSheetLoader(new InternalFileHandleResolver()));
 

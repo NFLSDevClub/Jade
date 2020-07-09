@@ -2,7 +2,6 @@ package com.zzzyt.jade.util;
 
 import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.zzzyt.jade.Config;
 import com.zzzyt.jade.music.BackgroundMusic;
 
 public class BGM {
@@ -10,7 +9,7 @@ public class BGM {
 	public static BackgroundMusic bgm;
 
 	private static ObjectMap<String, BackgroundMusic> bgms = new ObjectMap<String, BackgroundMusic>();
-	private static Logger logger = new Logger("BGM", Config.logLevel);
+	private static Logger logger = new Logger("BGM", U.getConfig().logLevel);
 
 	public static void play(String name) {
 		if (name == null) {

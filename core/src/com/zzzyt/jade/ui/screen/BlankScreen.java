@@ -4,12 +4,11 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.zzzyt.jade.Config;
 import com.zzzyt.jade.ui.FPSDisplay;
 import com.zzzyt.jade.ui.KeyListener;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.Global;
-import com.zzzyt.jade.util.Game;
+import com.zzzyt.jade.util.U;
 
 public class BlankScreen extends BasicScreen {
 
@@ -20,19 +19,19 @@ public class BlankScreen extends BasicScreen {
 	@Override
 	public void show() {
 		this.st = new Stage(viewport);
-		st.setDebugAll(Config.debugActorLayout);
+		st.setDebugAll(U.getConfig().debugActorLayout);
 		this.input = new InputMultiplexer();
 
 		this.background = new Image(A.getTexture("bg/blank.png"));
 		background.setZIndex(0);
-		background.setSize(Config.windowWidth, Config.windowHeight);
+		background.setSize(U.getConfig().windowWidth, U.getConfig().windowHeight);
 		st.addActor(this.background);
 
 		this.fps = new FPSDisplay();
 		st.addActor(fps);
 
 		input.addProcessor(st);
-		input.addProcessor(new KeyListener(Config.keyCancel, () -> {
+		input.addProcessor(new KeyListener(U.getConfig().keyCancel, () -> {
 			onQuit();
 		}));
 	}
@@ -46,10 +45,10 @@ public class BlankScreen extends BasicScreen {
 			state = ScreenState.SHOWN;
 			if (Global.get("_redirect") != null) {
 				if (Global.get("_redirectDelay") != null) {
-					Game.switchScreen((String) Global.get("_redirect"), (float) Global.get("_redirectDelay"));
+					U.switchScreen((String) Global.get("_redirect"), (float) Global.get("_redirectDelay"));
 					Global.remove("_redirectDelay");
 				} else {
-					Game.switchScreen((String) Global.get("_redirect"));
+					U.switchScreen((String) Global.get("_redirect"));
 				}
 				Global.remove("_redirect");
 			}

@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.zzzyt.jade.util.J;
-import com.zzzyt.jade.util.Util;
+import com.zzzyt.jade.util.U;
 
 public class ShotSheet {
 	public Texture texture;
@@ -19,7 +19,7 @@ public class ShotSheet {
 	}
 
 	public ShotSheet(FileHandle sheetFile) {
-		this(sheetFile, Util.fromJson(sheetFile, RawShotSheet.class));
+		this(sheetFile, U.fromJson(sheetFile, RawShotSheet.class));
 	}
 
 	public ShotSheet(FileHandle sheetFile, RawShotSheet raw) {

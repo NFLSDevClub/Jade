@@ -7,7 +7,6 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.WindowedMean;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
-import com.zzzyt.jade.Config;
 import com.zzzyt.jade.music.BackgroundMusic;
 import com.zzzyt.jade.ui.BackgroundLoader;
 import com.zzzyt.jade.ui.InputBlocker;
@@ -21,8 +20,7 @@ import com.zzzyt.jade.ui.screen.StartScreen;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.B;
 import com.zzzyt.jade.util.BGM;
-import com.zzzyt.jade.util.Game;
-import com.zzzyt.jade.util.Util;
+import com.zzzyt.jade.util.U;
 
 public class JadeDemo implements ApplicationListener {
 
@@ -35,11 +33,11 @@ public class JadeDemo implements ApplicationListener {
 
 	@Override
 	public void create() {
-		Gdx.app.setLogLevel(Config.logLevel);
+		Gdx.app.setLogLevel(U.getConfig().logLevel);
 
-		Game.game = this;
+		U.game = this;
 
-		this.logger = new Logger("Main", Config.logLevel);
+		this.logger = new Logger("Main", U.getConfig().logLevel);
 		logger.info("Game start!");
 
 		A.init();
@@ -56,7 +54,7 @@ public class JadeDemo implements ApplicationListener {
 		A.load("default_shot.shot");
 		A.finishLoading();
 
-		B.setSheet(Config.defaultShotSheet);
+		B.setSheet(U.getConfig().defaultShotSheet);
 
 		this.blocker = new InputBlocker();
 		blocker.enable();
@@ -74,8 +72,8 @@ public class JadeDemo implements ApplicationListener {
 		screens.add(new DifficultySelectScreen());
 		screens.add(new PlayerSelectScreen());
 
-		Game.switchScreen("blank");
-		Game.switchScreen("start", 0.5f);
+		U.switchScreen("blank");
+		U.switchScreen("start", 0.5f);
 
 		BackgroundLoader backgroundLoader = new BackgroundLoader();
 		backgroundLoader.start();
@@ -85,36 +83,36 @@ public class JadeDemo implements ApplicationListener {
 	public void render() {
 		BGM.update();
 
-		if (Gdx.input.isKeyPressed(Keys.F4)) {
+		if (U.getConfig().allowFullScreen && Gdx.input.isKeyPressed(Keys.F4)) {
 			if (Gdx.graphics.isFullscreen()) {
-				Gdx.graphics.setWindowedMode(Config.windowWidth, Config.windowHeight);
+				Gdx.graphics.setWindowedMode(U.getConfig().windowWidth, U.getConfig().windowHeight);
 			} else {
 				Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 			}
 		}
-		
+
 		fpsCounter.addValue(Gdx.graphics.getDeltaTime());
 
-		Util.glClear();
+		U.glClear();
 
 		boolean flag1 = false;
 		boolean flag2 = false;
 		for (int i = 0; i < screens.size; i++) {
 			if (screens.get(i).getState() == ScreenState.FADING_IN) {
 				flag1 = true;
-				screens.get(i).render(Util.safeDeltaTime());
+				screens.get(i).render(U.safeDeltaTime());
 			}
 		}
 		for (int i = 0; i < screens.size; i++) {
 			if (screens.get(i).getState() == ScreenState.SHOWN) {
 				flag2 = true;
-				screens.get(i).render(Util.safeDeltaTime());
+				screens.get(i).render(U.safeDeltaTime());
 			}
 		}
 		for (int i = 0; i < screens.size; i++) {
 			if (screens.get(i).getState() == ScreenState.FADING_OUT) {
 				flag1 = true;
-				screens.get(i).render(Util.safeDeltaTime());
+				screens.get(i).render(U.safeDeltaTime());
 			}
 		}
 		if (flag1) {

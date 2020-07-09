@@ -1,7 +1,6 @@
 package com.zzzyt.jade.util;
 
 import com.badlogic.gdx.math.MathUtils;
-import com.zzzyt.jade.Config;
 
 public class Collision {
 
@@ -10,7 +9,7 @@ public class Collision {
 	}
 
 	public static boolean collide(float x1, float y1, float r1, float x2, float y2, float r2) {
-		switch (Config.collisionMode) {
+		switch (U.getConfig().collisionMode) {
 		case circleCircleOrtho:
 			return circleCircleOrtho(x1, y1, r1, x2, y2, r2);
 		case squareSquare:

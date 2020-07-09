@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.zzzyt.jade.Config;
 import com.zzzyt.jade.demo.difficulty.DifficultyRegular;
 import com.zzzyt.jade.demo.difficulty.DifficultyExtra;
 import com.zzzyt.jade.demo.player.PlayerMarisa;
@@ -16,8 +15,8 @@ import com.zzzyt.jade.ui.GridLabel;
 import com.zzzyt.jade.ui.KeyListener;
 import com.zzzyt.jade.util.Global;
 import com.zzzyt.jade.util.J;
+import com.zzzyt.jade.util.U;
 import com.zzzyt.jade.util.BGM;
-import com.zzzyt.jade.util.Game;
 
 public class GameScreen extends BasicScreen {
 
@@ -36,12 +35,12 @@ public class GameScreen extends BasicScreen {
 	public void show() {
 		init(null, "bg/game.png");
 
-		input.addProcessor(new KeyListener(Config.keyPause, () -> {
+		input.addProcessor(new KeyListener(U.getConfig().keyPause, () -> {
 			pauseGame();
 		}));
 
 		this.frame = new GameFrame();
-		frame.setBounds(Config.offsetX, Config.offsetY, Config.w, Config.h);
+		frame.setBounds(U.getConfig().offsetX, U.getConfig().offsetY, U.getConfig().w, U.getConfig().h);
 		st.addActor(frame);
 
 		this.jade = new Jade();
@@ -86,8 +85,8 @@ public class GameScreen extends BasicScreen {
 	public void render(float delta) {
 		if (!paused) {
 			if (Gdx.input.isKeyPressed(Keys.CONTROL_LEFT)
-					&& (!J.isGameModeReplay() || Config.allowSpeedUpOutOfReplay)) {
-				for (int i = 0; i < Config.speedUpMultiplier - 1; i++) {
+					&& (!J.isGameModeReplay() || U.getConfig().allowSpeedUpOutOfReplay)) {
+				for (int i = 0; i < U.getConfig().speedUpMultiplier - 1; i++) {
 					jade.update();
 					jade.postRender();
 				}
@@ -115,7 +114,7 @@ public class GameScreen extends BasicScreen {
 
 	@Override
 	public void hide() {
-		Game.removeProcessor(input);
+		U.removeProcessor(input);
 		state = ScreenState.HIDDEN;
 		if (jade != null)
 			jade.dispose();
@@ -147,7 +146,7 @@ public class GameScreen extends BasicScreen {
 	}
 	
 	private void switchToStart() {
-		Game.switchScreen("blank", 0.5f);
+		U.switchScreen("blank", 0.5f);
 		Global.put("_redirect", "start");
 		Global.put("_redirectDelay", 0.5f);
 	}

@@ -13,9 +13,9 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
-import com.zzzyt.jade.Config;
 import com.zzzyt.jade.game.shot.ShotSheet;
 import com.zzzyt.jade.util.A;
+import com.zzzyt.jade.util.U;
 
 public class BackgroundLoader extends Thread {
 
@@ -25,7 +25,7 @@ public class BackgroundLoader extends Thread {
 
 	public BackgroundLoader() {
 		this.tasks = new Array<String>();
-		this.logger = new Logger("BackgroundLoader", Config.logLevel);
+		this.logger = new Logger("BackgroundLoader", U.getConfig().logLevel);
 	}
 
 	public void addTask(String folder) {
