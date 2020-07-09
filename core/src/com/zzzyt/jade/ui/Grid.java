@@ -13,7 +13,7 @@ import com.zzzyt.jade.util.U;
 public class Grid extends Group implements InputProcessor, GridComponent {
 
 	public List<GridComponent> grid;
-	public int x, y;
+	public int selectedX, selectedY;
 	public boolean cycle;
 
 	protected Grid parent;
@@ -36,8 +36,8 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 		this.activeAction = activeAction;
 		this.inactiveAction = inactiveAction;
 		grid = new ArrayList<GridComponent>();
-		this.x = 0;
-		this.y = 0;
+		this.selectedX = 0;
+		this.selectedY = 0;
 		this.minX = Integer.MAX_VALUE;
 		this.minY = Integer.MAX_VALUE;
 		this.maxX = Integer.MIN_VALUE;
@@ -62,35 +62,35 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 	public void selectFirst() {
 		if (grid.size() == 0)
 			return;
-		GridComponent button = grid.get(0);
-		x = button.getGridX();
-		y = button.getGridY();
-		select(x, y);
+		GridComponent component = grid.get(0);
+		selectedX = component.getGridX();
+		selectedY = component.getGridY();
+		select(selectedX, selectedY);
 	}
 
 	public void selectLast() {
 		if (grid.size() == 0)
 			return;
-		GridComponent button = grid.get(grid.size() - 1);
-		x = button.getGridX();
-		y = button.getGridY();
-		select(x, y);
+		GridComponent component = grid.get(grid.size() - 1);
+		selectedX = component.getGridX();
+		selectedY = component.getGridY();
+		select(selectedX, selectedY);
 	}
 
 	public void select(int nx, int ny, int dx, int dy) {
 		GridComponent closest = null;
 		int dist = Integer.MAX_VALUE;
-		for (GridComponent button : grid) {
-			if (button.isEnabled()) {
+		for (GridComponent component : grid) {
+			if (component.isEnabled()) {
 				if (dx != 0) {
-					if (distanceX(nx, button.getGridX(), dx) < dist) {
-						closest = button;
-						dist = distanceX(nx, button.getGridX(), dx);
+					if (component.getGridY() == selectedY && distanceX(nx, component.getGridX(), dx) < dist) {
+						closest = component;
+						dist = distanceX(nx, component.getGridX(), dx);
 					}
 				} else {
-					if (distanceY(ny, button.getGridY(), dy) < dist) {
-						closest = button;
-						dist = distanceY(ny, button.getGridY(), dy);
+					if (component.getGridX() == selectedX && distanceY(ny, component.getGridY(), dy) < dist) {
+						closest = component;
+						dist = distanceY(ny, component.getGridY(), dy);
 					}
 				}
 			}
@@ -98,16 +98,16 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 		if (closest == null) {
 			return;
 		}
-		for (GridComponent button : grid) {
-			if (button.isActive()) {
-				button.deactivate();
+		selectedX = closest.getGridX();
+		selectedY = closest.getGridY();
+		for (GridComponent component : grid) {
+			if (component.isActive() && component.isEnabled()
+					&& (component.getGridX() != selectedX || component.getGridY() != selectedY)) {
+				component.deactivate();
 			}
-		}
-		x = closest.getGridX();
-		y = closest.getGridY();
-		for (GridComponent button : grid) {
-			if (button.isEnabled() && button.getGridX() == x && button.getGridY() == y) {
-				button.activate();
+			if (!component.isActive() && component.isEnabled() && component.getGridX() == selectedX
+					&& component.getGridY() == selectedY) {
+				component.activate();
 			}
 		}
 	}
@@ -115,27 +115,27 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 	public void select(int nx, int ny) {
 		GridComponent closest = null;
 		int dist = Integer.MAX_VALUE;
-		for (GridComponent button : grid) {
-			if (button.isEnabled()) {
-				if (distance(nx, ny, button.getGridX(), button.getGridY()) < dist) {
-					closest = button;
-					dist = distance(nx, ny, button.getGridX(), button.getGridY());
+		for (GridComponent component : grid) {
+			if (component.isEnabled()) {
+				if (distance(nx, ny, component.getGridX(), component.getGridY()) < dist) {
+					closest = component;
+					dist = distance(nx, ny, component.getGridX(), component.getGridY());
 				}
 			}
 		}
 		if (closest == null) {
 			return;
 		}
-		for (GridComponent button : grid) {
-			if (button.isActive()) {
-				button.deactivate();
+		selectedX = closest.getGridX();
+		selectedY = closest.getGridY();
+		for (GridComponent component : grid) {
+			if (component.isActive() && component.isEnabled()
+					&& (component.getGridX() != selectedX || component.getGridY() != selectedY)) {
+				component.deactivate();
 			}
-		}
-		x = closest.getGridX();
-		y = closest.getGridY();
-		for (GridComponent button : grid) {
-			if (button.isEnabled() && button.getGridX() == x && button.getGridY() == y) {
-				button.activate();
+			if (!component.isActive() && component.isEnabled() && component.getGridX() == selectedX
+					&& component.getGridY() == selectedY) {
+				component.activate();
 			}
 		}
 	}
@@ -231,13 +231,13 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 		if (!enabled || !active)
 			return false;
 		if (U.matchKey(keycode, U.getConfig().keyUp)) {
-			select(x, y - 1, 0, -1);
+			select(selectedX, selectedY - 1, 0, -1);
 		} else if (U.matchKey(keycode, U.getConfig().keyDown)) {
-			select(x, y + 1, 0, 1);
+			select(selectedX, selectedY + 1, 0, 1);
 		} else if (U.matchKey(keycode, U.getConfig().keyLeft)) {
-			select(x - 1, y, -1, 0);
+			select(selectedX - 1, selectedY, -1, 0);
 		} else if (U.matchKey(keycode, U.getConfig().keyRight)) {
-			select(x + 1, y, 1, 0);
+			select(selectedX + 1, selectedY, 1, 0);
 		} else if (U.matchKey(keycode, U.getConfig().keySelect)) {
 			for (GridComponent button : grid) {
 				if (button.isActive()) {
@@ -321,11 +321,19 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 		return active;
 	}
 
+	public void updateButtons() {
+		for (GridComponent component : grid) {
+			if(component instanceof Grid) {
+				((Grid) component).updateButtons();
+			}
+			else {
+				component.update();				
+			}
+		}
+	}
+	
 	@Override
 	public void update() {
-		for (GridComponent button : grid) {
-			button.update();
-		}
 		if (enabled && active) {
 			clearActions();
 			if (activeAction != null) {
@@ -359,13 +367,13 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 
 	@Override
 	public void trigger() {
-		if(enabled) {
+		if (enabled) {
 			if (parent != null) {
 				parent.disable();
 			}
 			if (onTrigger != null) {
 				onTrigger.run();
-			}			
+			}
 		}
 	}
 
