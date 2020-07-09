@@ -53,7 +53,13 @@ public class GameScreen extends BasicScreen {
 
 		frame.setJade(jade);
 
-		this.pauseMenu = new Grid(true);
+		this.pauseMenu = new Grid(0, 0, true, () -> {
+
+		}, () -> {
+			return Actions.parallel(Actions.fadeIn(0.3f), Actions.moveTo(0, 0, 0.2f));
+		}, () -> {
+			return Actions.parallel(Actions.fadeOut(0.3f),Actions.moveTo(-30, 0, 0.3f));
+		});
 		st.addActor(pauseMenu);
 		input.addProcessor(pauseMenu);
 		pauseMenu.disable();
@@ -130,21 +136,21 @@ public class GameScreen extends BasicScreen {
 	private void pauseGame() {
 		paused = true;
 		BGM.pause();
-		frame.addAction(Actions.color(Color.GRAY, 0.5f));
+		frame.clearActions();
+		frame.addAction(Actions.color(Color.GRAY, 0.3f));
 		pauseMenu.enable();
 		pauseMenu.activate();
-		pauseMenu.addAction(Actions.fadeIn(0.5f));
 	}
 
 	private void resumeGame() {
 		pauseMenu.disable();
-		pauseMenu.addAction(Actions.fadeOut(0.3f));
+		frame.clearActions();
 		frame.addAction(Actions.sequence(Actions.color(Color.WHITE, 0.5f), Actions.run(() -> {
 			paused = false;
 			BGM.resume();
 		})));
 	}
-	
+
 	private void switchToStart() {
 		U.switchScreen("blank", 0.5f);
 		Global.put("_redirect", "start");
