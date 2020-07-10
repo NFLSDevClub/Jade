@@ -1,4 +1,4 @@
-package com.zzzyt.jade.game.operator;
+package com.zzzyt.jade.game;
 
 import com.zzzyt.jade.game.entity.Bullet;
 

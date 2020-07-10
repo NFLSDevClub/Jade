@@ -9,7 +9,7 @@ public class Collision {
 	}
 
 	public static boolean collide(float x1, float y1, float r1, float x2, float y2, float r2) {
-		switch (U.getConfig().collisionMode) {
+		switch (U.config().collisionMode) {
 		case circleCircleOrtho:
 			return circleCircleOrtho(x1, y1, r1, x2, y2, r2);
 		case squareSquare:

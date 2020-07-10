@@ -1,10 +1,8 @@
 package com.zzzyt.jade.game;
 
-public interface Task {
+public interface Task extends Updatable{
 
 	public boolean isFinished();
-
-	public void update(int frame);
 
 	public void init();
 	

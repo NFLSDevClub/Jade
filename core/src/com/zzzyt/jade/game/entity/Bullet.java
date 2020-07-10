@@ -7,7 +7,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool.Poolable;
-import com.zzzyt.jade.game.operator.Operator;
+import com.zzzyt.jade.game.Entity;
+import com.zzzyt.jade.game.Operator;
+import com.zzzyt.jade.game.Player;
 import com.zzzyt.jade.game.shot.BulletTexture;
 import com.zzzyt.jade.util.Collision;
 import com.zzzyt.jade.util.J;
@@ -206,6 +208,11 @@ public class Bullet implements Entity, Poolable {
 
 	public void onHit() {
 		J.onHit();
+	}
+
+	@Override
+	public int getZIndex() {
+		return 0;
 	}
 
 }

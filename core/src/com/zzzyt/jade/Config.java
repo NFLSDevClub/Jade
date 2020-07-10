@@ -18,6 +18,7 @@ public class Config {
 	public int windowHeight;
 	public boolean allowFullScreen;
 	public boolean allowResize;
+	public boolean fullScreenOnStart;
 	public Scaling windowScaling;
 
 	public int w;
@@ -64,7 +65,8 @@ public class Config {
 		windowHeight = 480;
 		allowFullScreen = true;
 		allowResize = true;
-		windowScaling = Scaling.fit;
+		fullScreenOnStart = false;
+		windowScaling = Scaling.none;
 
 		w = 384;
 		h = 448;
@@ -75,7 +77,7 @@ public class Config {
 		deleteDistance = 64;
 		safeDistance = 16;
 		collisionMode = CollisionMode.circleCircleOrtho;
-		invulnerable = false;
+		invulnerable = true;
 		cleanupBulletCount = 8192;
 		cleanupBlankCount = 512;
 		defaultShotSheet = "default_shot.shot";

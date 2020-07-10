@@ -9,7 +9,7 @@ public class BGM {
 	public static BackgroundMusic bgm;
 
 	private static ObjectMap<String, BackgroundMusic> bgms = new ObjectMap<String, BackgroundMusic>();
-	private static Logger logger = new Logger("BGM", U.getConfig().logLevel);
+	private static Logger logger = new Logger("BGM", U.config().logLevel);
 
 	public static void play(String name) {
 		if (name == null) {

@@ -17,7 +17,7 @@ public class SwitchBGM implements Task {
 	}
 
 	@Override
-	public void update(int frame) {
+	public void update(int t) {
 		BGM.play(bgmName);
 	}
 

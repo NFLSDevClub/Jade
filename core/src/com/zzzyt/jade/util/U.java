@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
@@ -18,7 +20,7 @@ public class U {
 	public static final Json json = new Json();
 	public static JadeDemo game;
 
-	public static Config getConfig() {
+	public static Config config() {
 		if (Config.config == null) {
 			Config.config = new Config();
 			Config.config.setDefault();
@@ -30,6 +32,7 @@ public class U {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT
 				| (Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV : 0));
+
 	}
 
 	public static float safeDeltaTime() {
@@ -56,12 +59,27 @@ public class U {
 		return false;
 	}
 
+	public static float getAlpha(Sprite sprite) {
+		return sprite.getColor().a;
+	}
+
+	public static Sprite addAlpha(Sprite sprite, float delta) {
+		sprite.setAlpha(MathUtils.clamp(sprite.getColor().a + delta, 0, 1));
+		return sprite;
+	}
+
+	public static TextureRegion setToCoverWorld(TextureRegion region) {
+		region.setRegionWidth(U.config().w);
+		region.setRegionHeight(U.config().h*2);
+		return region;
+	}
+
 	public static float screenToWorldY(float y) {
-		return y - U.getConfig().originY;
+		return y - U.config().originY;
 	}
 
 	public static float screenToWorldX(float x) {
-		return x - U.getConfig().originX;
+		return x - U.config().originX;
 	}
 
 	public static Json getJson() {
@@ -73,31 +91,31 @@ public class U {
 	}
 
 	public static boolean outOfWorld(float x, float y, float rx, float ry) {
-		if (x + rx < -U.getConfig().originX - U.getConfig().deleteDistance)
+		if (x + rx < -U.config().originX - U.config().deleteDistance)
 			return true;
-		if (x - rx > U.getConfig().w + U.getConfig().deleteDistance - U.getConfig().originX)
+		if (x - rx > U.config().w + U.config().deleteDistance - U.config().originX)
 			return true;
-		if (y + ry < -U.getConfig().originY - U.getConfig().deleteDistance)
+		if (y + ry < -U.config().originY - U.config().deleteDistance)
 			return true;
-		if (y - ry > U.getConfig().h + U.getConfig().deleteDistance - U.getConfig().originY)
+		if (y - ry > U.config().h + U.config().deleteDistance - U.config().originY)
 			return true;
 		return false;
 	}
 
 	public static boolean outOfFrame(float x, float y, float rx, float ry) {
-		if (x + rx < -U.getConfig().originX)
+		if (x + rx < -U.config().originX)
 			return true;
-		if (x - rx > U.getConfig().w - U.getConfig().originX)
+		if (x - rx > U.config().w - U.config().originX)
 			return true;
-		if (y + ry < -U.getConfig().originY)
+		if (y + ry < -U.config().originY)
 			return true;
-		if (y - ry > U.getConfig().h - U.getConfig().originY)
+		if (y - ry > U.config().h - U.config().originY)
 			return true;
 		return false;
 	}
 
 	public static Rectangle getWorldRectangle() {
-		return new Rectangle(-U.getConfig().originX, -U.getConfig().originY, U.getConfig().w, U.getConfig().h);
+		return new Rectangle(-U.config().originX, -U.config().originY, U.config().w, U.config().h);
 	}
 
 	public static <T> void cleanupArray(Array<T> array) {

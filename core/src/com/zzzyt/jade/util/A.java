@@ -31,7 +31,7 @@ public class A {
 
 	public static void init() {
 		A.am = new AssetManager();
-		A.am.getLogger().setLevel(U.getConfig().logLevel);
+		A.am.getLogger().setLevel(U.config().logLevel);
 		A.am.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(new InternalFileHandleResolver()));
 		A.am.setLoader(ShotSheet.class, new ShotSheetLoader(new InternalFileHandleResolver()));
 
@@ -58,6 +58,7 @@ public class A {
 		} else if (tmp instanceof Texture) {
 			return new TextureRegion((Texture) tmp);
 		} else {
+			A.am.getLogger().error("[A] getRegion() requires a Texture-like asset!");
 			return (TextureRegion) tmp;
 		}
 	}

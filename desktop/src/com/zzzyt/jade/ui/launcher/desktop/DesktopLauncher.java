@@ -8,12 +8,12 @@ import com.zzzyt.jade.util.U;
 public class DesktopLauncher {
 	public static void main(String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = U.getConfig().windowWidth;
-		config.height = U.getConfig().windowHeight;
-		config.foregroundFPS = U.getConfig().fps;
-		config.backgroundFPS = U.getConfig().fps;
-		config.resizable = U.getConfig().allowResize;
-		config.vSyncEnabled = U.getConfig().vsyncEnabled;
+		config.width = U.config().windowWidth;
+		config.height = U.config().windowHeight;
+		config.foregroundFPS = U.config().fps;
+		config.backgroundFPS = U.config().fps;
+		config.resizable = U.config().allowResize;
+		config.vSyncEnabled = U.config().vsyncEnabled;
 		config.samples = 3;
 		new LwjglApplication(new JadeDemo(), config);
 	}

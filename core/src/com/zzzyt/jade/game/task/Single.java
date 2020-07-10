@@ -1,23 +1,24 @@
 package com.zzzyt.jade.game.task;
 
 import com.zzzyt.jade.game.Task;
+import com.zzzyt.jade.game.Updatable;
 
 public class Single implements Task {
 
-	private Updateable updateFunc;
+	private Updatable updateFunc;
 	private boolean finished;
-	private int firstFrame;
+	private int firstT;
 	private int delay;
 
 	public Single() {
 
 	}
 
-	public Single(Updateable updateFunc) {
+	public Single(Updatable updateFunc) {
 		this(0, updateFunc);
 	}
 
-	public Single(int delay, Updateable updateFunc) {
+	public Single(int delay, Updatable updateFunc) {
 		this.updateFunc = updateFunc;
 		this.delay = delay;
 	}
@@ -31,7 +32,7 @@ public class Single implements Task {
 		return this;
 	}
 
-	public Single setUpdateFunc(Updateable updateFunc) {
+	public Single setUpdateFunc(Updatable updateFunc) {
 		this.updateFunc = updateFunc;
 		return this;
 	}
@@ -42,24 +43,19 @@ public class Single implements Task {
 	}
 
 	@Override
-	public void update(int frame) {
-		if (firstFrame == -1) {
-			firstFrame = frame;
+	public void update(int t) {
+		if (firstT == -1) {
+			firstT = t;
 		}
-		if (frame - firstFrame >= delay) {
-			updateFunc.update(frame - firstFrame - delay);
+		if (t - firstT >= delay) {
+			updateFunc.update(t - firstT - delay);
 		}
 
-	}
-
-	@FunctionalInterface
-	public static interface Updateable {
-		public void update(int frame);
 	}
 
 	@Override
 	public void init() {
 		this.finished = false;
-		this.firstFrame = -1;
+		this.firstT = -1;
 	}
 }

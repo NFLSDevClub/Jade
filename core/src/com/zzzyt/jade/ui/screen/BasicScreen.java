@@ -24,8 +24,8 @@ public class BasicScreen implements FadeableScreen {
 	protected ScreenState state;
 
 	public BasicScreen() {
-		this.viewport = new ScalingViewport(U.getConfig().windowScaling, U.getConfig().windowWidth,
-				U.getConfig().windowHeight);
+		this.viewport = new ScalingViewport(U.config().windowScaling, U.config().windowWidth,
+				U.config().windowHeight);
 		this.state = ScreenState.HIDDEN;
 	}
 
@@ -42,7 +42,7 @@ public class BasicScreen implements FadeableScreen {
 		BGM.play(bgm);
 
 		this.st = new Stage(viewport);
-		st.setDebugAll(U.getConfig().debugActorLayout);
+		st.setDebugAll(U.config().debugActorLayout);
 		this.input = new InputMultiplexer();
 
 		this.background = new Image(background);
@@ -53,7 +53,7 @@ public class BasicScreen implements FadeableScreen {
 		st.addActor(fps);
 
 		input.addProcessor(st);
-		input.addProcessor(new KeyListener(U.getConfig().keyCancel, () -> {
+		input.addProcessor(new KeyListener(U.config().keyCancel, () -> {
 			onQuit();
 		}));
 

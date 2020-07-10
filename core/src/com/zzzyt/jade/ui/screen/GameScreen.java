@@ -35,31 +35,16 @@ public class GameScreen extends BasicScreen {
 	public void show() {
 		init(null, "bg/game.png");
 
-		input.addProcessor(new KeyListener(U.getConfig().keyPause, () -> {
+		input.addProcessor(new KeyListener(U.config().keyPause, () -> {
 			pauseGame();
 		}));
 
 		this.frame = new GameFrame();
-		frame.setBounds(U.getConfig().offsetX, U.getConfig().offsetY, U.getConfig().w, U.getConfig().h);
+		frame.setBounds(U.config().offsetX, U.config().offsetY, U.config().w, U.config().h);
 		st.addActor(frame);
 
-		this.jade = new Jade();
-
-		if ("reimu".equals(Global.get("_player"))) {
-			jade.setPlayer(new PlayerReimu());
-		} else if ("marisa".equals(Global.get("_player"))) {
-			jade.setPlayer(new PlayerMarisa());
-		}
-
-		frame.setJade(jade);
-
-		this.pauseMenu = new Grid(0, 0, true, () -> {
-
-		}, () -> {
-			return Actions.parallel(Actions.fadeIn(0.3f), Actions.moveTo(0, 0, 0.2f));
-		}, () -> {
-			return Actions.parallel(Actions.fadeOut(0.3f),Actions.moveTo(-30, 0, 0.3f));
-		});
+		this.pauseMenu = new Grid(0, 0, true, () -> Actions.parallel(Actions.fadeIn(0.3f), Actions.moveTo(0, 0, 0.2f)),
+				() -> Actions.parallel(Actions.fadeOut(0.3f), Actions.moveTo(-30, 0, 0.3f)));
 		st.addActor(pauseMenu);
 		input.addProcessor(pauseMenu);
 		pauseMenu.disable();
@@ -69,20 +54,15 @@ public class GameScreen extends BasicScreen {
 			resumeGame();
 		}));
 		pauseMenu.add(new GridLabel("Retart Game", 18, 55, 170, 200, 20, 0, 1, () -> {
+			startGame();
 			resumeGame();
-		})).disable();
+		}));
 		pauseMenu.add(new GridLabel("Quit Game", 18, 60, 140, 200, 20, 0, 2, () -> {
 			switchToStart();
 		}));
 		pauseMenu.selectFirst();
 
-		if ("regular".equals(Global.get("_gameMode"))) {
-			jade.addTask(new DifficultyRegular((int) Global.get("_difficulty")));
-		} else if ("extra".equals(Global.get("_gameMode"))) {
-			jade.addTask(new DifficultyExtra());
-		}
-
-		jade.getTask(0).init();
+		startGame();
 
 		this.paused = false;
 	}
@@ -91,13 +71,13 @@ public class GameScreen extends BasicScreen {
 	public void render(float delta) {
 		if (!paused) {
 			if (Gdx.input.isKeyPressed(Keys.CONTROL_LEFT)
-					&& (!J.isGameModeReplay() || U.getConfig().allowSpeedUpOutOfReplay)) {
-				for (int i = 0; i < U.getConfig().speedUpMultiplier - 1; i++) {
-					jade.update();
+					&& (!J.isGameModeReplay() || U.config().allowSpeedUpOutOfReplay)) {
+				for (int i = 0; i < U.config().speedUpMultiplier - 1; i++) {
+					jade.preRender();
 					jade.postRender();
 				}
 			}
-			jade.update();
+			jade.preRender();
 			jade.draw();
 
 			// Important!!!! Or viewport will become stretched.
@@ -155,6 +135,28 @@ public class GameScreen extends BasicScreen {
 		U.switchScreen("blank", 0.5f);
 		Global.put("_redirect", "start");
 		Global.put("_redirectDelay", 0.5f);
+	}
+
+	private void startGame() {
+		if (jade != null) {
+			jade.dispose();
+		}
+		jade = new Jade();
+
+		if ("reimu".equals(Global.get("_player"))) {
+			jade.setPlayer(new PlayerReimu());
+		} else if ("marisa".equals(Global.get("_player"))) {
+			jade.setPlayer(new PlayerMarisa());
+		}
+
+		if ("regular".equals(Global.get("_gameMode"))) {
+			J.addTask(new DifficultyRegular((int) Global.get("_difficulty")));
+		} else if ("extra".equals(Global.get("_gameMode"))) {
+			J.addTask(new DifficultyExtra());
+		}
+
+		BGM.play(null);
+		frame.setJade(jade);
 	}
 
 }

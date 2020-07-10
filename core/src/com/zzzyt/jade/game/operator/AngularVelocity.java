@@ -1,5 +1,6 @@
 package com.zzzyt.jade.game.operator;
 
+import com.zzzyt.jade.game.Operator;
 import com.zzzyt.jade.game.entity.Bullet;
 
 public class AngularVelocity implements Operator {

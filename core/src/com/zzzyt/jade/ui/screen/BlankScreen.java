@@ -19,19 +19,19 @@ public class BlankScreen extends BasicScreen {
 	@Override
 	public void show() {
 		this.st = new Stage(viewport);
-		st.setDebugAll(U.getConfig().debugActorLayout);
+		st.setDebugAll(U.config().debugActorLayout);
 		this.input = new InputMultiplexer();
 
 		this.background = new Image(A.getTexture("bg/blank.png"));
 		background.setZIndex(0);
-		background.setSize(U.getConfig().windowWidth, U.getConfig().windowHeight);
+		background.setSize(U.config().windowWidth, U.config().windowHeight);
 		st.addActor(this.background);
 
 		this.fps = new FPSDisplay();
 		st.addActor(fps);
 
 		input.addProcessor(st);
-		input.addProcessor(new KeyListener(U.getConfig().keyCancel, () -> {
+		input.addProcessor(new KeyListener(U.config().keyCancel, () -> {
 			onQuit();
 		}));
 	}

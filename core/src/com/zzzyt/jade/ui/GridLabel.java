@@ -28,15 +28,15 @@ public class GridLabel extends Label implements GridComponent {
 
 	public GridLabel(CharSequence text, int fontSize, float x, float y, float width, float height, int gridX, int gridY,
 			Runnable runnable) {
-		super(text, new LabelStyle(A.getFont(U.getConfig().UIFont, fontSize, 2, Color.BLACK), U.getConfig().UIFontColor));
+		super(text, new LabelStyle(A.getFont(U.config().UIFont, fontSize, 2, Color.BLACK), U.config().UIFontColor));
 		this.staticX = x;
 		this.staticY = y;
 		this.gridX = gridX;
 		this.gridY = gridY;
 		this.runnable = runnable;
 		this.active = false;
-		this.activeStyle = new LabelStyle(A.getFont(U.getConfig().UIFont, fontSize, 2, Color.BLACK), U.getConfig().UIFontColor);
-		this.inactiveStyle = new LabelStyle(A.getFont(U.getConfig().UIFont, fontSize, 2, Color.BLACK), U.getConfig().UIFontColor);
+		this.activeStyle = new LabelStyle(A.getFont(U.config().UIFont, fontSize, 2, Color.BLACK), U.config().UIFontColor);
+		this.inactiveStyle = new LabelStyle(A.getFont(U.config().UIFont, fontSize, 2, Color.BLACK), U.config().UIFontColor);
 		this.activeAction = () -> Actions.parallel(
 				Actions.forever(Actions.sequence(Actions.alpha(0.6f, 0.1f, Interpolation.fade),
 						Actions.alpha(1f, 0.1f, Interpolation.fade))),
@@ -51,7 +51,7 @@ public class GridLabel extends Label implements GridComponent {
 	public GridLabel(CharSequence text, int fontSize, float x, float y, float width, float height, int gridX, int gridY,
 			Callable<? extends Action> activeAction, Callable<? extends Action> inactiveAction, LabelStyle activeStyle,
 			LabelStyle inactiveStyle, Runnable runnable) {
-		super(text, new LabelStyle(A.getFont(U.getConfig().UIFont, fontSize, 2, Color.BLACK), U.getConfig().UIFontColor));
+		super(text, new LabelStyle(A.getFont(U.config().UIFont, fontSize, 2, Color.BLACK), U.config().UIFontColor));
 		this.staticX = x;
 		this.staticY = y;
 		this.gridX = gridX;

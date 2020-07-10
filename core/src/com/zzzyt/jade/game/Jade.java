@@ -10,8 +10,6 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.zzzyt.jade.game.entity.Bullet;
-import com.zzzyt.jade.game.entity.Player;
-import com.zzzyt.jade.game.operator.Operator;
 import com.zzzyt.jade.util.B;
 import com.zzzyt.jade.util.M;
 import com.zzzyt.jade.util.U;
@@ -29,7 +27,7 @@ public class Jade implements Disposable {
 	private transient Logger logger;
 
 	public Array<Task> tasks;
-
+	public Array<Drawable> nDrawables, pDrawables;
 	public ObjectMap<Integer, Array<Operator>> operators;
 	public Array<Bullet> bullets;
 	public Array<Bullet> candidates;
@@ -42,15 +40,15 @@ public class Jade implements Disposable {
 	public Jade() {
 		this.frame = 0;
 
-		this.logger = new Logger("Jade", U.getConfig().logLevel);
+		this.logger = new Logger("Jade", U.config().logLevel);
 
 		logger.info("Creating Jade session...");
 
-		this.fbo = new FrameBuffer(Format.RGBA8888, U.getConfig().w, U.getConfig().h, false);
+		this.fbo = new FrameBuffer(Format.RGBA8888, U.config().w, U.config().h, false);
 		this.fboRegion = new TextureRegion(fbo.getColorBufferTexture());
 
 		this.cam = new OrthographicCamera(fbo.getWidth(), fbo.getHeight());
-		cam.position.set(U.getConfig().w / 2 - U.getConfig().originX, U.getConfig().h / 2 - U.getConfig().originY, 0);
+		cam.position.set(U.config().w / 2 - U.config().originX, U.config().h / 2 - U.config().originY, 0);
 		cam.update();
 
 		fboRegion.flip(false, true);
@@ -61,6 +59,8 @@ public class Jade implements Disposable {
 		this.bullets = new Array<Bullet>(false, 1024);
 		this.candidates = new Array<Bullet>(false, 256);
 		this.tasks = new Array<Task>(true, 16);
+		this.nDrawables = new Array<Drawable>(true, 16);
+		this.pDrawables = new Array<Drawable>(true, 16);
 
 		if (Jade.session != null) {
 			logger.error("[WARN] There's another existing Jade session!");
@@ -74,17 +74,26 @@ public class Jade implements Disposable {
 		fbo.begin();
 		U.glClear();
 		batch.begin();
-		player.draw(batch);
+		for (int i = 0; i < nDrawables.size; i++) {
+			if (nDrawables.get(i) != null) {
+				nDrawables.get(i).draw(batch);
+			}
+		}
 		for (int i = 0; i < bullets.size; i++) {
-			if (bullets.get(i) == null)
-				continue;
-			bullets.get(i).draw(batch);
+			if (bullets.get(i) != null) {
+				bullets.get(i).draw(batch);
+			}
+		}
+		for (int i = 0; i < pDrawables.size; i++) {
+			if (pDrawables.get(i) != null) {
+				pDrawables.get(i).draw(batch);
+			}
 		}
 		batch.end();
 		fbo.end();
 	}
 
-	public void update() {
+	public void preRender() {
 		if (!running)
 			return;
 		frame++;
@@ -118,13 +127,23 @@ public class Jade implements Disposable {
 		}
 		U.cleanupArray(tasks);
 
+		for (int i = 0; i < nDrawables.size; i++) {
+			if (nDrawables.get(i) != null) {
+				nDrawables.get(i).update(frame);
+			}
+		}
 		for (int i = 0; i < bullets.size; i++) {
 			if (bullets.get(i) != null) {
 				bullets.get(i).update(frame);
 			}
 		}
+		for (int i = 0; i < pDrawables.size; i++) {
+			if (pDrawables.get(i) != null) {
+				pDrawables.get(i).update(frame);
+			}
+		}
 
-		if ((bulletCount <= U.getConfig().cleanupBulletCount && blankCount >= U.getConfig().cleanupBlankCount)
+		if ((bulletCount <= U.config().cleanupBulletCount && blankCount >= U.config().cleanupBlankCount)
 				|| (bullets.size >= 1048576)) {
 			logger.info("Cleaning up blanks in bullet array: bulletCount=" + bulletCount + " blankCount=" + blankCount);
 			U.cleanupArray(bullets);
@@ -136,7 +155,7 @@ public class Jade implements Disposable {
 
 		candidateCount = 0;
 		Bullet tmp;
-		float dst = M.sqr(player.getRadius() + U.getConfig().safeDistance);
+		float dst = M.sqr(player.getRadius() + U.config().safeDistance);
 		for (int i = 0; i < bullets.size; i++) {
 			if (bullets.get(i) == null)
 				continue;
@@ -209,7 +228,7 @@ public class Jade implements Disposable {
 	}
 
 	public void onHit() {
-		if (!U.getConfig().invulnerable) {
+		if (!U.config().invulnerable) {
 			pause();
 		}
 	}
@@ -238,7 +257,11 @@ public class Jade implements Disposable {
 	}
 
 	public Jade setPlayer(Player player) {
+		if (this.player != null) {
+			removeDrawable(player);
+		}
 		this.player = player;
+		addDrawable(player);
 		return this;
 	}
 
@@ -256,6 +279,24 @@ public class Jade implements Disposable {
 
 	public int getBulletCount() {
 		return bulletCount;
+	}
+
+	public Jade addDrawable(Drawable drawable) {
+		if (drawable.getZIndex() < 0) {
+			nDrawables.insert(Drawable.binarySearch(nDrawables, drawable.getZIndex()), drawable);
+		} else if (drawable.getZIndex() > 0) {
+			pDrawables.insert(Drawable.binarySearch(pDrawables, drawable.getZIndex()), drawable);
+		}
+		return this;
+	}
+
+	public Jade removeDrawable(Drawable drawable) {
+		if (drawable.getZIndex() < 0) {
+			nDrawables.removeValue(drawable, true);
+		} else if (drawable.getZIndex() > 0) {
+			pDrawables.removeValue(drawable, true);
+		}
+		return this;
 	}
 
 	@Override

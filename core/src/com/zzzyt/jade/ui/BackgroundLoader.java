@@ -25,7 +25,7 @@ public class BackgroundLoader extends Thread {
 
 	public BackgroundLoader() {
 		this.tasks = new Array<String>();
-		this.logger = new Logger("BackgroundLoader", U.getConfig().logLevel);
+		this.logger = new Logger("BackgroundLoader", U.config().logLevel);
 	}
 
 	public void addTask(String folder) {

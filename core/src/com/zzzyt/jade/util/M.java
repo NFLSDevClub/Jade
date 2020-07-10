@@ -6,6 +6,22 @@ public class M {
 
 	public static final float SQRT2 = 1.41421356237309505f;
 
+	public static int safeMod(int x, int mod) {
+		if (x >= 0) {
+			return x % mod;
+		} else {
+			return (x % mod + mod) % mod;
+		}
+	}
+
+	public static float safeMod(float x, float mod) {
+		if (x >= 0) {
+			return x % mod;
+		} else {
+			return (x % mod + mod) % mod;
+		}
+	}
+
 	public static float normalizeAngle(float angle) {
 		if (angle > 0) {
 			angle = angle - MathUtils.round(angle / 360) * 360;
@@ -33,15 +49,15 @@ public class M {
 	public static int min(int a, int b) {
 		return Math.min(a, b);
 	}
-	
+
 	public static int round(float a) {
 		return MathUtils.round(a);
 	}
-	
+
 	public static int floor(float a) {
 		return MathUtils.floor(a);
 	}
-	
+
 	public static int ceil(float a) {
 		return MathUtils.ceil(a);
 	}

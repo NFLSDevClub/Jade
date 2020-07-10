@@ -17,22 +17,20 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 	public boolean cycle;
 
 	protected Grid parent;
-	protected Runnable onTrigger;
 	protected Callable<? extends Action> activeAction, inactiveAction;
 	protected int gridX, gridY;
 	protected int minX, minY, maxX, maxY;
 	protected boolean enabled, active;
 
 	public Grid(boolean cycle) {
-		this(0, 0, cycle, null, null, null);
+		this(0, 0, cycle, null, null);
 	}
 
-	public Grid(int gridX, int gridY, boolean cycle, Runnable onTrigger, Callable<? extends Action> activeAction,
+	public Grid(int gridX, int gridY, boolean cycle, Callable<? extends Action> activeAction,
 			Callable<? extends Action> inactiveAction) {
 		this.cycle = cycle;
 		this.gridX = gridX;
 		this.gridY = gridY;
-		this.onTrigger = onTrigger;
 		this.activeAction = activeAction;
 		this.inactiveAction = inactiveAction;
 		grid = new ArrayList<GridComponent>();
@@ -230,15 +228,15 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 	public boolean keyDown(int keycode) {
 		if (!enabled || !active)
 			return false;
-		if (U.matchKey(keycode, U.getConfig().keyUp)) {
+		if (U.matchKey(keycode, U.config().keyUp)) {
 			select(selectedX, selectedY - 1, 0, -1);
-		} else if (U.matchKey(keycode, U.getConfig().keyDown)) {
+		} else if (U.matchKey(keycode, U.config().keyDown)) {
 			select(selectedX, selectedY + 1, 0, 1);
-		} else if (U.matchKey(keycode, U.getConfig().keyLeft)) {
+		} else if (U.matchKey(keycode, U.config().keyLeft)) {
 			select(selectedX - 1, selectedY, -1, 0);
-		} else if (U.matchKey(keycode, U.getConfig().keyRight)) {
+		} else if (U.matchKey(keycode, U.config().keyRight)) {
 			select(selectedX + 1, selectedY, 1, 0);
-		} else if (U.matchKey(keycode, U.getConfig().keySelect)) {
+		} else if (U.matchKey(keycode, U.config().keySelect)) {
 			for (GridComponent button : grid) {
 				if (button.isActive()) {
 					button.trigger();
@@ -323,15 +321,14 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 
 	public void updateButtons() {
 		for (GridComponent component : grid) {
-			if(component instanceof Grid) {
+			if (component instanceof Grid) {
 				((Grid) component).updateButtons();
-			}
-			else {
-				component.update();				
+			} else {
+				component.update();
 			}
 		}
 	}
-	
+
 	@Override
 	public void update() {
 		if (enabled && active) {
@@ -367,14 +364,7 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 
 	@Override
 	public void trigger() {
-		if (enabled) {
-			if (parent != null) {
-				parent.disable();
-			}
-			if (onTrigger != null) {
-				onTrigger.run();
-			}
-		}
+
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package com.zzzyt.jade.game.entity;
 
+import com.zzzyt.jade.game.Player;
 import com.zzzyt.jade.util.M;
 import com.zzzyt.jade.util.U;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -37,7 +38,7 @@ public class BasicPlayer implements Player {
 		this.radius = radius;
 		this.speedHigh = speedHigh;
 		this.speedLow = speedLow;
-		this.x = U.screenToWorldX(U.getConfig().w / 2);
+		this.x = U.screenToWorldX(U.config().w / 2);
 		this.y = U.screenToWorldY(32);
 		this.frameLength = frameLength;
 		this.transitionFrameLength = transitionFrameLength;
@@ -54,12 +55,13 @@ public class BasicPlayer implements Player {
 		this.toLeft = atlas.findRegions(regionName + "_toLeft");
 		this.toRight = atlas.findRegions(regionName + "_toRight");
 		this.hitbox = new Sprite(atlas.findRegion(regionName + "_hitbox"));
+		hitbox.setAlpha(0);
 		this.frameLength = frameLength;
 		this.transitionFrameLength = transitionFrameLength;
 		this.radius = radius;
 		this.speedHigh = speedHigh;
 		this.speedLow = speedLow;
-		this.x = U.screenToWorldX(U.getConfig().w / 2);
+		this.x = U.screenToWorldX(U.config().w / 2);
 		this.y = U.screenToWorldY(32);
 		this.timer1 = 0;
 		this.timer2 = 0;
@@ -79,7 +81,7 @@ public class BasicPlayer implements Player {
 		this.radius = radius;
 		this.speedHigh = speedHigh;
 		this.speedLow = speedLow;
-		this.x = U.screenToWorldX(U.getConfig().w / 2);
+		this.x = U.screenToWorldX(U.config().w / 2);
 		this.y = U.screenToWorldY(32);
 		this.timer1 = 0;
 		this.timer2 = 0;
@@ -89,10 +91,10 @@ public class BasicPlayer implements Player {
 	public void draw(Batch batch) {
 		TextureRegion tmp = getTexture();
 		batch.draw(tmp, x - tmp.getRegionWidth() / 2, y - tmp.getRegionHeight() / 2);
-		if (U.checkKey(U.getConfig().keySlow)) {
-			hitbox.setAlpha(MathUtils.clamp(hitbox.getColor().a + 0.1f, 0, 1));
+		if (U.checkKey(U.config().keySlow)) {
+			U.addAlpha(hitbox, 0.1f);
 		} else {
-			hitbox.setAlpha(MathUtils.clamp(hitbox.getColor().a - 0.1f, 0, 1));
+			U.addAlpha(hitbox, -0.1f);
 		}
 		if (hitbox.getColor().a > 0) {
 			hitbox.draw(batch);
@@ -141,23 +143,23 @@ public class BasicPlayer implements Player {
 	}
 
 	@Override
-	public void update(int frame) {
+	public void update(int t) {
 		dx = 0;
 		dy = 0;
 		float speed = speedHigh;
-		if (U.checkKey(U.getConfig().keySlow)) {
+		if (U.checkKey(U.config().keySlow)) {
 			speed = speedLow;
 		}
-		if (U.checkKey(U.getConfig().keyUp)) {
+		if (U.checkKey(U.config().keyUp)) {
 			dy++;
 		}
-		if (U.checkKey(U.getConfig().keyDown)) {
+		if (U.checkKey(U.config().keyDown)) {
 			dy--;
 		}
-		if (U.checkKey(U.getConfig().keyLeft)) {
+		if (U.checkKey(U.config().keyLeft)) {
 			dx--;
 		}
-		if (U.checkKey(U.getConfig().keyRight)) {
+		if (U.checkKey(U.config().keyRight)) {
 			dx++;
 		}
 		if (Math.abs(dx) > 0 && Math.abs(dy) == 0) {
@@ -168,13 +170,13 @@ public class BasicPlayer implements Player {
 			x += speed * dx / M.SQRT2;
 			y += speed * dy / M.SQRT2;
 		}
-		x = MathUtils.clamp(x, radius - U.getConfig().originX, U.getConfig().w - radius - U.getConfig().originX);
-		y = MathUtils.clamp(y, radius - U.getConfig().originY, U.getConfig().h - radius - U.getConfig().originY);
+		x = MathUtils.clamp(x, radius - U.config().originX, U.config().w - radius - U.config().originX);
+		y = MathUtils.clamp(y, radius - U.config().originY, U.config().h - radius - U.config().originY);
 
 		hitbox.setPosition(x - hitbox.getWidth() / 2, y - hitbox.getHeight() / 2);
 		hitbox.setRotation(M.normalizeAngle(hitbox.getRotation() + 4f));
 
-		timer1 = frame % frameLength;
+		timer1 = t % frameLength;
 		if (dx < 0) {
 			if (pos > -toLeft.size * transitionFrameLength) {
 				pos--;
@@ -221,5 +223,10 @@ public class BasicPlayer implements Player {
 	@Override
 	public float getRadius() {
 		return radius;
+	}
+
+	@Override
+	public int getZIndex() {
+		return -1024;
 	}
 }

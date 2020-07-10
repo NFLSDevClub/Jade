@@ -1,7 +1,7 @@
 package com.zzzyt.jade.game.task;
 
+import com.zzzyt.jade.game.Operator;
 import com.zzzyt.jade.game.Task;
-import com.zzzyt.jade.game.operator.Operator;
 import com.zzzyt.jade.util.J;
 
 public class AddOperator implements Task {
@@ -18,7 +18,7 @@ public class AddOperator implements Task {
 	}
 
 	@Override
-	public void update(int frame) {
+	public void update(int t) {
 		J.addOperator(operator);
 	}
 

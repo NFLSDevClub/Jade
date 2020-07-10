@@ -52,14 +52,14 @@ public class Plural implements Task {
 	}
 
 	@Override
-	public void update(int frame) {
+	public void update(int t) {
 		if (!isFinished()) {
 			if (firstTime) {
 				getCurrentTask().init();
 				firstTime = false;
 			}
 			while (true) {
-				getCurrentTask().update(frame);
+				getCurrentTask().update(t);
 				if (getCurrentTask().isFinished()) {
 					currentTask++;
 					if (currentTask >= tasks.size) {

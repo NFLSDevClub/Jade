@@ -11,7 +11,7 @@ public class ClearBullets implements Task {
 	}
 
 	@Override
-	public void update(int frame) {
+	public void update(int t) {
 		J.clearBullets();
 	}
 

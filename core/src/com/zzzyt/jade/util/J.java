@@ -2,11 +2,12 @@ package com.zzzyt.jade.util;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
+import com.zzzyt.jade.game.Drawable;
 import com.zzzyt.jade.game.Jade;
+import com.zzzyt.jade.game.Operator;
+import com.zzzyt.jade.game.Player;
 import com.zzzyt.jade.game.Task;
 import com.zzzyt.jade.game.entity.Bullet;
-import com.zzzyt.jade.game.entity.Player;
-import com.zzzyt.jade.game.operator.Operator;
 
 public class J {
 
@@ -41,12 +42,12 @@ public class J {
 		return Jade.session.getBullets();
 	}
 
-	public static Jade addOperator(Operator operator) {
-		return Jade.session.addOperator(operator);
+	public static void addOperator(Operator operator) {
+		Jade.session.addOperator(operator);
 	}
 
-	public static Jade removeOperator(Operator operator) {
-		return Jade.session.removeOperator(operator);
+	public static void removeOperator(Operator operator) {
+		Jade.session.removeOperator(operator);
 	}
 
 	public static Array<Operator> getOperators(int tag) {
@@ -61,12 +62,13 @@ public class J {
 		Jade.session.operators.clear();
 	}
 
-	public static Jade addTask(Task Task) {
-		return Jade.session.addTask(Task);
+	public static void addTask(Task task) {
+		Jade.session.addTask(task);
+		task.init();
 	}
 
-	public static Jade removeTask(Task task) {
-		return Jade.session.removeTask(task);
+	public static void removeTask(Task task) {
+		Jade.session.removeTask(task);
 	}
 
 	public static Array<Task> getTasks() {
@@ -83,12 +85,12 @@ public class J {
 		return Jade.session.frame();
 	}
 
-	public static Jade add(Bullet bullet) {
-		return Jade.session.add(bullet);
+	public static void add(Bullet bullet) {
+		Jade.session.add(bullet);
 	}
 
-	public static Jade remove(Bullet bullet) {
-		return Jade.session.remove(bullet);
+	public static void remove(Bullet bullet) {
+		Jade.session.remove(bullet);
 	}
 
 	public static void clearBullets() {
@@ -97,6 +99,10 @@ public class J {
 			if (tmp.get(i) != null)
 				J.remove(tmp.get(i));
 		}
+	}
+	
+	public static void addDrawable(Drawable drawable) {
+		Jade.session.addDrawable(drawable);
 	}
 
 	public static void onHit() {

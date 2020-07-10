@@ -33,11 +33,15 @@ public class JadeDemo implements ApplicationListener {
 
 	@Override
 	public void create() {
-		Gdx.app.setLogLevel(U.getConfig().logLevel);
+		Gdx.app.setLogLevel(U.config().logLevel);
 
 		U.game = this;
 
-		this.logger = new Logger("Main", U.getConfig().logLevel);
+		if(U.config().fullScreenOnStart) {
+			Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+		}
+		
+		this.logger = new Logger("Main", U.config().logLevel);
 		logger.info("Game start!");
 
 		A.init();
@@ -54,7 +58,7 @@ public class JadeDemo implements ApplicationListener {
 		A.load("default_shot.shot");
 		A.finishLoading();
 
-		B.setSheet(U.getConfig().defaultShotSheet);
+		B.setSheet(U.config().defaultShotSheet);
 
 		this.blocker = new InputBlocker();
 		blocker.enable();
@@ -83,9 +87,9 @@ public class JadeDemo implements ApplicationListener {
 	public void render() {
 		BGM.update();
 
-		if (U.getConfig().allowFullScreen && Gdx.input.isKeyPressed(Keys.F4)) {
+		if (U.config().allowFullScreen && Gdx.input.isKeyPressed(Keys.F4)) {
 			if (Gdx.graphics.isFullscreen()) {
-				Gdx.graphics.setWindowedMode(U.getConfig().windowWidth, U.getConfig().windowHeight);
+				Gdx.graphics.setWindowedMode(U.config().windowWidth, U.config().windowHeight);
 			} else {
 				Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 			}
