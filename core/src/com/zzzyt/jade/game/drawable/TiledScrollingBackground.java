@@ -2,7 +2,6 @@ package com.zzzyt.jade.game.drawable;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.zzzyt.jade.game.Drawable;
 import com.zzzyt.jade.util.M;
@@ -59,7 +58,7 @@ public class TiledScrollingBackground implements Drawable {
 
 	@Override
 	public void update(int t) {
-		tile.getColor().a = MathUtils.clamp(tile.getColor().a + delta, 0, 1);
+		tile.getColor().a = M.clamp(tile.getColor().a + delta, 0, 1);
 		y = M.safeMod(y - scrollSpeed, tile.getRegion().getRegionHeight());
 	}
 

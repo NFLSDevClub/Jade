@@ -6,6 +6,22 @@ public class M {
 
 	public static final float SQRT2 = 1.41421356237309505f;
 
+	public static int clamp(int value, int min, int max) {
+		return M.clamp(value, min, max);
+	}
+
+	public static long clamp(long value, long min, long max) {
+		return M.clamp(value, min, max);
+	}
+
+	public static float clamp(float value, float min, float max) {
+		return M.clamp(value, min, max);
+	}
+
+	public static double clamp(double value, double min, double max) {
+		return M.clamp(value, min, max);
+	}
+
 	public static int safeMod(int x, int mod) {
 		if (x >= 0) {
 			return x % mod;

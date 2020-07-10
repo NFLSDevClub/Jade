@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 
 public class BasicPlayer implements Player {
@@ -170,8 +169,8 @@ public class BasicPlayer implements Player {
 			x += speed * dx / M.SQRT2;
 			y += speed * dy / M.SQRT2;
 		}
-		x = MathUtils.clamp(x, radius - U.config().originX, U.config().w - radius - U.config().originX);
-		y = MathUtils.clamp(y, radius - U.config().originY, U.config().h - radius - U.config().originY);
+		x = M.clamp(x, radius - U.config().originX, U.config().w - radius - U.config().originX);
+		y = M.clamp(y, radius - U.config().originY, U.config().h - radius - U.config().originY);
 
 		hitbox.setPosition(x - hitbox.getWidth() / 2, y - hitbox.getHeight() / 2);
 		hitbox.setRotation(M.normalizeAngle(hitbox.getRotation() + 4f));

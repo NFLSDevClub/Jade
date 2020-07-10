@@ -6,7 +6,6 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
@@ -36,7 +35,7 @@ public class U {
 	}
 
 	public static float safeDeltaTime() {
-		return MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0f, 0.1f);
+		return M.clamp(Gdx.graphics.getDeltaTime(), 0f, 0.1f);
 	}
 
 	public static boolean matchKey(int keycode, int[] key) {
@@ -64,7 +63,7 @@ public class U {
 	}
 
 	public static Sprite addAlpha(Sprite sprite, float delta) {
-		sprite.setAlpha(MathUtils.clamp(sprite.getColor().a + delta, 0, 1));
+		sprite.setAlpha(M.clamp(sprite.getColor().a + delta, 0, 1));
 		return sprite;
 	}
 

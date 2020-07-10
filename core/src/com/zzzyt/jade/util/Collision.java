@@ -1,7 +1,5 @@
 package com.zzzyt.jade.util;
 
-import com.badlogic.gdx.math.MathUtils;
-
 public class Collision {
 
 	public static enum CollisionMode {
@@ -40,8 +38,8 @@ public class Collision {
 	}
 
 	public static boolean circleRect(float x1, float y1, float r, float x2, float y2, float w, float h) {
-		x2 = MathUtils.clamp(x1, x2, x2 + w);
-		y2 = MathUtils.clamp(y1, y2, y2 + h);
+		x2 = M.clamp(x1, x2, x2 + w);
+		y2 = M.clamp(y1, y2, y2 + h);
 
 		if (M.dist2(x1, y1, x2, y2) <= M.sqr(r)) {
 			return true;
@@ -50,8 +48,8 @@ public class Collision {
 	}
 
 	public static boolean circleSquare(float x1, float y1, float r, float x2, float y2, float s) {
-		x2 = MathUtils.clamp(x1, x2 - s / 2, x2 + s / 2);
-		y2 = MathUtils.clamp(y1, y2 - s / 2, y2 + s / 2);
+		x2 = M.clamp(x1, x2 - s / 2, x2 + s / 2);
+		y2 = M.clamp(y1, y2 - s / 2, y2 + s / 2);
 
 		if (M.dist2(x1, y1, x2, y2) <= M.sqr(r)) {
 			return true;
