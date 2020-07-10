@@ -25,7 +25,6 @@ public class GameScreen extends BasicScreen {
 	private GameFrame frame;
 
 	private Grid pauseMenu;
-	private boolean paused;
 
 	public GameScreen() {
 		super();
@@ -63,13 +62,12 @@ public class GameScreen extends BasicScreen {
 		pauseMenu.selectFirst();
 
 		startGame();
-
-		this.paused = false;
 	}
 
 	@Override
 	public void render(float delta) {
-		if (!paused) {
+		boolean running = jade.isRunning();
+		if (running) {
 			if (Gdx.input.isKeyPressed(Keys.CONTROL_LEFT)
 					&& (!J.isGameModeReplay() || U.config().allowSpeedUpOutOfReplay)) {
 				for (int i = 0; i < U.config().speedUpMultiplier - 1; i++) {
@@ -78,17 +76,17 @@ public class GameScreen extends BasicScreen {
 				}
 			}
 			jade.preRender();
-			jade.draw();
-
-			// Important!!!! Or viewport will become stretched.
-			Gdx.gl20.glViewport(viewport.getScreenX(), viewport.getScreenY(), viewport.getScreenWidth(),
-					viewport.getScreenHeight());
 		}
+		jade.draw();
+
+		// Important!!!! Or viewport will become stretched.
+		Gdx.gl20.glViewport(viewport.getScreenX(), viewport.getScreenY(), viewport.getScreenWidth(),
+				viewport.getScreenHeight());
 
 		st.act();
 		st.draw();
 
-		if (!paused) {
+		if (running) {
 			jade.postRender();
 		}
 	}
@@ -114,7 +112,7 @@ public class GameScreen extends BasicScreen {
 	}
 
 	private void pauseGame() {
-		paused = true;
+		jade.pause();
 		BGM.pause();
 		frame.clearActions();
 		frame.addAction(Actions.color(Color.GRAY, 0.3f));
@@ -126,7 +124,7 @@ public class GameScreen extends BasicScreen {
 		pauseMenu.disable();
 		frame.clearActions();
 		frame.addAction(Actions.sequence(Actions.color(Color.WHITE, 0.5f), Actions.run(() -> {
-			paused = false;
+			jade.resume();
 			BGM.resume();
 		})));
 	}

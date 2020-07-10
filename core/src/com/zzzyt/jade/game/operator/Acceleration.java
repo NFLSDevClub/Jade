@@ -8,7 +8,7 @@ public class Acceleration implements Operator {
 	private int tag;
 	private float acceleration, target;
 
-	public Acceleration(int tag, float acceleration, int target) {
+	public Acceleration(int tag, float acceleration, float target) {
 		this.tag = tag;
 		this.acceleration = acceleration;
 		this.target = target;

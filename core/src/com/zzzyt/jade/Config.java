@@ -74,10 +74,10 @@ public class Config {
 		offsetY = 16;
 		originX = w / 2;
 		originY = h;
-		deleteDistance = 64;
+		deleteDistance = 256;
 		safeDistance = 16;
 		collisionMode = CollisionMode.circleCircleOrtho;
-		invulnerable = false;
+		invulnerable = true;
 		cleanupBulletCount = 8192;
 		cleanupBlankCount = 512;
 		defaultShotSheet = "default_shot.shot";

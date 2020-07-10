@@ -42,8 +42,9 @@ public class J {
 		return Jade.session.getBullets();
 	}
 
-	public static void addOperator(Operator operator) {
+	public static Operator addOperator(Operator operator) {
 		Jade.session.addOperator(operator);
+		return operator;
 	}
 
 	public static void removeOperator(Operator operator) {
@@ -62,9 +63,10 @@ public class J {
 		Jade.session.operators.clear();
 	}
 
-	public static void addTask(Task task) {
+	public static Task addTask(Task task) {
 		Jade.session.addTask(task);
 		task.init();
+		return task;
 	}
 
 	public static void removeTask(Task task) {
@@ -85,8 +87,9 @@ public class J {
 		return Jade.session.frame();
 	}
 
-	public static void add(Bullet bullet) {
+	public static Bullet add(Bullet bullet) {
 		Jade.session.add(bullet);
+		return bullet;
 	}
 
 	public static void remove(Bullet bullet) {

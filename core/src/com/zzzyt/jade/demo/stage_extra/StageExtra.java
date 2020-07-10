@@ -14,5 +14,8 @@ public class StageExtra extends Plural {
 		add(new StageExtraMid1());
 		add(new WaitForBulletClear());
 		add(new Wait(300));
+		add(new StageExtraMid2());
+		add(new WaitForBulletClear());
+		add(new Wait(300));
 	}
 }

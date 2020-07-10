@@ -71,33 +71,34 @@ public class Jade implements Disposable {
 	}
 
 	public void draw() {
-		fbo.begin();
-		U.glClear();
-		batch.begin();
-		for (int i = 0; i < nDrawables.size; i++) {
-			if (nDrawables.get(i) != null) {
-				nDrawables.get(i).draw(batch);
+		if (running) {
+			fbo.begin();
+			U.glClear();
+			batch.begin();
+			for (int i = 0; i < nDrawables.size; i++) {
+				if (nDrawables.get(i) != null) {
+					nDrawables.get(i).draw(batch);
+				}
 			}
-		}
-		for (int i = 0; i < bullets.size; i++) {
-			if (bullets.get(i) != null) {
-				bullets.get(i).draw(batch);
+			for (int i = 0; i < bullets.size; i++) {
+				if (bullets.get(i) != null) {
+					bullets.get(i).draw(batch);
+				}
 			}
-		}
-		for (int i = 0; i < pDrawables.size; i++) {
-			if (pDrawables.get(i) != null) {
-				pDrawables.get(i).draw(batch);
+			for (int i = 0; i < pDrawables.size; i++) {
+				if (pDrawables.get(i) != null) {
+					pDrawables.get(i).draw(batch);
+				}
 			}
+			batch.end();
+			fbo.end();
 		}
-		batch.end();
-		fbo.end();
 	}
 
 	public void preRender() {
 		if (!running)
 			return;
 		frame++;
-		player.update(frame);
 		Bullet tmp;
 		for (int i = 0; i < candidateCount; i++) {
 			tmp = candidates.get(i);
@@ -171,6 +172,10 @@ public class Jade implements Disposable {
 		}
 	}
 
+	public FrameBuffer getFrameBuffer() {
+		return fbo;
+	}
+
 	public TextureRegion getFrameTexture() {
 		return fboRegion;
 	}
@@ -222,9 +227,14 @@ public class Jade implements Disposable {
 		running = false;
 	}
 
-	private void pause() {
+	public void pause() {
 		logger.info("Pausing Jade session...");
 		running = false;
+	}
+
+	public void resume() {
+		logger.info("Resuming Jade seesion...");
+		running = true;
 	}
 
 	public void onHit() {
