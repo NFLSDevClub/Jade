@@ -7,6 +7,7 @@ import com.zzzyt.jade.ui.Grid;
 import com.zzzyt.jade.ui.GridImage;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.Global;
+import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.util.U;
 
 public class PlayerSelectScreen extends BasicScreen {
@@ -79,8 +80,10 @@ public class PlayerSelectScreen extends BasicScreen {
 
 	@Override
 	protected void onQuit() {
-		if ("extra".equals(Global.get("_gameMode"))) {
-			U.switchScreen("start", 0.5f);
+		if (J.isGameModeSpellPractice()) {
+			U.switchScreen("spellSelect", 0.5f);
+		} else if (J.isGameModeStagePractice()) {
+			U.switchScreen("stageSelect", 0.5f);
 		} else {
 			U.switchScreen("difficultySelect", 0.5f);
 		}

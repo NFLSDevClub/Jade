@@ -9,6 +9,7 @@ import com.zzzyt.jade.demo.difficulty.DifficultyExtra;
 import com.zzzyt.jade.demo.player.PlayerMarisa;
 import com.zzzyt.jade.demo.player.PlayerReimu;
 import com.zzzyt.jade.game.Jade;
+import com.zzzyt.jade.game.Task;
 import com.zzzyt.jade.ui.GameFrame;
 import com.zzzyt.jade.ui.Grid;
 import com.zzzyt.jade.ui.GridLabel;
@@ -147,10 +148,12 @@ public class GameScreen extends BasicScreen {
 			jade.setPlayer(new PlayerMarisa());
 		}
 
-		if ("regular".equals(Global.get("_gameMode"))) {
+		if (J.isGameModeRegular()) {
 			J.addTask(new DifficultyRegular((int) Global.get("_difficulty")));
-		} else if ("extra".equals(Global.get("_gameMode"))) {
+		} else if (J.isGameModeExtra()) {
 			J.addTask(new DifficultyExtra());
+		} else if (J.isGameModeSpellPractice() || J.isGameModeStagePractice()) {
+			J.addTask((Task) Global.get("_practice"));
 		}
 
 		BGM.play(null);

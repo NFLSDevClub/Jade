@@ -39,24 +39,24 @@ public class StartScreen extends BasicScreen {
 		st.addActor(grid);
 		grid.add(new GridLabel("Game Start", 24, 430, 290, 200, 30, 0, 0, () -> {
 			A.finishLoading();
-			Global.put("_gameMode","regular");
+			Global.put("_gameMode", "regular");
 			U.switchScreen("difficultySelect", 0.5f);
 		}));
 		grid.add(new GridLabel("Extra Start", 24, 420, 260, 200, 30, 0, 1, () -> {
 			A.finishLoading();
-			Global.put("_gameMode","extra");
-			U.switchScreen("playerSelect", 0.5f);
+			Global.put("_gameMode", "extra");
+			U.switchScreen("difficultySelect", 0.5f);
 		}));
 		grid.add(new GridLabel("Stage Practice", 24, 410, 230, 200, 30, 0, 2, () -> {
 			A.finishLoading();
-//			Global.put("_gameMode","stagePractice");
-//			Game.switchScreen("difficultySelect", 0.5f);
-		})).disable();
+			Global.put("_gameMode","stagePractice");
+			U.switchScreen("difficultySelect", 0.5f);
+		}));
 		grid.add(new GridLabel("Spell Practice", 24, 400, 200, 200, 30, 0, 3, () -> {
 			A.finishLoading();
-			Global.put("_gameMode","spellPractice");
+			Global.put("_gameMode", "spellPractice");
 			U.switchScreen("difficultySelect", 0.5f);
-		})).disable();
+		}));
 		grid.add(new GridLabel("Replay", 24, 390, 170, 200, 30, 0, 4, () -> {
 			A.finishLoading();
 		})).disable();
