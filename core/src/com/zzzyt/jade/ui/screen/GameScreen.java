@@ -14,6 +14,7 @@ import com.zzzyt.jade.ui.GameFrame;
 import com.zzzyt.jade.ui.Grid;
 import com.zzzyt.jade.ui.GridLabel;
 import com.zzzyt.jade.ui.KeyListener;
+import com.zzzyt.jade.ui.YesNoMenu;
 import com.zzzyt.jade.util.Global;
 import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.util.U;
@@ -26,6 +27,7 @@ public class GameScreen extends BasicScreen {
 	private GameFrame frame;
 
 	private Grid pauseMenu;
+	private YesNoMenu yesNoMenu;
 
 	public GameScreen() {
 		super();
@@ -43,10 +45,19 @@ public class GameScreen extends BasicScreen {
 		frame.setBounds(U.config().offsetX, U.config().offsetY, U.config().w, U.config().h);
 		st.addActor(frame);
 
-		this.pauseMenu = new Grid(0, 0, true, () -> Actions.parallel(Actions.fadeIn(0.3f), Actions.moveTo(0, 0, 0.2f)),
-				() -> Actions.parallel(Actions.fadeOut(0.3f), Actions.moveTo(-30, 0, 0.3f)));
+		this.yesNoMenu = new YesNoMenu(null, null, 0, 0);
+		yesNoMenu.setPosition(250, 150);
+		st.addActor(yesNoMenu);
+		yesNoMenu.setNo(() -> {
+			yesNoMenu.exit();
+		});
+		yesNoMenu.disable();
+		yesNoMenu.setColor(new Color(1, 1, 1, 0));
+
+		this.pauseMenu = new Grid(0, 0, true, () -> Actions.fadeIn(0.3f), () -> Actions.fadeOut(0.3f));
+		pauseMenu.setPosition(-30, 0);
 		st.addActor(pauseMenu);
-		input.addProcessor(pauseMenu);
+		yesNoMenu.setParent(pauseMenu);
 		pauseMenu.disable();
 		pauseMenu.setColor(new Color(1, 1, 1, 0));
 
@@ -54,19 +65,33 @@ public class GameScreen extends BasicScreen {
 			resumeGame();
 		}));
 		pauseMenu.add(new GridLabel("Retart Game", 18, 55, 170, 200, 20, 0, 1, () -> {
-			startGame();
-			resumeGame();
+			yesNoMenu.setYes(() -> {
+				yesNoMenu.deactivate();
+				yesNoMenu.disable();
+				startGame();
+				resumeGame();
+			});
+			yesNoMenu.activate();
+			yesNoMenu.enable();
+			yesNoMenu.selectFirst();
+			pauseMenu.disable();
 		}));
 		pauseMenu.add(new GridLabel("Quit Game", 18, 60, 140, 200, 20, 0, 2, () -> {
 			switchToStart();
 		}));
+		pauseMenu.updateComponent();
 		pauseMenu.selectFirst();
 
+		input.addProcessor(pauseMenu);
+		input.addProcessor(yesNoMenu);
 		startGame();
 	}
 
 	@Override
 	public void render(float delta) {
+		frame.setRotation(J.frame());
+		frame.setOrigin(frame.getWidth() / 2, frame.getHeight() / 2);
+
 		boolean running = jade.isRunning();
 		if (running) {
 			if (Gdx.input.isKeyPressed(Keys.CONTROL_LEFT)
@@ -119,15 +144,19 @@ public class GameScreen extends BasicScreen {
 		frame.addAction(Actions.color(Color.GRAY, 0.3f));
 		pauseMenu.enable();
 		pauseMenu.activate();
+		pauseMenu.selectFirst();
+		pauseMenu.addAction(Actions.moveTo(0, 0, 0.2f));
 	}
 
 	private void resumeGame() {
-		pauseMenu.disable();
 		frame.clearActions();
 		frame.addAction(Actions.sequence(Actions.color(Color.WHITE, 0.5f), Actions.run(() -> {
 			jade.resume();
 			BGM.resume();
 		})));
+		pauseMenu.disable();
+		pauseMenu.deactivate();
+		pauseMenu.addAction(Actions.moveTo(-30, 0, 0.3f));
 	}
 
 	private void switchToStart() {

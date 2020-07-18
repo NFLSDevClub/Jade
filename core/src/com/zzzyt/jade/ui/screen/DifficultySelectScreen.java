@@ -19,7 +19,7 @@ public class DifficultySelectScreen extends BasicScreen {
 
 	@Override
 	public void show() {
-		init("mus/E.0107.ogg", "bg/select.png");
+		init("mus/E.0109.ogg", "bg/select.png");
 
 		this.grid = new Grid(true);
 		st.addActor(grid);
@@ -63,6 +63,7 @@ public class DifficultySelectScreen extends BasicScreen {
 		} else {
 			grid.select(0, J.difficulty() - 1);
 		}
+		grid.updateComponent();
 		grid.update();
 		input.addProcessor(grid);
 	}

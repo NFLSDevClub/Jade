@@ -24,7 +24,7 @@ public class StartScreen extends BasicScreen {
 
 	@Override
 	public void show() {
-		init("mus/E.0107.ogg", "bg/start.png");
+		init("mus/E.0109.ogg", "bg/start.png");
 
 		this.title = new Label("Jade Demo Game", new LabelStyle(A.getFont("font/LBRITE.ttf", 60), Color.BLACK));
 		title.setPosition(90, 390);
@@ -49,7 +49,7 @@ public class StartScreen extends BasicScreen {
 		}));
 		grid.add(new GridLabel("Stage Practice", 24, 410, 230, 200, 30, 0, 2, () -> {
 			A.finishLoading();
-			Global.put("_gameMode","stagePractice");
+			Global.put("_gameMode", "stagePractice");
 			U.switchScreen("difficultySelect", 0.5f);
 		}));
 		grid.add(new GridLabel("Spell Practice", 24, 400, 200, 200, 30, 0, 3, () -> {
@@ -74,7 +74,7 @@ public class StartScreen extends BasicScreen {
 		}));
 		grid.activate();
 		grid.selectFirst();
-		grid.update();
+		grid.updateComponent();
 		input.addProcessor(grid);
 	}
 
@@ -107,7 +107,11 @@ public class StartScreen extends BasicScreen {
 
 	@Override
 	protected void onQuit() {
-		U.quit();
+		if (grid.selectedY == 8) {
+			U.quit();
+		} else {
+			grid.select(0, 8);
+		}
 	}
 
 	@Override

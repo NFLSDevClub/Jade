@@ -20,7 +20,7 @@ public class PlayerSelectScreen extends BasicScreen {
 
 	@Override
 	public void show() {
-		init("mus/E.0107.ogg", "bg/select.png");
+		init("mus/E.0109.ogg", "bg/select.png");
 
 		this.grid = new Grid(true);
 		st.addActor(grid);
@@ -60,6 +60,7 @@ public class PlayerSelectScreen extends BasicScreen {
 		} else if ("marisa".equals(Global.get("_player"))) {
 			grid.select(1, 0);
 		}
+		grid.updateComponent();
 		grid.update();
 		input.addProcessor(grid);
 	}

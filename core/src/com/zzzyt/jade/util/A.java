@@ -85,6 +85,8 @@ public class A {
 			load(fileName, BitmapFont.class);
 		else if ("ttf".equals(extension))
 			load(fileName, FreeTypeFontGenerator.class);
+		else if ("otf".equals(extension))
+			load(fileName, FreeTypeFontGenerator.class);
 		else if ("shot".equals(extension))
 			load(fileName, ShotSheet.class);
 		else if ("p".equals(extension))

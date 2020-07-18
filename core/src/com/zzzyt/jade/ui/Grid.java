@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -237,13 +238,28 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 		} else if (U.matchKey(keycode, U.config().keyRight)) {
 			select(selectedX + 1, selectedY, 1, 0);
 		} else if (U.matchKey(keycode, U.config().keySelect)) {
+			boolean flag = false;
 			for (GridComponent button : grid) {
 				if (button.isActive()) {
 					button.trigger();
+					flag = true;
 				}
 			}
+			if (flag) {
+				return true;
+			}
+		} else if (U.matchKey(keycode, U.config().keyCancel)) {
+			exit();
 		}
 		return false;
+	}
+
+	public void exit() {
+		if (parent != null) {
+			parent.enable();
+			disable();
+			deactivate();
+		}
 	}
 
 	@Override
@@ -319,10 +335,10 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 		return active;
 	}
 
-	public void updateButtons() {
+	public void updateComponent() {
 		for (GridComponent component : grid) {
 			if (component instanceof Grid) {
-				((Grid) component).updateButtons();
+				((Grid) component).updateComponent();
 			} else {
 				component.update();
 			}
@@ -331,7 +347,7 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 
 	@Override
 	public void update() {
-		if (enabled && active) {
+		if (active) {
 			clearActions();
 			if (activeAction != null) {
 				try {

@@ -35,15 +35,20 @@ public class GridLabel extends Label implements GridComponent {
 		this.gridY = gridY;
 		this.runnable = runnable;
 		this.active = false;
-		this.activeStyle = new LabelStyle(A.getFont(U.config().UIFont, fontSize, 2, Color.BLACK), U.config().UIFontColor);
-		this.inactiveStyle = new LabelStyle(A.getFont(U.config().UIFont, fontSize, 2, Color.BLACK), U.config().UIFontColor);
+		this.activeStyle = new LabelStyle(A.getFont(U.config().UIFont, fontSize, 2, Color.BLACK),
+				U.config().UIFontColor);
+		this.inactiveStyle = new LabelStyle(A.getFont(U.config().UIFont, fontSize, 2, Color.BLACK),
+				U.config().UIFontColor);
 		this.activeAction = () -> Actions.parallel(
-				Actions.forever(Actions.sequence(Actions.alpha(0.6f, 0.1f, Interpolation.fade),
-						Actions.alpha(1f, 0.1f, Interpolation.fade))),
-				Actions.sequence(Actions.moveTo(staticX - 10, staticY, 0.1f, Interpolation.sine),
-						Actions.moveTo(staticX, staticY, 0.1f, Interpolation.sine)));
+				Actions.sequence(Actions.color(new Color(1, 0.6f, 0.6f, 1)),
+						Actions.moveTo(staticX + 2, staticY, 0.03f, Interpolation.sine),
+						Actions.moveTo(staticX - 4, staticY, 0.06f, Interpolation.sine),
+						Actions.moveTo(staticX, staticY, 0.03f, Interpolation.sine)),
+				Actions.forever(Actions.sequence(Actions.color(Color.WHITE, 1f),
+						Actions.color(new Color(1, 0.6f, 0.6f, 1), 1f))));
 		this.inactiveAction = () -> Actions.parallel(Actions.alpha(1f),
-				Actions.moveTo(staticX, staticY, 0.1f, Interpolation.sine));
+				Actions.moveTo(staticX, staticY, 0.1f, Interpolation.sine),
+				Actions.color(new Color(0.6f, 0.3f, 0.3f, 1)));
 		this.enabled = true;
 		setBounds(x, y, width, height);
 	}
@@ -75,12 +80,7 @@ public class GridLabel extends Label implements GridComponent {
 
 	@Override
 	public void update() {
-		if (enabled) {
-			setColor(Color.WHITE);
-		} else {
-			setColor(Color.GRAY);
-		}
-		if (enabled && active) {
+		if (active) {
 			if (activeStyle != null)
 				setStyle(activeStyle);
 			getActions().clear();
@@ -102,6 +102,9 @@ public class GridLabel extends Label implements GridComponent {
 					e.printStackTrace();
 				}
 			}
+		}
+		if (!enabled) {
+			setStyle(new LabelStyle(inactiveStyle.font, inactiveStyle.fontColor.cpy().mul(0.5f, 0.5f, 0.5f, 1)));
 		}
 	}
 

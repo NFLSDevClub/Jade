@@ -49,9 +49,9 @@ public class JadeDemo implements ApplicationListener {
 		A.init();
 
 		BGM.register(new BackgroundMusic("mus/Idea12.ogg", 0, 12));
-		BGM.register(new BackgroundMusic("mus/E.0107.ogg", 10, Float.MAX_VALUE));
+		BGM.register(new BackgroundMusic("mus/E.0109.ogg", 10, Float.MAX_VALUE));
 		BGM.register(new BackgroundMusic("mus/Yet Another Tetris (Piano ver.).ogg", 0, Float.MAX_VALUE));
-		A.load("font/SongSC.ttf");
+		A.load(U.config().UIFont);
 		A.load("font/LBRITE.ttf");
 		A.load("font/LBRITEI.ttf");
 		A.load("font/debug.fnt");
