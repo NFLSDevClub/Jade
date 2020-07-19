@@ -10,8 +10,6 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.zzzyt.jade.game.entity.Bullet;
-import com.zzzyt.jade.util.B;
-import com.zzzyt.jade.util.M;
 import com.zzzyt.jade.util.U;
 
 public class Jade implements Disposable {
@@ -30,12 +28,11 @@ public class Jade implements Disposable {
 	public Array<Drawable> nDrawables, pDrawables;
 	public ObjectMap<Integer, Array<Operator>> operators;
 	public Array<Bullet> bullets;
-	public Array<Bullet> candidates;
 	public Player player;
 
 	private boolean running;
-	private int candidateCount;
 	private int bulletCount, blankCount;
+	private boolean paused;
 
 	public Jade() {
 		this.frame = 0;
@@ -57,7 +54,6 @@ public class Jade implements Disposable {
 
 		this.operators = new ObjectMap<Integer, Array<Operator>>();
 		this.bullets = new Array<Bullet>(false, 1024);
-		this.candidates = new Array<Bullet>(false, 256);
 		this.tasks = new Array<Task>(true, 16);
 		this.nDrawables = new Array<Drawable>(true, 16);
 		this.pDrawables = new Array<Drawable>(true, 16);
@@ -68,10 +64,11 @@ public class Jade implements Disposable {
 		Jade.session = this;
 
 		this.running = true;
+		this.paused = false;
 	}
 
 	public void draw() {
-		if (running) {
+		if (running && !paused) {
 			fbo.begin();
 			U.glClear();
 			batch.begin();
@@ -95,29 +92,12 @@ public class Jade implements Disposable {
 		}
 	}
 
-	public void preRender() {
-		if (!running)
-			return;
-		frame++;
-		Bullet tmp;
-		for (int i = 0; i < candidateCount; i++) {
-			tmp = candidates.get(i);
-			if (tmp.collide(player)) {
-				tmp.onHit();
-			}
-		}
-	}
-
-	public void postRender() {
-		if (!running) {
-			U.switchScreen("start");
-			return;
-		}
+	public void update() {
 		if (tasks.size == 0) {
 			terminate();
-			U.switchScreen("start");
 			return;
 		}
+		frame++;
 		for (int i = 0; i < tasks.size; i++) {
 			if (tasks.get(i) != null) {
 				tasks.get(i).update(frame);
@@ -153,23 +133,6 @@ public class Jade implements Disposable {
 			}
 			blankCount = 0;
 		}
-
-		candidateCount = 0;
-		Bullet tmp;
-		float dst = M.sqr(player.getRadius() + U.config().safeDistance);
-		for (int i = 0; i < bullets.size; i++) {
-			if (bullets.get(i) == null)
-				continue;
-			tmp = bullets.get(i);
-			if (tmp.dist2(player.getX(), player.getY()) <= M.sqr(tmp.getBoundingRadius()) + dst) {
-				if (candidates.size > candidateCount) {
-					candidates.set(candidateCount, tmp);
-				} else {
-					candidates.add(tmp);
-				}
-				candidateCount++;
-			}
-		}
 	}
 
 	public FrameBuffer getFrameBuffer() {
@@ -193,7 +156,6 @@ public class Jade implements Disposable {
 		bulletCount--;
 		bullets.set(bullet.id, null);
 		bullet.id = -1;
-		B.freeBullet(bullet);
 		return this;
 	}
 
@@ -229,17 +191,17 @@ public class Jade implements Disposable {
 
 	public void pause() {
 		logger.info("Pausing Jade session...");
-		running = false;
+		paused = true;
 	}
 
 	public void resume() {
 		logger.info("Resuming Jade seesion...");
-		running = true;
+		paused = false;
 	}
 
 	public void onHit() {
 		if (!U.config().invulnerable) {
-			pause();
+			terminate();
 		}
 	}
 
@@ -319,6 +281,10 @@ public class Jade implements Disposable {
 
 	public boolean isRunning() {
 		return running;
+	}
+
+	public boolean isPaused() {
+		return paused;
 	}
 
 }

@@ -176,6 +176,10 @@ public class Bullet implements Entity, Poolable {
 	}
 
 	public void update(int frame) {
+		if (collide(J.getPlayer())) {
+			J.onHit();
+		}
+
 		t++;
 		Array<Operator> tmp = J.getOperators(tag);
 		if (tmp != null) {

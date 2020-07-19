@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.zzzyt.jade.demo.stage1.Stage1;
-import com.zzzyt.jade.demo.stage_extra.StageExtra;
+import com.zzzyt.jade.demo.stageextra.StageExtra;
 import com.zzzyt.jade.game.Task;
 import com.zzzyt.jade.ui.Grid;
 import com.zzzyt.jade.ui.GridLabel;

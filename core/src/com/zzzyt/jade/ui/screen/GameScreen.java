@@ -3,6 +3,7 @@ package com.zzzyt.jade.ui.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.zzzyt.jade.demo.difficulty.DifficultyRegular;
 import com.zzzyt.jade.demo.difficulty.DifficultyExtra;
@@ -43,18 +44,15 @@ public class GameScreen extends BasicScreen {
 
 		this.frame = new GameFrame();
 		frame.setBounds(U.config().offsetX, U.config().offsetY, U.config().w, U.config().h);
+		frame.setOrigin(frame.getWidth() / 2, frame.getHeight() / 2);
 		st.addActor(frame);
 
-		this.yesNoMenu = new YesNoMenu(null, null, 0, 0);
-		yesNoMenu.setPosition(250, 150);
+		this.yesNoMenu = new YesNoMenu(250, 150);
 		st.addActor(yesNoMenu);
-		yesNoMenu.setNo(() -> {
-			yesNoMenu.exit();
-		});
 		yesNoMenu.disable();
 		yesNoMenu.setColor(new Color(1, 1, 1, 0));
 
-		this.pauseMenu = new Grid(0, 0, true, () -> Actions.fadeIn(0.3f), () -> Actions.fadeOut(0.3f));
+		this.pauseMenu = new Grid(0, 0, true, () -> Actions.fadeIn(0.2f), () -> Actions.fadeOut(0.1f));
 		pauseMenu.setPosition(-30, 0);
 		st.addActor(pauseMenu);
 		yesNoMenu.setParent(pauseMenu);
@@ -77,7 +75,17 @@ public class GameScreen extends BasicScreen {
 			pauseMenu.disable();
 		}));
 		pauseMenu.add(new GridLabel("Quit Game", 18, 60, 140, 200, 20, 0, 2, () -> {
-			switchToStart();
+			yesNoMenu.setYes(() -> {
+				yesNoMenu.deactivate();
+				yesNoMenu.disable();
+				pauseMenu.deactivate();
+				pauseMenu.disable();
+				switchToStart();
+			});
+			yesNoMenu.activate();
+			yesNoMenu.enable();
+			yesNoMenu.selectFirst();
+			pauseMenu.disable();
 		}));
 		pauseMenu.updateComponent();
 		pauseMenu.selectFirst();
@@ -89,19 +97,17 @@ public class GameScreen extends BasicScreen {
 
 	@Override
 	public void render(float delta) {
-		frame.setRotation(J.frame());
-		frame.setOrigin(frame.getWidth() / 2, frame.getHeight() / 2);
-
-		boolean running = jade.isRunning();
-		if (running) {
+		if (jade.isRunning() && !jade.isPaused()) {
 			if (Gdx.input.isKeyPressed(Keys.CONTROL_LEFT)
 					&& (!J.isGameModeReplay() || U.config().allowSpeedUpOutOfReplay)) {
 				for (int i = 0; i < U.config().speedUpMultiplier - 1; i++) {
-					jade.preRender();
-					jade.postRender();
+					jade.update();
 				}
 			}
-			jade.preRender();
+			jade.update();
+		}
+		if (!jade.isRunning()) {
+			U.switchScreen("start");
 		}
 		jade.draw();
 
@@ -111,10 +117,6 @@ public class GameScreen extends BasicScreen {
 
 		st.act();
 		st.draw();
-
-		if (running) {
-			jade.postRender();
-		}
 	}
 
 	@Override
@@ -145,7 +147,7 @@ public class GameScreen extends BasicScreen {
 		pauseMenu.enable();
 		pauseMenu.activate();
 		pauseMenu.selectFirst();
-		pauseMenu.addAction(Actions.moveTo(0, 0, 0.2f));
+		pauseMenu.addAction(Actions.moveTo(0, 0, 0.2f, Interpolation.sine));
 	}
 
 	private void resumeGame() {
@@ -156,7 +158,7 @@ public class GameScreen extends BasicScreen {
 		})));
 		pauseMenu.disable();
 		pauseMenu.deactivate();
-		pauseMenu.addAction(Actions.moveTo(-30, 0, 0.3f));
+		pauseMenu.addAction(Actions.moveTo(-30, 0, 0.1f, Interpolation.sine));
 	}
 
 	private void switchToStart() {

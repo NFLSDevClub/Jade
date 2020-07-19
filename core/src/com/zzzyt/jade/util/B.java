@@ -2,19 +2,12 @@ package com.zzzyt.jade.util;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.Pool;
 import com.zzzyt.jade.game.entity.Bullet;
 import com.zzzyt.jade.game.shot.BulletData;
 import com.zzzyt.jade.game.shot.ShotSheet;
 
 public class B {
 
-	public static Pool<Bullet> BulletPool = new Pool<Bullet>() {
-		@Override
-		protected Bullet newObject() {
-			return new Bullet();
-		}
-	};
 	public static ShotSheet sheet;
 
 	public static ShotSheet setSheet(ShotSheet sheet) {
@@ -27,22 +20,17 @@ public class B {
 	}
 
 	public static Bullet newBullet() {
-		return BulletPool.obtain();
+		return new Bullet();
 	}
 
 	public static Bullet newBullet(TextureRegion region, int tag, float radius) {
-		Bullet tmp = BulletPool.obtain();
+		Bullet tmp = newBullet();
 		tmp.sprite = new Sprite(region);
 		tmp.tag = tag;
 		tmp.radius = radius;
 		tmp.boundingRadius = Math.max(tmp.sprite.getHeight() * tmp.sprite.getScaleX(),
 				tmp.sprite.getWidth() * tmp.sprite.getScaleY());
 		return tmp;
-	}
-
-	public static Bullet freeBullet(Bullet bullet) {
-		BulletPool.free(bullet);
-		return bullet;
 	}
 
 	public static Bullet as(float x, float y, float angle, float speed, int id, int tag) {

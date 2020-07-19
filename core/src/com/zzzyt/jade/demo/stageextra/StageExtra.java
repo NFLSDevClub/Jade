@@ -1,4 +1,4 @@
-package com.zzzyt.jade.demo.stage_extra;
+package com.zzzyt.jade.demo.stageextra;
 
 import com.zzzyt.jade.game.task.Wait;
 import com.zzzyt.jade.game.task.Plural;

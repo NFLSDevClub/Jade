@@ -1,4 +1,4 @@
-package com.zzzyt.jade.demo.stage_extra;
+package com.zzzyt.jade.demo.stageextra;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.zzzyt.jade.game.Operator;
