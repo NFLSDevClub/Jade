@@ -65,7 +65,8 @@ public class StartScreen extends BasicScreen {
 		})).disable();
 		grid.add(new GridButton("Music Room", 24, 370, 110, 200, 30, 0, 6, () -> {
 			A.finishLoading();
-		})).disable();
+			U.switchScreen("musicRoom", 0.5f);
+		}));
 		grid.add(new GridButton("Settings", 24, 360, 80, 200, 30, 0, 7, () -> {
 			A.finishLoading();
 		})).disable();

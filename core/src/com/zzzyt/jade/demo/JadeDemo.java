@@ -14,6 +14,7 @@ import com.zzzyt.jade.ui.screen.BlankScreen;
 import com.zzzyt.jade.ui.screen.DifficultySelectScreen;
 import com.zzzyt.jade.ui.screen.FadeableScreen;
 import com.zzzyt.jade.ui.screen.GameScreen;
+import com.zzzyt.jade.ui.screen.MusicRoomScreen;
 import com.zzzyt.jade.ui.screen.PlayerSelectScreen;
 import com.zzzyt.jade.ui.screen.ScreenState;
 import com.zzzyt.jade.ui.screen.SpellSelectScreen;
@@ -79,6 +80,7 @@ public class JadeDemo implements ApplicationListener {
 		screens.add(new PlayerSelectScreen());
 		screens.add(new StageSelectScreen());
 		screens.add(new SpellSelectScreen());
+		screens.add(new MusicRoomScreen());
 
 		U.switchScreen("blank");
 		U.switchScreen("start", 0.5f);
