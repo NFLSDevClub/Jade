@@ -1,7 +1,5 @@
 package com.zzzyt.jade.ui.screen;
 
-import javax.swing.GroupLayout.Alignment;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
