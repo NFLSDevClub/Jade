@@ -80,7 +80,7 @@ public class StartScreen extends BasicScreen {
 
 	@Override
 	public void render(float delta) {
-		st.act();
+		st.act(U.safeDeltaTime());
 		st.draw();
 		A.update();
 	}

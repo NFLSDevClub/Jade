@@ -34,6 +34,24 @@ public class BasicScreen implements FadeableScreen {
 
 	}
 
+	public void init(String bgm) {
+		BGM.play(bgm);
+
+		this.st = new Stage(viewport);
+		st.setDebugAll(U.config().debugActorLayout);
+		this.input = new InputMultiplexer();
+
+		this.fps = new FPSDisplay();
+		st.addActor(fps);
+
+		input.addProcessor(st);
+		input.addProcessor(new KeyListener(U.config().keyCancel, () -> {
+			onQuit();
+		}));
+
+		U.addProcessor(input);
+	}
+	
 	public void init(String bgm, String backgroundName) {
 		init(bgm, A.getRegion(backgroundName));
 	}
@@ -74,7 +92,7 @@ public class BasicScreen implements FadeableScreen {
 
 	@Override
 	public void render(float delta) {
-		st.act();
+		st.act(U.safeDeltaTime());
 		st.draw();
 	}
 

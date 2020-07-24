@@ -29,7 +29,7 @@ public class YesNoMenu extends Grid {
 		super(gridX, gridY, true, activeAction, inactiveAction);
 		this.yesRunnable = yesRunnable;
 		this.noRunnable = noRunnable;
-		this.label = new GridLabel("Really?", 18, 0, 70, 200, 20, 0, 0);
+		this.label = new GridLabel("Really?", 24, 0, 70, 200, 30, 0, 0);
 		this.yes = new GridButton("Yes!", 18, 0, 30, 200, 20, 0, 1, this.yesRunnable);
 		this.no = new GridButton("No!", 18, 0, 0, 200, 20, 0, 2, this.noRunnable);
 		add(no);
