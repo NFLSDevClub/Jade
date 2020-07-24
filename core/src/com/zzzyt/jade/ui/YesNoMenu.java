@@ -9,7 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 public class YesNoMenu extends Grid {
 
 	private Runnable yesRunnable, noRunnable;
-	private GridLabel yes, no;
+	private GridLabel label;
+	private GridButton yes, no;
 
 	public YesNoMenu(float x, float y) {
 		this(null, null, 0, 0, null, null);
@@ -28,10 +29,12 @@ public class YesNoMenu extends Grid {
 		super(gridX, gridY, true, activeAction, inactiveAction);
 		this.yesRunnable = yesRunnable;
 		this.noRunnable = noRunnable;
-		this.no = new GridLabel("No!", 18, 0, 30, 200, 20, 0, 0, this.noRunnable);
-		this.yes = new GridLabel("Yes!", 18, 0, 0, 200, 20, 0, 1, this.yesRunnable);
+		this.label = new GridLabel("Really?", 18, 0, 70, 200, 20, 0, 0);
+		this.yes = new GridButton("Yes!", 18, 0, 30, 200, 20, 0, 1, this.yesRunnable);
+		this.no = new GridButton("No!", 18, 0, 0, 200, 20, 0, 2, this.noRunnable);
 		add(no);
 		add(yes);
+		add(label);
 		updateComponent();
 		selectFirst();
 	}

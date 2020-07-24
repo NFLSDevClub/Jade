@@ -13,7 +13,7 @@ import com.zzzyt.jade.game.Jade;
 import com.zzzyt.jade.game.Task;
 import com.zzzyt.jade.ui.GameFrame;
 import com.zzzyt.jade.ui.Grid;
-import com.zzzyt.jade.ui.GridLabel;
+import com.zzzyt.jade.ui.GridButton;
 import com.zzzyt.jade.ui.KeyListener;
 import com.zzzyt.jade.ui.YesNoMenu;
 import com.zzzyt.jade.util.Global;
@@ -59,10 +59,10 @@ public class GameScreen extends BasicScreen {
 		pauseMenu.disable();
 		pauseMenu.setColor(new Color(1, 1, 1, 0));
 
-		pauseMenu.add(new GridLabel("Resume Game", 18, 50, 200, 200, 20, 0, 0, () -> {
+		pauseMenu.add(new GridButton("Resume Game", 18, 50, 200, 200, 20, 0, 0, () -> {
 			resumeGame();
 		}));
-		pauseMenu.add(new GridLabel("Retart Game", 18, 55, 170, 200, 20, 0, 1, () -> {
+		pauseMenu.add(new GridButton("Retart Game", 18, 55, 170, 200, 20, 0, 1, () -> {
 			yesNoMenu.setYes(() -> {
 				yesNoMenu.deactivate();
 				yesNoMenu.disable();
@@ -74,7 +74,7 @@ public class GameScreen extends BasicScreen {
 			yesNoMenu.selectFirst();
 			pauseMenu.disable();
 		}));
-		pauseMenu.add(new GridLabel("Quit Game", 18, 60, 140, 200, 20, 0, 2, () -> {
+		pauseMenu.add(new GridButton("Quit Game", 18, 60, 140, 200, 20, 0, 2, () -> {
 			yesNoMenu.setYes(() -> {
 				yesNoMenu.deactivate();
 				yesNoMenu.disable();

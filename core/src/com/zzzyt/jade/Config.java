@@ -60,7 +60,7 @@ public class Config {
 		logLevel = Logger.DEBUG;
 
 		fps = 60;
-		vsyncEnabled = false;
+		vsyncEnabled = true;
 		windowWidth = 640;
 		windowHeight = 480;
 		allowFullScreen = true;

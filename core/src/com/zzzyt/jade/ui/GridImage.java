@@ -19,19 +19,14 @@ public class GridImage extends Image implements GridComponent {
 	protected Callable<? extends Action> activeAction, inactiveAction;
 
 	public GridImage(TextureRegion texture, float x, float y, int gridX, int gridY, Runnable runnable) {
-		super(texture);
-		setPosition(x, y);
-		this.staticX = x;
-		this.staticY = y;
-		this.gridX = gridX;
-		this.gridY = gridY;
-		this.runnable = runnable;
-		this.activeAction = () -> Actions.sequence(Actions.moveTo(staticX, staticY), Actions.color(Color.WHITE),
-				Actions.sequence(Actions.moveTo(staticX - 10, staticY, 0.1f, Interpolation.sine),
-						Actions.moveTo(staticX, staticY, 0.1f, Interpolation.sine)));
-		this.inactiveAction = () -> Actions.forever(Actions.color(Color.GRAY));
-		this.enabled = true;
-		deactivate();
+		this(texture,x,y,gridX,gridY,null,null,runnable);
+		setActiveAction(() -> Actions.sequence(
+				Actions.moveTo(staticX, staticY), Actions.color(Color.WHITE),
+				Actions.sequence(
+						Actions.moveTo(staticX - 10, staticY, 0.1f, Interpolation.sine),
+						Actions.moveTo(staticX, staticY, 0.1f, Interpolation.sine))));
+		setInactiveAction(() -> Actions.forever(
+				Actions.color(Color.GRAY)));
 	}
 
 	public GridImage(TextureRegion texture, float x, float y, int gridX, int gridY,

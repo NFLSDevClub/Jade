@@ -7,7 +7,7 @@ import com.zzzyt.jade.demo.stage1.Stage1;
 import com.zzzyt.jade.demo.stageextra.StageExtra;
 import com.zzzyt.jade.game.Task;
 import com.zzzyt.jade.ui.Grid;
-import com.zzzyt.jade.ui.GridLabel;
+import com.zzzyt.jade.ui.GridButton;
 import com.zzzyt.jade.util.Global;
 import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.util.U;
@@ -42,7 +42,7 @@ public class StageSelectScreen extends BasicScreen {
 		}
 		for (int i = 0; i < names.size; i++) {
 			final Task tmp = stages.get(i);
-			grid.add(new GridLabel(names.get(i), 24, 60, 360 - i * 30, 300, 30, 0, i, () -> {
+			grid.add(new GridButton(names.get(i), 24, 60, 360 - i * 30, 300, 30, 0, i, () -> {
 				Global.put("_practice", tmp);
 				U.switchScreen("playerSelect", 0.5f);
 			}));

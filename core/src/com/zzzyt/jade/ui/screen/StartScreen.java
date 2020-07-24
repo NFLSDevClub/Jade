@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.zzzyt.jade.ui.Grid;
-import com.zzzyt.jade.ui.GridLabel;
+import com.zzzyt.jade.ui.GridButton;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.Global;
 import com.zzzyt.jade.util.U;
@@ -37,39 +37,39 @@ public class StartScreen extends BasicScreen {
 
 		this.grid = new Grid(true);
 		st.addActor(grid);
-		grid.add(new GridLabel("Game Start", 24, 430, 290, 200, 30, 0, 0, () -> {
+		grid.add(new GridButton("Game Start", 24, 430, 290, 200, 30, 0, 0, () -> {
 			A.finishLoading();
 			Global.put("_gameMode", "regular");
 			U.switchScreen("difficultySelect", 0.5f);
 		}));
-		grid.add(new GridLabel("Extra Start", 24, 420, 260, 200, 30, 0, 1, () -> {
+		grid.add(new GridButton("Extra Start", 24, 420, 260, 200, 30, 0, 1, () -> {
 			A.finishLoading();
 			Global.put("_gameMode", "extra");
 			U.switchScreen("difficultySelect", 0.5f);
 		}));
-		grid.add(new GridLabel("Stage Practice", 24, 410, 230, 200, 30, 0, 2, () -> {
+		grid.add(new GridButton("Stage Practice", 24, 410, 230, 200, 30, 0, 2, () -> {
 			A.finishLoading();
 			Global.put("_gameMode", "stagePractice");
 			U.switchScreen("difficultySelect", 0.5f);
 		}));
-		grid.add(new GridLabel("Spell Practice", 24, 400, 200, 200, 30, 0, 3, () -> {
+		grid.add(new GridButton("Spell Practice", 24, 400, 200, 200, 30, 0, 3, () -> {
 			A.finishLoading();
 			Global.put("_gameMode", "spellPractice");
 			U.switchScreen("difficultySelect", 0.5f);
 		}));
-		grid.add(new GridLabel("Replay", 24, 390, 170, 200, 30, 0, 4, () -> {
+		grid.add(new GridButton("Replay", 24, 390, 170, 200, 30, 0, 4, () -> {
 			A.finishLoading();
 		})).disable();
-		grid.add(new GridLabel("Player Data", 24, 380, 140, 200, 30, 0, 5, () -> {
+		grid.add(new GridButton("Player Data", 24, 380, 140, 200, 30, 0, 5, () -> {
 			A.finishLoading();
 		})).disable();
-		grid.add(new GridLabel("Music Room", 24, 370, 110, 200, 30, 0, 6, () -> {
+		grid.add(new GridButton("Music Room", 24, 370, 110, 200, 30, 0, 6, () -> {
 			A.finishLoading();
 		})).disable();
-		grid.add(new GridLabel("Settings", 24, 360, 80, 200, 30, 0, 7, () -> {
+		grid.add(new GridButton("Settings", 24, 360, 80, 200, 30, 0, 7, () -> {
 			A.finishLoading();
 		})).disable();
-		grid.add(new GridLabel("Quit", 24, 350, 50, 200, 30, 0, 8, () -> {
+		grid.add(new GridButton("Quit", 24, 350, 50, 200, 30, 0, 8, () -> {
 			U.quit();
 		}));
 		grid.activate();
