@@ -69,7 +69,8 @@ public class StartScreen extends BasicScreen {
 		}));
 		grid.add(new GridButton("Settings", 24, 360, 80, 200, 30, 0, 7, () -> {
 			A.finishLoading();
-		})).disable();
+			U.switchScreen("settings", 0.5f);
+		}));
 		grid.add(new GridButton("Quit", 24, 350, 50, 200, 30, 0, 8, () -> {
 			U.quit();
 		}));

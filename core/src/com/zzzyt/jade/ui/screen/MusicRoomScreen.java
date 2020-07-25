@@ -45,7 +45,7 @@ public class MusicRoomScreen extends BasicScreen {
 		this.names = new Array<String>();
 		bgms.add(BGM.getBGM("mus/E.0109.ogg"));
 		names.add("E.0109");
-		comments.add("E.0109\nby Zzzyt.\nTitle theme.");
+		comments.add("E.0109\nby Zzzyt\nTitle theme.");
 
 		bgms.add(BGM.getBGM("mus/Idea12.ogg"));
 		names.add("Desire Drive");
@@ -61,6 +61,7 @@ public class MusicRoomScreen extends BasicScreen {
 			final int tmpint = i;
 			grid.add(new GridButton((i + 1) + ". " + names.get(i), 18, 40, 420 - i * 20, 20, 40, 0, i, () -> {
 				setComment(tmpint);
+				BGM.stop();
 				BGM.play(bgms.get(tmpint).getName());
 			}));
 		}
@@ -75,6 +76,10 @@ public class MusicRoomScreen extends BasicScreen {
 
 	@Override
 	protected void onFadeIn(float duration) {
+		comment.clearActions();
+		comment.setPosition(640, 32);
+		comment.addAction(Actions.moveTo(320, 32, duration, Interpolation.sine));
+
 		grid.clearActions();
 		grid.setPosition(-200, 0);
 		grid.addAction(Actions.moveTo(0, 0, duration, Interpolation.sineOut));
@@ -82,6 +87,10 @@ public class MusicRoomScreen extends BasicScreen {
 
 	@Override
 	protected void onFadeOut(float duration) {
+		comment.clearActions();
+		comment.setPosition(320, 32);
+		comment.addAction(Actions.moveTo(640, 32, duration, Interpolation.sine));
+
 		grid.clearActions();
 		grid.setPosition(0, 0);
 		grid.addAction(Actions.moveTo(-200, 0, duration, Interpolation.sineOut));

@@ -17,6 +17,7 @@ import com.zzzyt.jade.ui.screen.GameScreen;
 import com.zzzyt.jade.ui.screen.MusicRoomScreen;
 import com.zzzyt.jade.ui.screen.PlayerSelectScreen;
 import com.zzzyt.jade.ui.screen.ScreenState;
+import com.zzzyt.jade.ui.screen.SettingsScreen;
 import com.zzzyt.jade.ui.screen.SpellSelectScreen;
 import com.zzzyt.jade.ui.screen.StageSelectScreen;
 import com.zzzyt.jade.ui.screen.StartScreen;
@@ -40,17 +41,17 @@ public class JadeDemo implements ApplicationListener {
 
 		U.game = this;
 
-		if(U.config().fullScreenOnStart) {
+		if (U.config().fullScreenOnStart) {
 			Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 		}
-		
+
 		this.logger = new Logger("Main", U.config().logLevel);
 		logger.info("Game start!");
 
 		A.init();
 
 		BGM.register(new BackgroundMusic("mus/Idea12.ogg", 0, 12));
-		BGM.register(new BackgroundMusic("mus/E.0109.ogg", 10, Float.MAX_VALUE));
+		BGM.register(new BackgroundMusic("mus/E.0109.ogg", 10, 50));
 		BGM.register(new BackgroundMusic("mus/Yet Another Tetris (Piano ver.).ogg", 0, Float.MAX_VALUE));
 		A.load(U.config().UIFont);
 		A.load("font/LBRITE.ttf");
@@ -81,6 +82,7 @@ public class JadeDemo implements ApplicationListener {
 		screens.add(new StageSelectScreen());
 		screens.add(new SpellSelectScreen());
 		screens.add(new MusicRoomScreen());
+		screens.add(new SettingsScreen());
 
 		U.switchScreen("blank");
 		U.switchScreen("start", 0.5f);

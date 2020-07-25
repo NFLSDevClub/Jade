@@ -1,18 +1,17 @@
 package com.zzzyt.jade.ui;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.Callable;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.utils.Array;
 import com.zzzyt.jade.util.U;
 
 public class Grid extends Group implements InputProcessor, GridComponent {
 
-	public List<GridComponent> grid;
+	public Array<GridComponent> grid;
 	public int selectedX, selectedY;
 	public boolean cycle;
 
@@ -33,7 +32,7 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 		this.gridY = gridY;
 		this.activeAction = activeAction;
 		this.inactiveAction = inactiveAction;
-		grid = new ArrayList<GridComponent>();
+		grid = new Array<GridComponent>();
 		this.selectedX = 0;
 		this.selectedY = 0;
 		this.minX = Integer.MAX_VALUE;
@@ -58,7 +57,7 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 	}
 
 	public void selectFirst() {
-		if (grid.size() == 0)
+		if (grid.size == 0)
 			return;
 		GridComponent component = grid.get(0);
 		selectedX = component.getGridX();
@@ -67,9 +66,9 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 	}
 
 	public void selectLast() {
-		if (grid.size() == 0)
+		if (grid.size == 0)
 			return;
-		GridComponent component = grid.get(grid.size() - 1);
+		GridComponent component = grid.get(grid.size - 1);
 		selectedX = component.getGridX();
 		selectedY = component.getGridY();
 		select(selectedX, selectedY);

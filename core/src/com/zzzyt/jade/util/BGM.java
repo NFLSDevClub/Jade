@@ -14,7 +14,6 @@ public class BGM {
 	public static void play(String name) {
 		if (name == null) {
 			stop();
-			BGM.bgm = null;
 			return;
 		}
 		if ("".equals(name)) {
@@ -60,6 +59,7 @@ public class BGM {
 		if (BGM.bgm != null) {
 			logger.debug("Stopping \"" + BGM.bgm.getName() + "\".");
 			BGM.bgm.stop();
+			BGM.bgm = null;
 		}
 	}
 
