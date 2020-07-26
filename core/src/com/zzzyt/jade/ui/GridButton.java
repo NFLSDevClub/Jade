@@ -29,7 +29,7 @@ public class GridButton extends Label implements GridComponent {
 	public GridButton(CharSequence text, int fontSize, float x, float y, float width, float height, int gridX, int gridY,
 			Callable<? extends Action> activeAction, Callable<? extends Action> inactiveAction, LabelStyle activeStyle,
 			LabelStyle inactiveStyle, Runnable runnable) {
-		super(text, new LabelStyle(A.getFont(U.config().UIFont, fontSize, 2, Color.BLACK), U.config().UIFontColor));
+		super(text, new LabelStyle(A.getFont(U.config().UIFont, fontSize, 4, Color.BLACK), U.config().UIFontColor));
 		this.staticX = x;
 		this.staticY = y;
 		this.gridX = gridX;
@@ -47,8 +47,8 @@ public class GridButton extends Label implements GridComponent {
 	public GridButton(CharSequence text, int fontSize, float x, float y, float width, float height, int gridX, int gridY,
 			Runnable runnable) {
 		this(text,fontSize,x,y,width,height,gridX,gridY,null,null,
-			new LabelStyle(A.getFont(U.config().UIFont, fontSize, 2, Color.BLACK),U.config().UIFontColor),
-			new LabelStyle(A.getFont(U.config().UIFont, fontSize, 2, Color.BLACK),U.config().UIFontColor),runnable);
+			new LabelStyle(A.getFont(U.config().UIFont, fontSize, 4, Color.BLACK),U.config().UIFontColor),
+			new LabelStyle(A.getFont(U.config().UIFont, fontSize, 4, Color.BLACK),U.config().UIFontColor),runnable);
 		setActiveAction(() -> Actions.parallel(
 				Actions.sequence(
 					Actions.color(Color.WHITE),

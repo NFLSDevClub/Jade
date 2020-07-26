@@ -14,17 +14,22 @@ public class Config {
 
 	public int fps;
 	public boolean vsyncEnabled;
-	public int windowWidth;
-	public int windowHeight;
+	public float windowWidth;
+	public float windowHeight;
+	public int startupWindowWidth;
+	public int startupWindowHeight;
+	public float frameWidth;
+	public float frameHeight;
+	public float frameOffsetX;
+	public float frameOffsetY;
 	public boolean allowFullScreen;
 	public boolean allowResize;
-	public boolean fullScreenOnStart;
+	public boolean startupFullScreen;
 	public Scaling windowScaling;
 
 	public int w;
 	public int h;
-	public float offsetX;
-	public float offsetY;
+
 	public float originX;
 	public float originY;
 	public float deleteDistance;
@@ -61,17 +66,22 @@ public class Config {
 
 		fps = 60;
 		vsyncEnabled = false;
-		windowWidth = 640;
-		windowHeight = 480;
+
+		windowWidth = 1280;
+		windowHeight = 960;
+		startupWindowWidth = 640;
+		startupWindowHeight = 480;
+		frameWidth = 768;
+		frameHeight = 896;
+		frameOffsetX = 64;
+		frameOffsetY = 32;
 		allowFullScreen = true;
 		allowResize = true;
-		fullScreenOnStart = false;
-		windowScaling = Scaling.none;
+		startupFullScreen = false;
+		windowScaling = Scaling.fit;
 
 		w = 384;
 		h = 448;
-		offsetX = 32;
-		offsetY = 16;
 		originX = w / 2;
 		originY = h;
 		deleteDistance = 256;

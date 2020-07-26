@@ -1,4 +1,4 @@
-package com.zzzyt.jade.demo;
+package com.zzzyt.jade.demo.ui;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -7,20 +7,20 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.WindowedMean;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
+import com.zzzyt.jade.demo.ui.screen.DifficultySelectScreen;
+import com.zzzyt.jade.demo.ui.screen.GameScreen;
+import com.zzzyt.jade.demo.ui.screen.MusicRoomScreen;
+import com.zzzyt.jade.demo.ui.screen.PlayerSelectScreen;
+import com.zzzyt.jade.demo.ui.screen.SettingsScreen;
+import com.zzzyt.jade.demo.ui.screen.SpellSelectScreen;
+import com.zzzyt.jade.demo.ui.screen.StageSelectScreen;
+import com.zzzyt.jade.demo.ui.screen.StartScreen;
 import com.zzzyt.jade.music.BackgroundMusic;
 import com.zzzyt.jade.ui.BackgroundLoader;
 import com.zzzyt.jade.ui.InputBlocker;
 import com.zzzyt.jade.ui.screen.BlankScreen;
-import com.zzzyt.jade.ui.screen.DifficultySelectScreen;
 import com.zzzyt.jade.ui.screen.FadeableScreen;
-import com.zzzyt.jade.ui.screen.GameScreen;
-import com.zzzyt.jade.ui.screen.MusicRoomScreen;
-import com.zzzyt.jade.ui.screen.PlayerSelectScreen;
 import com.zzzyt.jade.ui.screen.ScreenState;
-import com.zzzyt.jade.ui.screen.SettingsScreen;
-import com.zzzyt.jade.ui.screen.SpellSelectScreen;
-import com.zzzyt.jade.ui.screen.StageSelectScreen;
-import com.zzzyt.jade.ui.screen.StartScreen;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.B;
 import com.zzzyt.jade.util.BGM;
@@ -41,7 +41,7 @@ public class JadeDemo implements ApplicationListener {
 
 		U.game = this;
 
-		if (U.config().fullScreenOnStart) {
+		if (U.config().startupFullScreen) {
 			Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 		}
 
@@ -97,7 +97,7 @@ public class JadeDemo implements ApplicationListener {
 
 		if (U.config().allowFullScreen && Gdx.input.isKeyPressed(Keys.F4)) {
 			if (Gdx.graphics.isFullscreen()) {
-				Gdx.graphics.setWindowedMode(U.config().windowWidth, U.config().windowHeight);
+				Gdx.graphics.setWindowedMode(U.config().startupWindowWidth, U.config().startupWindowHeight);
 			} else {
 				Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 			}

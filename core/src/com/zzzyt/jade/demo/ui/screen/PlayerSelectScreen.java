@@ -1,10 +1,11 @@
-package com.zzzyt.jade.ui.screen;
+package com.zzzyt.jade.demo.ui.screen;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.zzzyt.jade.ui.Grid;
 import com.zzzyt.jade.ui.GridImage;
+import com.zzzyt.jade.ui.screen.BasicScreen;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.Global;
 import com.zzzyt.jade.util.J;
@@ -25,13 +26,13 @@ public class PlayerSelectScreen extends BasicScreen {
 		this.grid = new Grid(true);
 		st.addActor(grid);
 
-		grid.add(new GridImage(A.getRegion("diff/marisa_description.png"), 720, 100, 1, 0,
-				() -> Actions.sequence(Actions.color(Color.WHITE), Actions.moveTo(340, 100, 0.2f, Interpolation.sine)),
-				() -> Actions.sequence(Actions.color(Color.GRAY), Actions.moveTo(720, 100, 0.2f, Interpolation.sine)),
+		grid.add(new GridImage(A.getRegion("diff/marisa_description.png"), 1440, 200, 1, 0,
+				() -> Actions.sequence(Actions.color(Color.WHITE), Actions.moveTo(680, 200, 0.2f, Interpolation.sine)),
+				() -> Actions.sequence(Actions.color(Color.GRAY), Actions.moveTo(1440, 200, 0.2f, Interpolation.sine)),
 				null));
-		grid.add(new GridImage(A.getRegion("diff/marisa_portrait.png"), 360, 100, 1, 0,
-				() -> Actions.sequence(Actions.color(Color.WHITE), Actions.moveTo(200, 100, 0.2f, Interpolation.sine)),
-				() -> Actions.sequence(Actions.color(Color.GRAY), Actions.moveTo(360, 100, 0.2f, Interpolation.sine)),
+		grid.add(new GridImage(A.getRegion("diff/marisa_portrait.png"), 720, 200, 1, 0,
+				() -> Actions.sequence(Actions.color(Color.WHITE), Actions.moveTo(400, 200, 0.2f, Interpolation.sine)),
+				() -> Actions.sequence(Actions.color(Color.GRAY), Actions.moveTo(720, 200, 0.2f, Interpolation.sine)),
 				() -> {
 					Global.put("_player", "marisa");
 					Global.put("_redirect", "game");
@@ -39,13 +40,13 @@ public class PlayerSelectScreen extends BasicScreen {
 					U.switchScreen("blank", 0.5f);
 				}));
 
-		grid.add(new GridImage(A.getRegion("diff/reimu_description.png"), 120, 100, 0, 0,
-				() -> Actions.sequence(Actions.color(Color.WHITE), Actions.moveTo(120, 100, 0.2f, Interpolation.sine)),
-				() -> Actions.sequence(Actions.color(Color.GRAY), Actions.moveTo(-360, 100, 0.2f, Interpolation.sine)),
+		grid.add(new GridImage(A.getRegion("diff/reimu_description.png"), 240, 200, 0, 0,
+				() -> Actions.sequence(Actions.color(Color.WHITE), Actions.moveTo(240, 200, 0.2f, Interpolation.sine)),
+				() -> Actions.sequence(Actions.color(Color.GRAY), Actions.moveTo(-720, 200, 0.2f, Interpolation.sine)),
 				null));
-		grid.add(new GridImage(A.getRegion("diff/reimu_portrait.png"), 240, 100, 0, 0,
-				() -> Actions.sequence(Actions.color(Color.WHITE), Actions.moveTo(240, 100, 0.2f, Interpolation.sine)),
-				() -> Actions.sequence(Actions.color(Color.GRAY), Actions.moveTo(80, 100, 0.2f, Interpolation.sine)),
+		grid.add(new GridImage(A.getRegion("diff/reimu_portrait.png"), 480, 200, 0, 0,
+				() -> Actions.sequence(Actions.color(Color.WHITE), Actions.moveTo(480, 200, 0.2f, Interpolation.sine)),
+				() -> Actions.sequence(Actions.color(Color.GRAY), Actions.moveTo(160, 200, 0.2f, Interpolation.sine)),
 				() -> {
 					Global.put("_player", "reimu");
 					Global.put("_redirect", "game");
@@ -68,7 +69,7 @@ public class PlayerSelectScreen extends BasicScreen {
 	@Override
 	protected void onFadeIn(float duration) {
 		grid.clearActions();
-		grid.setPosition(100, 0);
+		grid.setPosition(200, 0);
 		grid.addAction(Actions.moveTo(0, 0, duration, Interpolation.sineOut));
 	}
 
@@ -76,7 +77,7 @@ public class PlayerSelectScreen extends BasicScreen {
 	protected void onFadeOut(float duration) {
 		grid.clearActions();
 		grid.setPosition(0, 0);
-		grid.addAction(Actions.moveTo(100, 0, duration, Interpolation.sineOut));
+		grid.addAction(Actions.moveTo(200, 0, duration, Interpolation.sineOut));
 	}
 
 	@Override

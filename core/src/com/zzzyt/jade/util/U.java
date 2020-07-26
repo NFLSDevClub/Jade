@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.zzzyt.jade.Config;
-import com.zzzyt.jade.demo.JadeDemo;
+import com.zzzyt.jade.demo.ui.JadeDemo;
 import com.zzzyt.jade.ui.screen.FadeableScreen;
 import com.zzzyt.jade.ui.screen.ScreenState;
 

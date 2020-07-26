@@ -1,9 +1,10 @@
-package com.zzzyt.jade.ui.screen;
+package com.zzzyt.jade.demo.ui.screen;
 
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.zzzyt.jade.ui.Grid;
 import com.zzzyt.jade.ui.GridImage;
+import com.zzzyt.jade.ui.screen.BasicScreen;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.Global;
 import com.zzzyt.jade.util.J;
@@ -33,29 +34,29 @@ public class DifficultySelectScreen extends BasicScreen {
 			switchTarget = "playerSelect";
 		}
 		if (J.isGameModeRegular() || J.isGameModeSpellPractice() || J.isGameModeStagePractice()) {
-			((GridImage) grid.add(new GridImage(A.getRegion("diff/easy.png"), 60, 370, 0, 0, () -> {
+			grid.add(new GridImage(A.getRegion("diff/easy.png"), 120, 740, 0, 0, () -> {
 				Global.put("_difficulty", J.EASY);
 				U.switchScreen(switchTarget, 0.5f);
-			}))).setScale(0.75f);
-			((GridImage) grid.add(new GridImage(A.getRegion("diff/normal.png"), 60, 280, 0, 1, () -> {
+			}));
+			grid.add(new GridImage(A.getRegion("diff/normal.png"), 120, 560, 0, 1, () -> {
 				Global.put("_difficulty", J.NORMAL);
 				U.switchScreen(switchTarget, 0.5f);
-			}))).setScale(0.75f);
-			((GridImage) grid.add(new GridImage(A.getRegion("diff/hard.png"), 60, 190, 0, 2, () -> {
+			}));
+			grid.add(new GridImage(A.getRegion("diff/hard.png"), 120, 380, 0, 2, () -> {
 				Global.put("_difficulty", J.HARD);
 				U.switchScreen(switchTarget, 0.5f);
-			}))).setScale(0.75f);
-			((GridImage) grid.add(new GridImage(A.getRegion("diff/lunatic.png"), 60, 100, 0, 3, () -> {
+			}));
+			grid.add(new GridImage(A.getRegion("diff/lunatic.png"), 120, 200, 0, 3, () -> {
 				Global.put("_difficulty", J.LUNATIC);
 				U.switchScreen(switchTarget, 0.5f);
-			}))).setScale(0.75f);
+			}));
 		}
 
 		if (J.isGameModeExtra() || J.isGameModeSpellPractice() || J.isGameModeStagePractice()) {
-			((GridImage) grid.add(new GridImage(A.getRegion("diff/extra.png"), 60, 10, 0, 4, () -> {
+			grid.add(new GridImage(A.getRegion("diff/extra.png"), 120, 20, 0, 4, () -> {
 				Global.put("_difficulty", J.EXTRA);
 				U.switchScreen(switchTarget, 0.5f);
-			}))).setScale(0.75f);
+			}));
 		}
 		grid.activate();
 		if (Global.get("_difficulty") == null) {
@@ -71,7 +72,7 @@ public class DifficultySelectScreen extends BasicScreen {
 	@Override
 	protected void onFadeIn(float duration) {
 		grid.clearActions();
-		grid.setPosition(-200, 0);
+		grid.setPosition(-400, 0);
 		grid.addAction(Actions.moveTo(0, 0, duration, Interpolation.sineOut));
 	}
 
@@ -79,7 +80,7 @@ public class DifficultySelectScreen extends BasicScreen {
 	protected void onFadeOut(float duration) {
 		grid.clearActions();
 		grid.setPosition(0, 0);
-		grid.addAction(Actions.moveTo(-200, 0, duration, Interpolation.sineOut));
+		grid.addAction(Actions.moveTo(-400, 0, duration, Interpolation.sineOut));
 	}
 
 	@Override

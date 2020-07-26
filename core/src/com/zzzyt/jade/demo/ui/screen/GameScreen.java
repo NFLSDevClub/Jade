@@ -1,4 +1,4 @@
-package com.zzzyt.jade.ui.screen;
+package com.zzzyt.jade.demo.ui.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -18,6 +18,8 @@ import com.zzzyt.jade.ui.GridButton;
 import com.zzzyt.jade.ui.GridLabel;
 import com.zzzyt.jade.ui.KeyListener;
 import com.zzzyt.jade.ui.YesNoMenu;
+import com.zzzyt.jade.ui.screen.BasicScreen;
+import com.zzzyt.jade.ui.screen.ScreenState;
 import com.zzzyt.jade.util.Global;
 import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.util.U;
@@ -48,41 +50,42 @@ public class GameScreen extends BasicScreen {
 		}));
 
 		this.frame = new GameFrame();
-		frame.setBounds(U.config().offsetX, U.config().offsetY, U.config().w, U.config().h);
+		frame.setBounds(U.config().frameOffsetX, U.config().frameOffsetY, U.config().frameWidth,
+				U.config().frameHeight);
 		frame.setOrigin(frame.getWidth() / 2, frame.getHeight() / 2);
 		st.addActor(frame);
 
 		this.left = new Image(A.getRegion("bg/game_left.png"));
-		left.setPosition(0, 0);
+		left.setBounds(0, 0, 64, 960);
 		st.addActor(left);
 		this.right = new Image(A.getRegion("bg/game_right.png"));
-		right.setPosition(416, 0);
+		right.setBounds(832, 0, 448, 960);
 		st.addActor(right);
 		this.top = new Image(A.getRegion("bg/game_top.png"));
-		top.setPosition(32, 464);
+		top.setBounds(64, 928, 768, 32);
 		st.addActor(top);
 		this.bottom = new Image(A.getRegion("bg/game_bottom.png"));
-		bottom.setPosition(32, 0);
+		bottom.setBounds(64, 0, 768, 32);
 		st.addActor(bottom);
 
 		fps.setZIndex(1024);
 
-		this.yesNoMenu = new YesNoMenu(250, 150);
+		this.yesNoMenu = new YesNoMenu(500, 300);
 		st.addActor(yesNoMenu);
 		yesNoMenu.disable();
 		yesNoMenu.setColor(new Color(1, 1, 1, 0));
 
 		this.pauseMenu = new Grid(0, 0, true, () -> Actions.fadeIn(0.2f), () -> Actions.fadeOut(0.1f));
-		pauseMenu.setPosition(-30, 0);
+		pauseMenu.setPosition(-60, 0);
 		st.addActor(pauseMenu);
 		yesNoMenu.setParent(pauseMenu);
 		pauseMenu.disable();
 		pauseMenu.setColor(new Color(1, 1, 1, 0));
 
-		pauseMenu.add(new GridButton("Resume Game", 18, 50, 200, 200, 20, 0, 1, () -> {
+		pauseMenu.add(new GridButton("Resume Game", 36, 100, 400, 400, 40, 0, 1, () -> {
 			resumeGame();
 		}));
-		pauseMenu.add(new GridButton("Retart Game", 18, 55, 170, 200, 20, 0, 2, () -> {
+		pauseMenu.add(new GridButton("Retart Game", 36, 110, 340, 400, 40, 0, 2, () -> {
 			yesNoMenu.setYes(() -> {
 				yesNoMenu.deactivate();
 				yesNoMenu.disable();
@@ -94,7 +97,7 @@ public class GameScreen extends BasicScreen {
 			yesNoMenu.selectFirst();
 			pauseMenu.disable();
 		}));
-		pauseMenu.add(new GridButton("Quit Game", 18, 60, 140, 200, 20, 0, 3, () -> {
+		pauseMenu.add(new GridButton("Quit Game", 36, 120, 280, 400, 40, 0, 3, () -> {
 			yesNoMenu.setYes(() -> {
 				yesNoMenu.deactivate();
 				yesNoMenu.disable();
@@ -107,7 +110,7 @@ public class GameScreen extends BasicScreen {
 			yesNoMenu.selectFirst();
 			pauseMenu.disable();
 		}));
-		pauseMenu.add(new GridLabel("Game Paused", 24, 45, 250, 200, 30, 0, 0));
+		pauseMenu.add(new GridLabel("Game Paused", 48, 90, 500, 400, 60, 0, 0));
 		pauseMenu.updateComponent();
 		pauseMenu.selectFirst();
 
@@ -185,7 +188,7 @@ public class GameScreen extends BasicScreen {
 		})));
 		pauseMenu.disable();
 		pauseMenu.deactivate();
-		pauseMenu.addAction(Actions.moveTo(-30, 0, 0.1f, Interpolation.sine));
+		pauseMenu.addAction(Actions.moveTo(-60, 0, 0.1f, Interpolation.sine));
 	}
 
 	private void switchToStart() {

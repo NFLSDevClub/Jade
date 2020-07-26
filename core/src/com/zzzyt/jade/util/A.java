@@ -3,6 +3,7 @@ package com.zzzyt.jade.util;
 import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetLoaderParameters.LoadedCallback;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.BitmapFontLoader.BitmapFontParameter;
 import com.badlogic.gdx.assets.loaders.TextureLoader.TextureParameter;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
@@ -82,7 +83,7 @@ public class A {
 		else if ("atlas".equals(extension))
 			load(fileName, TextureAtlas.class);
 		else if ("fnt".equals(extension))
-			load(fileName, BitmapFont.class);
+			load(fileName, BitmapFont.class, defaultBitmapFontParameter());
 		else if ("ttf".equals(extension))
 			load(fileName, FreeTypeFontGenerator.class);
 		else if ("otf".equals(extension))
@@ -166,6 +167,8 @@ public class A {
 			parameter.borderWidth = borderWidth;
 			parameter.borderColor = borderColor;
 		}
+		parameter.minFilter = TextureFilter.Linear;
+		parameter.magFilter = TextureFilter.Linear;
 		BitmapFont font = generator.generateFont(parameter);
 		fontCache.put(key, font);
 		return font;
@@ -177,6 +180,13 @@ public class A {
 
 	public static TextureParameter defaultTextureParameter() {
 		TextureParameter tmp = new TextureParameter();
+		tmp.minFilter = TextureFilter.Linear;
+		tmp.magFilter = TextureFilter.Linear;
+		return tmp;
+	}
+
+	public static BitmapFontParameter defaultBitmapFontParameter() {
+		BitmapFontParameter tmp = new BitmapFontParameter();
 		tmp.minFilter = TextureFilter.Linear;
 		tmp.magFilter = TextureFilter.Linear;
 		return tmp;

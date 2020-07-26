@@ -1,4 +1,4 @@
-package com.zzzyt.jade.ui.screen;
+package com.zzzyt.jade.demo.ui.screen;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;
@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Array;
 import com.zzzyt.jade.music.BackgroundMusic;
 import com.zzzyt.jade.ui.GridButton;
 import com.zzzyt.jade.ui.ScrollingGrid;
+import com.zzzyt.jade.ui.screen.BasicScreen;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.BGM;
 import com.zzzyt.jade.util.U;
@@ -34,8 +35,8 @@ public class MusicRoomScreen extends BasicScreen {
 		init("mus/E.0109.ogg", "bg/select.png");
 
 		this.comment = new Label("",
-				new LabelStyle(A.getFont(U.config().UIFont, 18, 2, Color.BLACK), U.config().UIFontColor));
-		comment.setBounds(320, 32, 288, 416);
+				new LabelStyle(A.getFont(U.config().UIFont, 36, 4, Color.BLACK), U.config().UIFontColor));
+		comment.setBounds(640, 64, 576, 832);
 		comment.setWrap(true);
 		comment.setAlignment(Align.topLeft);
 		st.addActor(comment);
@@ -55,11 +56,11 @@ public class MusicRoomScreen extends BasicScreen {
 		names.add("Yet Another Tetris");
 		comments.add("Yet Another Tetris\nArranged by Zzzyt\nStage Extra theme.");
 
-		this.grid = new ScrollingGrid(true, new Rectangle(32, 32, 256, 416));
+		this.grid = new ScrollingGrid(true, new Rectangle(64, 64, 512, 832));
 		st.addActor(grid);
 		for (int i = 0; i < bgms.size; i++) {
 			final int tmpint = i;
-			grid.add(new GridButton((i + 1) + ". " + names.get(i), 18, 40, 420 - i * 20, 20, 40, 0, i, () -> {
+			grid.add(new GridButton((i + 1) + ". " + names.get(i), 36, 80, 840 - i * 40, 40, 80, 0, i, () -> {
 				setComment(tmpint);
 				BGM.stop();
 				BGM.play(bgms.get(tmpint).getName());
@@ -77,23 +78,23 @@ public class MusicRoomScreen extends BasicScreen {
 	@Override
 	protected void onFadeIn(float duration) {
 		comment.clearActions();
-		comment.setPosition(640, 32);
-		comment.addAction(Actions.moveTo(320, 32, duration, Interpolation.sine));
+		comment.setPosition(1000, 64);
+		comment.addAction(Actions.moveTo(640, 64, duration, Interpolation.sine));
 
 		grid.clearActions();
-		grid.setPosition(-200, 0);
+		grid.setPosition(-400, 0);
 		grid.addAction(Actions.moveTo(0, 0, duration, Interpolation.sineOut));
 	}
 
 	@Override
 	protected void onFadeOut(float duration) {
 		comment.clearActions();
-		comment.setPosition(320, 32);
-		comment.addAction(Actions.moveTo(640, 32, duration, Interpolation.sine));
+		comment.setPosition(640, 64);
+		comment.addAction(Actions.moveTo(1000, 64, duration, Interpolation.sine));
 
 		grid.clearActions();
 		grid.setPosition(0, 0);
-		grid.addAction(Actions.moveTo(-200, 0, duration, Interpolation.sineOut));
+		grid.addAction(Actions.moveTo(-400, 0, duration, Interpolation.sineOut));
 	}
 
 	@Override

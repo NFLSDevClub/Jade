@@ -1,4 +1,4 @@
-package com.zzzyt.jade.ui.screen;
+package com.zzzyt.jade.demo.ui.screen;
 
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -13,6 +13,7 @@ import com.zzzyt.jade.game.task.Wait;
 import com.zzzyt.jade.game.task.WaitForBulletClear;
 import com.zzzyt.jade.ui.Grid;
 import com.zzzyt.jade.ui.GridButton;
+import com.zzzyt.jade.ui.screen.BasicScreen;
 import com.zzzyt.jade.util.Global;
 import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.util.U;
@@ -51,7 +52,7 @@ public class SpellSelectScreen extends BasicScreen {
 		}
 		for (int i = 0; i < names.size; i++) {
 			final Task tmp = constructStage(spells.get(i));
-			grid.add(new GridButton(names.get(i), 24, 60, 360 - i * 30, 300, 30, 0, i, () -> {
+			grid.add(new GridButton(names.get(i), 48, 120, 720 - i * 60, 600, 60, 0, i, () -> {
 				Global.put("_practice", tmp);
 				U.switchScreen("playerSelect", 0.5f);
 			}));
@@ -66,7 +67,7 @@ public class SpellSelectScreen extends BasicScreen {
 	@Override
 	protected void onFadeIn(float duration) {
 		grid.clearActions();
-		grid.setPosition(-200, 0);
+		grid.setPosition(-400, 0);
 		grid.addAction(Actions.moveTo(0, 0, duration, Interpolation.sineOut));
 	}
 
@@ -74,7 +75,7 @@ public class SpellSelectScreen extends BasicScreen {
 	protected void onFadeOut(float duration) {
 		grid.clearActions();
 		grid.setPosition(0, 0);
-		grid.addAction(Actions.moveTo(-200, 0, duration, Interpolation.sineOut));
+		grid.addAction(Actions.moveTo(-400, 0, duration, Interpolation.sineOut));
 	}
 
 	@Override

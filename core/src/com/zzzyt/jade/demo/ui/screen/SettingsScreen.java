@@ -1,10 +1,11 @@
-package com.zzzyt.jade.ui.screen;
+package com.zzzyt.jade.demo.ui.screen;
 
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.zzzyt.jade.ui.GridButton;
 import com.zzzyt.jade.ui.ScrollingGrid;
+import com.zzzyt.jade.ui.screen.BasicScreen;
 import com.zzzyt.jade.util.U;
 
 public class SettingsScreen extends BasicScreen {
@@ -19,11 +20,11 @@ public class SettingsScreen extends BasicScreen {
 	public void show() {
 		init("mus/E.0109.ogg", "bg/select.png");
 
-		this.grid = new ScrollingGrid(true, new Rectangle(32, 32, 576, 416));
+		this.grid = new ScrollingGrid(true, new Rectangle(64, 64, 1152, 832));
 		st.addActor(grid);
 		for (int i = 0; i < 40; i++) {
 			for (int j = 0; j < 20; j++) {
-				grid.add(new GridButton(i + "," + j, 18, j * 64, 416 - i * 32, 64, 32, j, i, null));
+				grid.add(new GridButton(i + "," + j, 36, j * 128, 832 - i * 64, 128, 64, j, i, null));
 			}
 		}
 		grid.selectFirst();
@@ -36,7 +37,7 @@ public class SettingsScreen extends BasicScreen {
 	@Override
 	protected void onFadeIn(float duration) {
 		grid.clearActions();
-		grid.setPosition(-200, 0);
+		grid.setPosition(-400, 0);
 		grid.addAction(Actions.moveTo(0, 0, duration, Interpolation.sineOut));
 	}
 
@@ -44,7 +45,7 @@ public class SettingsScreen extends BasicScreen {
 	protected void onFadeOut(float duration) {
 		grid.clearActions();
 		grid.setPosition(0, 0);
-		grid.addAction(Actions.moveTo(-200, 0, duration, Interpolation.sineOut));
+		grid.addAction(Actions.moveTo(-400, 0, duration, Interpolation.sineOut));
 	}
 
 	@Override
