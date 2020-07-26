@@ -5,8 +5,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.WindowedMean;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.zzzyt.jade.demo.ui.screen.DifficultySelectScreen;
 import com.zzzyt.jade.demo.ui.screen.GameScreen;
 import com.zzzyt.jade.demo.ui.screen.MusicRoomScreen;
@@ -17,6 +20,7 @@ import com.zzzyt.jade.demo.ui.screen.StageSelectScreen;
 import com.zzzyt.jade.demo.ui.screen.StartScreen;
 import com.zzzyt.jade.music.BackgroundMusic;
 import com.zzzyt.jade.ui.BackgroundLoader;
+import com.zzzyt.jade.ui.FPSDisplay;
 import com.zzzyt.jade.ui.InputBlocker;
 import com.zzzyt.jade.ui.screen.BlankScreen;
 import com.zzzyt.jade.ui.screen.FadeableScreen;
@@ -33,6 +37,9 @@ public class JadeDemo implements ApplicationListener {
 	public InputMultiplexer input;
 	public InputBlocker blocker;
 
+	private Viewport viewport;
+	private Stage st;
+	private FPSDisplay fps;
 	public WindowedMean fpsCounter;
 
 	@Override
@@ -72,6 +79,13 @@ public class JadeDemo implements ApplicationListener {
 		Gdx.input.setInputProcessor(input);
 
 		this.fpsCounter = new WindowedMean(10);
+
+		this.viewport = new ScalingViewport(U.config().windowScaling, U.config().windowWidth, U.config().windowHeight);
+		this.st = new Stage(viewport);
+		st.setDebugAll(U.config().debugActorLayout);
+
+		this.fps = new FPSDisplay();
+		st.addActor(fps);
 
 		this.screens = new Array<FadeableScreen>();
 		screens.add(new BlankScreen());
@@ -135,6 +149,9 @@ public class JadeDemo implements ApplicationListener {
 		if (!flag1 && !flag2) {
 			Gdx.app.exit();
 		}
+
+		st.act(U.safeDeltaTime());
+		st.draw();
 	}
 
 	@Override
@@ -145,6 +162,7 @@ public class JadeDemo implements ApplicationListener {
 			}
 			screens.get(i).dispose();
 		}
+		st.dispose();
 		A.dispose();
 	}
 
@@ -155,6 +173,7 @@ public class JadeDemo implements ApplicationListener {
 				screens.get(i).resize(width, height);
 			}
 		}
+		viewport.update(width, height);
 	}
 
 	@Override

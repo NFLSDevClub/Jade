@@ -20,7 +20,6 @@ public class BasicScreen implements FadeableScreen {
 	public InputMultiplexer input;
 
 	protected Image background;
-	protected FPSDisplay fps;
 	protected ScreenState state;
 
 	public BasicScreen() {
@@ -30,7 +29,7 @@ public class BasicScreen implements FadeableScreen {
 
 	@Override
 	public void show() {
-
+		
 	}
 
 	public void init(String bgm) {
@@ -39,9 +38,6 @@ public class BasicScreen implements FadeableScreen {
 		this.st = new Stage(viewport);
 		st.setDebugAll(U.config().debugActorLayout);
 		this.input = new InputMultiplexer();
-
-		this.fps = new FPSDisplay();
-		st.addActor(fps);
 
 		input.addProcessor(st);
 		input.addProcessor(new KeyListener(U.config().keyCancel, () -> {
@@ -66,9 +62,6 @@ public class BasicScreen implements FadeableScreen {
 		this.background.setZIndex(0);
 		this.background.setBounds(0, 0, U.config().windowWidth, U.config().windowHeight);
 		st.addActor(this.background);
-
-		this.fps = new FPSDisplay();
-		st.addActor(fps);
 
 		input.addProcessor(st);
 		input.addProcessor(new KeyListener(U.config().keyCancel, () -> {

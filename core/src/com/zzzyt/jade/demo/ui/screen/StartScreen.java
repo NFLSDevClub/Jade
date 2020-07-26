@@ -29,8 +29,10 @@ public class StartScreen extends BasicScreen {
 
 		this.title = new Label("Jade Demo Game", new LabelStyle(A.getFont("font/LBRITE.ttf", 120), Color.BLACK));
 		title.setPosition(180, 780);
+		
 		this.subtitle = new Label("by Zzzyt", new LabelStyle(A.getFont("font/LBRITEI.ttf", 60), Color.BLACK));
 		subtitle.setPosition(960, 720);
+		
 		this.titles = new Group();
 		titles.addActor(title);
 		titles.addActor(subtitle);

@@ -68,8 +68,6 @@ public class GameScreen extends BasicScreen {
 		bottom.setBounds(64, 0, 768, 32);
 		st.addActor(bottom);
 
-		fps.setZIndex(1024);
-
 		this.yesNoMenu = new YesNoMenu(500, 300);
 		st.addActor(yesNoMenu);
 		yesNoMenu.disable();
