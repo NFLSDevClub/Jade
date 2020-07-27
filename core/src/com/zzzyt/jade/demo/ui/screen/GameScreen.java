@@ -32,7 +32,7 @@ public class GameScreen extends BasicScreen {
 
 	private GameFrame frame;
 
-	private Image left, right, top, bottom;
+	private Image bg;
 
 	private Grid pauseMenu;
 	private YesNoMenu yesNoMenu;
@@ -54,19 +54,6 @@ public class GameScreen extends BasicScreen {
 				U.config().frameHeight);
 		frame.setOrigin(frame.getWidth() / 2, frame.getHeight() / 2);
 		st.addActor(frame);
-
-		this.left = new Image(A.getRegion("bg/game_left.png"));
-		left.setBounds(0, 0, 64, 960);
-		st.addActor(left);
-		this.right = new Image(A.getRegion("bg/game_right.png"));
-		right.setBounds(832, 0, 448, 960);
-		st.addActor(right);
-		this.top = new Image(A.getRegion("bg/game_top.png"));
-		top.setBounds(64, 928, 768, 32);
-		st.addActor(top);
-		this.bottom = new Image(A.getRegion("bg/game_bottom.png"));
-		bottom.setBounds(64, 0, 768, 32);
-		st.addActor(bottom);
 
 		this.yesNoMenu = new YesNoMenu(500, 300);
 		st.addActor(yesNoMenu);
@@ -111,6 +98,10 @@ public class GameScreen extends BasicScreen {
 		pauseMenu.add(new GridLabel("Game Paused", 48, 90, 500, 400, 60, 0, 0));
 		pauseMenu.updateComponent();
 		pauseMenu.selectFirst();
+
+		this.bg = new Image(A.getRegion("bg/game.png"));
+		bg.setBounds(0, 0, U.config().windowWidth, U.config().windowHeight);
+		st.addActor(bg);
 
 		input.addProcessor(pauseMenu);
 		input.addProcessor(yesNoMenu);

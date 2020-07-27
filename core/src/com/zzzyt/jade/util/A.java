@@ -9,7 +9,6 @@ import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -167,8 +166,8 @@ public class A {
 			parameter.borderWidth = borderWidth;
 			parameter.borderColor = borderColor;
 		}
-		parameter.minFilter = TextureFilter.Linear;
-		parameter.magFilter = TextureFilter.Linear;
+		parameter.minFilter = U.config().textureMinFilter;
+		parameter.magFilter = U.config().textureMagFilter;
 		BitmapFont font = generator.generateFont(parameter);
 		fontCache.put(key, font);
 		return font;
@@ -180,15 +179,15 @@ public class A {
 
 	public static TextureParameter defaultTextureParameter() {
 		TextureParameter tmp = new TextureParameter();
-		tmp.minFilter = TextureFilter.Linear;
-		tmp.magFilter = TextureFilter.Linear;
+		tmp.minFilter = U.config().textureMinFilter;
+		tmp.magFilter = U.config().textureMagFilter;
 		return tmp;
 	}
 
 	public static BitmapFontParameter defaultBitmapFontParameter() {
 		BitmapFontParameter tmp = new BitmapFontParameter();
-		tmp.minFilter = TextureFilter.Linear;
-		tmp.magFilter = TextureFilter.Linear;
+		tmp.minFilter = U.config().textureMinFilter;
+		tmp.magFilter = U.config().textureMagFilter;
 		return tmp;
 	}
 

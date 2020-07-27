@@ -2,6 +2,7 @@ package com.zzzyt.jade;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.Scaling;
 import com.zzzyt.jade.util.Collision.CollisionMode;
@@ -26,10 +27,11 @@ public class Config {
 	public boolean allowResize;
 	public boolean startupFullScreen;
 	public Scaling windowScaling;
+	public TextureFilter textureMinFilter;
+	public TextureFilter textureMagFilter;
 
 	public int w;
 	public int h;
-
 	public float originX;
 	public float originY;
 	public float deleteDistance;
@@ -79,7 +81,9 @@ public class Config {
 		allowResize = true;
 		startupFullScreen = false;
 		windowScaling = Scaling.fit;
-
+		textureMagFilter=TextureFilter.Linear;
+		textureMinFilter = TextureFilter.Linear;
+				
 		w = 384;
 		h = 448;
 		originX = w / 2;
@@ -93,7 +97,7 @@ public class Config {
 		defaultShotSheet = "default_shot.shot";
 		allowSpeedUpOutOfReplay = true;
 		speedUpMultiplier = 4;
-
+		
 		keyDown = new int[] { Keys.DOWN };
 		keyUp = new int[] { Keys.UP };
 		keyLeft = new int[] { Keys.LEFT };
