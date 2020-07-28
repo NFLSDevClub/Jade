@@ -10,14 +10,14 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.zzzyt.jade.Config;
-import com.zzzyt.jade.demo.ui.JadeDemo;
+import com.zzzyt.jade.ui.JadeApplication;
 import com.zzzyt.jade.ui.screen.FadeableScreen;
 import com.zzzyt.jade.ui.screen.ScreenState;
 
 public class U {
 
 	public static final Json json = new Json();
-	public static JadeDemo game;
+	public static JadeApplication game;
 
 	public static Config config() {
 		if (Config.config == null) {

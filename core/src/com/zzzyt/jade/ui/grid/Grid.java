@@ -1,4 +1,4 @@
-package com.zzzyt.jade.ui;
+package com.zzzyt.jade.ui.grid;
 
 import java.util.concurrent.Callable;
 
@@ -364,6 +364,16 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 				}
 			}
 		}
+	}
+
+	public Grid setGridX(int gridX) {
+		this.gridX = gridX;
+		return this;
+	}
+
+	public Grid setGridY(int gridY) {
+		this.gridY = gridY;
+		return this;
 	}
 
 	@Override

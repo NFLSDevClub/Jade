@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Music.OnCompletionListener;
 import com.zzzyt.jade.util.BGM;
+import com.zzzyt.jade.util.U;
 
 public class BackgroundMusic {
 	public String name;
@@ -46,6 +47,7 @@ public class BackgroundMusic {
 			@Override
 			public void onCompletion(Music music) {
 				if (isLooping) {
+					music.setVolume(U.config().musicVolume);
 					music.play();
 					music.setPosition(loopStart);
 				}
@@ -63,6 +65,7 @@ public class BackgroundMusic {
 		load();
 		isPlaying = true;
 		music.setLooping(false);
+		music.setVolume(U.config().musicVolume);
 		music.play();
 	}
 
@@ -73,6 +76,7 @@ public class BackgroundMusic {
 
 	public void resume() {
 		isPlaying = true;
+		music.setVolume(U.config().musicVolume);
 		music.play();
 	}
 
@@ -80,10 +84,15 @@ public class BackgroundMusic {
 		if (music != null && isPlaying && isLooping) {
 			if (!music.isPlaying()) {
 				music.setPosition(loopStart);
+				music.setVolume(U.config().musicVolume);
 				music.play();
 			} else if (music.getPosition() >= loopEnd) {
 				music.setPosition(loopStart + (music.getPosition() - loopEnd));
 			}
 		}
+	}
+
+	public void setVolume(float volume) {
+		music.setVolume(volume);
 	}
 }

@@ -1,4 +1,4 @@
-package com.zzzyt.jade.ui;
+package com.zzzyt.jade.ui.grid;
 
 import java.util.concurrent.Callable;
 
@@ -15,7 +15,6 @@ public class ScrollingGrid extends Grid {
 	public ScrollingGrid(boolean cycle, Rectangle region) {
 		super(cycle);
 		this.region = region;
-		setCullingArea(new Rectangle(region));
 		this.offsetX = 0;
 		this.offsetY = 0;
 	}
@@ -24,7 +23,6 @@ public class ScrollingGrid extends Grid {
 			Callable<? extends Action> inactiveAction) {
 		super(gridX, gridY, cycle, activeAction, inactiveAction);
 		this.region = region;
-		setCullingArea(new Rectangle(region));
 		this.offsetX = 0;
 		this.offsetY = 0;
 	}
@@ -48,14 +46,21 @@ public class ScrollingGrid extends Grid {
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		Rectangle cullingArea = getCullingArea();
 		float tmpX1 = getX(), tmpY1 = getY();
-		float tmpX2 = cullingArea.getX(), tmpY2 = cullingArea.getY();
-		setPosition(tmpX1 + offsetX, tmpY1 + offsetY);
-		cullingArea.setPosition(tmpX2 - offsetX, tmpY2 - offsetY);
-		super.draw(batch, parentAlpha);
-		setPosition(tmpX1, tmpY1);
-		cullingArea.setPosition(tmpX2, tmpY2);
+		Rectangle cullingArea = getCullingArea();
+		if(cullingArea!=null) {
+			float tmpX2 = cullingArea.getX(), tmpY2 = cullingArea.getY();
+			setPosition(tmpX1 + offsetX, tmpY1 + offsetY);
+			cullingArea.setPosition(tmpX2 - offsetX, tmpY2 - offsetY);
+			super.draw(batch, parentAlpha);
+			setPosition(tmpX1, tmpY1);
+			cullingArea.setPosition(tmpX2, tmpY2);			
+		}
+		else {
+			setPosition(tmpX1 + offsetX, tmpY1 + offsetY);
+			super.draw(batch, parentAlpha);
+			setPosition(tmpX1, tmpY1);
+		}
 	}
 
 	private float calculateDelta(float x, float width, float x2, float width2) {

@@ -43,6 +43,8 @@ public class Config {
 	public String defaultShotSheet;
 	public boolean allowSpeedUpOutOfReplay;
 	public int speedUpMultiplier;
+	public float musicVolume;
+	public float SEVolume;
 
 	public int[] keyDown;
 	public int[] keyUp;
@@ -81,9 +83,9 @@ public class Config {
 		allowResize = true;
 		startupFullScreen = false;
 		windowScaling = Scaling.fit;
-		textureMagFilter=TextureFilter.Linear;
+		textureMagFilter = TextureFilter.Linear;
 		textureMinFilter = TextureFilter.Linear;
-				
+
 		w = 384;
 		h = 448;
 		originX = w / 2;
@@ -97,7 +99,9 @@ public class Config {
 		defaultShotSheet = "default_shot.shot";
 		allowSpeedUpOutOfReplay = true;
 		speedUpMultiplier = 4;
-		
+		musicVolume = 1;
+		SEVolume = 1;
+
 		keyDown = new int[] { Keys.DOWN };
 		keyUp = new int[] { Keys.UP };
 		keyLeft = new int[] { Keys.LEFT };
@@ -111,6 +115,6 @@ public class Config {
 
 		UIFont = "font/SongSC.ttf";
 		UIFontColor = Color.WHITE;
-		debugActorLayout = false;
+		debugActorLayout = true;
 	}
 }

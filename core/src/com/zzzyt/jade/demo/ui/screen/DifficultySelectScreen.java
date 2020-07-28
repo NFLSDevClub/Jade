@@ -2,8 +2,8 @@ package com.zzzyt.jade.demo.ui.screen;
 
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.zzzyt.jade.ui.Grid;
-import com.zzzyt.jade.ui.GridImage;
+import com.zzzyt.jade.ui.grid.Grid;
+import com.zzzyt.jade.ui.grid.GridImage;
 import com.zzzyt.jade.ui.screen.BasicScreen;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.Global;

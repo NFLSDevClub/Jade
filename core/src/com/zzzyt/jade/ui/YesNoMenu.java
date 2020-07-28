@@ -5,6 +5,9 @@ import java.util.concurrent.Callable;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.zzzyt.jade.ui.grid.Grid;
+import com.zzzyt.jade.ui.grid.GridButton;
+import com.zzzyt.jade.ui.grid.GridLabel;
 
 public class YesNoMenu extends Grid {
 

@@ -87,4 +87,10 @@ public class BGM {
 		}
 	}
 
+	public static void setVolume(float volume) {
+		if (bgm != null) {
+			BGM.setVolume(volume);
+		}
+	}
+
 }

@@ -1,4 +1,4 @@
-package com.zzzyt.jade.ui;
+package com.zzzyt.jade.ui.grid;
 
 import java.util.concurrent.Callable;
 

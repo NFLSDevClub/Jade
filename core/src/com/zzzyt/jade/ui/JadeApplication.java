@@ -1,4 +1,4 @@
-package com.zzzyt.jade.demo.ui;
+package com.zzzyt.jade.ui;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -10,27 +10,13 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.zzzyt.jade.demo.ui.screen.DifficultySelectScreen;
-import com.zzzyt.jade.demo.ui.screen.GameScreen;
-import com.zzzyt.jade.demo.ui.screen.MusicRoomScreen;
-import com.zzzyt.jade.demo.ui.screen.PlayerSelectScreen;
-import com.zzzyt.jade.demo.ui.screen.SettingsScreen;
-import com.zzzyt.jade.demo.ui.screen.SpellSelectScreen;
-import com.zzzyt.jade.demo.ui.screen.StageSelectScreen;
-import com.zzzyt.jade.demo.ui.screen.StartScreen;
-import com.zzzyt.jade.music.BackgroundMusic;
-import com.zzzyt.jade.ui.BackgroundLoader;
-import com.zzzyt.jade.ui.FPSDisplay;
-import com.zzzyt.jade.ui.InputBlocker;
-import com.zzzyt.jade.ui.screen.BlankScreen;
 import com.zzzyt.jade.ui.screen.FadeableScreen;
 import com.zzzyt.jade.ui.screen.ScreenState;
 import com.zzzyt.jade.util.A;
-import com.zzzyt.jade.util.B;
 import com.zzzyt.jade.util.BGM;
 import com.zzzyt.jade.util.U;
 
-public class JadeDemo implements ApplicationListener {
+public class JadeApplication implements ApplicationListener {
 
 	public Logger logger;
 	public Array<FadeableScreen> screens;
@@ -42,6 +28,10 @@ public class JadeDemo implements ApplicationListener {
 	private FPSDisplay fps;
 	public WindowedMean fpsCounter;
 
+	public void onStart() {
+		
+	}
+	
 	@Override
 	public void create() {
 		Gdx.app.setLogLevel(U.config().logLevel);
@@ -57,20 +47,6 @@ public class JadeDemo implements ApplicationListener {
 
 		A.init();
 
-		BGM.register(new BackgroundMusic("mus/Idea12.ogg", 0, 12));
-		BGM.register(new BackgroundMusic("mus/E.0109.ogg", 10, 50));
-		BGM.register(new BackgroundMusic("mus/Yet Another Tetris (Piano ver.).ogg", 0, Float.MAX_VALUE));
-		A.load(U.config().UIFont);
-		A.load("font/LBRITE.ttf");
-		A.load("font/LBRITEI.ttf");
-		A.load("font/debug.fnt");
-		A.load("bg/blank.png");
-		A.load("bg/start.png");
-		A.load("default_shot.shot");
-		A.finishLoading();
-
-		B.setSheet(U.config().defaultShotSheet);
-
 		this.blocker = new InputBlocker();
 		blocker.enable();
 
@@ -79,27 +55,18 @@ public class JadeDemo implements ApplicationListener {
 		Gdx.input.setInputProcessor(input);
 
 		this.fpsCounter = new WindowedMean(10);
+		this.screens = new Array<FadeableScreen>();
 
 		this.viewport = new ScalingViewport(U.config().windowScaling, U.config().windowWidth, U.config().windowHeight);
 		this.st = new Stage(viewport);
 		st.setDebugAll(U.config().debugActorLayout);
 
+		A.load("font/debug.fnt");
+		A.finishLoading();
 		this.fps = new FPSDisplay();
 		st.addActor(fps);
-
-		this.screens = new Array<FadeableScreen>();
-		screens.add(new BlankScreen());
-		screens.add(new StartScreen());
-		screens.add(new GameScreen());
-		screens.add(new DifficultySelectScreen());
-		screens.add(new PlayerSelectScreen());
-		screens.add(new StageSelectScreen());
-		screens.add(new SpellSelectScreen());
-		screens.add(new MusicRoomScreen());
-		screens.add(new SettingsScreen());
-
-		U.switchScreen("blank");
-		U.switchScreen("start", 0.5f);
+		
+		onStart();
 
 		BackgroundLoader backgroundLoader = new BackgroundLoader();
 		backgroundLoader.start();
