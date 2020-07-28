@@ -117,7 +117,7 @@ public class BackgroundLoader extends Thread {
 		else if ("atlas".equals(extension))
 			A.load(fh.path(), TextureAtlas.class);
 		else if ("fnt".equals(extension))
-			A.load(fh.path(), BitmapFont.class);
+			A.load(fh.path(), BitmapFont.class, A.defaultBitmapFontParameter());
 		else if ("ttf".equals(extension))
 			A.load(fh.path(), FreeTypeFontGenerator.class);
 		else if ("shot".equals(extension))
