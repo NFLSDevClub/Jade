@@ -44,6 +44,10 @@ public class Config {
 	public boolean allowSpeedUpOutOfReplay;
 	public int speedUpMultiplier;
 	public float musicVolume;
+	/**
+	 * Guessed from 0.0-1.0
+	 * --XGN
+	 */
 	public float SEVolume;
 
 	public int[] keyDown;

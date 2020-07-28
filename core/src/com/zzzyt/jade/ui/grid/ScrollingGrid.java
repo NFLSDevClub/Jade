@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class ScrollingGrid extends Grid {
+public class ScrollingGrid extends NoisyGrid {
 
 	protected Rectangle region;
 	protected float offsetX, offsetY;

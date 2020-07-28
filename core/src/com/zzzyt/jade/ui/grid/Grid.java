@@ -236,22 +236,29 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 		} else if (U.matchKey(keycode, U.config().keyRight)) {
 			select(selectedX + 1, selectedY, 1, 0);
 		} else if (U.matchKey(keycode, U.config().keySelect)) {
-			boolean flag = false;
-			for (GridComponent button : grid) {
-				if (button.isActive()) {
-					button.trigger();
-					flag = true;
-				}
-			}
-			if (flag) {
-				return true;
-			}
+			return fire();
 		} else if (U.matchKey(keycode, U.config().keyCancel)) {
 			exit();
 		}
 		return false;
 	}
 
+	/**
+	 * Trigger the current button in the grid <br/>
+	 * @return Success?
+	 */
+	public boolean fire() {
+		boolean flag = false;
+		for (GridComponent button : grid) {
+			if (button.isActive()) {
+				button.trigger();
+				flag = true;
+			}
+		}
+		
+		return flag;
+	}
+	
 	public void exit() {
 		if (parent != null) {
 			parent.enable();

@@ -14,6 +14,7 @@ import com.zzzyt.jade.ui.grid.ScrollingGrid;
 import com.zzzyt.jade.ui.screen.BasicScreen;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.BGM;
+import com.zzzyt.jade.util.SE;
 import com.zzzyt.jade.util.U;
 
 public class MusicRoomScreen extends BasicScreen {
@@ -99,6 +100,7 @@ public class MusicRoomScreen extends BasicScreen {
 
 	@Override
 	protected void onQuit() {
+		SE.play("cancel");
 		U.switchScreen("start", 0.5f);
 	}
 

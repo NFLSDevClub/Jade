@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.zzzyt.jade.ui.grid.Grid;
 import com.zzzyt.jade.ui.grid.GridButton;
+import com.zzzyt.jade.ui.grid.NoisyGrid;
 import com.zzzyt.jade.ui.screen.BasicScreen;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.Global;
@@ -38,7 +39,7 @@ public class StartScreen extends BasicScreen {
 		titles.addActor(subtitle);
 		st.addActor(titles);
 
-		this.grid = new Grid(true);
+		this.grid = new NoisyGrid(true);
 		st.addActor(grid);
 		grid.add(new GridButton("Game Start", 48, 860, 580, 400, 60, 0, 0, () -> {
 			A.finishLoading();

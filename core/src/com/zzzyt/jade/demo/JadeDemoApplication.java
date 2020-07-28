@@ -14,6 +14,7 @@ import com.zzzyt.jade.ui.screen.BlankScreen;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.B;
 import com.zzzyt.jade.util.BGM;
+import com.zzzyt.jade.util.SE;
 import com.zzzyt.jade.util.U;
 
 public class JadeDemoApplication extends JadeApplication {
@@ -23,6 +24,12 @@ public class JadeDemoApplication extends JadeApplication {
 		BGM.register(new BackgroundMusic("mus/Idea12.ogg", 0, 12));
 		BGM.register(new BackgroundMusic("mus/E.0109.ogg", 10, 50));
 		BGM.register(new BackgroundMusic("mus/Yet Another Tetris (Piano ver.).ogg", 0, Float.MAX_VALUE));
+		
+		SE.register("cancel", "snd/se_cancel00.wav");
+		SE.register("invalid", "snd/se_invalid.wav");
+		SE.register("ok", "snd/se_ok00.wav");
+		SE.register("select", "snd/se_select00.wav");
+		
 		A.load(U.config().UIFont);
 		A.load("font/LBRITE.ttf");
 		A.load("font/LBRITEI.ttf");

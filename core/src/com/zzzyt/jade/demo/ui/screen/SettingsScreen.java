@@ -9,6 +9,7 @@ import com.zzzyt.jade.ui.grid.GridLabel;
 import com.zzzyt.jade.ui.grid.ScrollingCenteredGrid;
 import com.zzzyt.jade.ui.grid.ScrollingGrid;
 import com.zzzyt.jade.ui.screen.BasicScreen;
+import com.zzzyt.jade.util.SE;
 import com.zzzyt.jade.util.U;
 
 public class SettingsScreen extends BasicScreen {
@@ -73,6 +74,7 @@ public class SettingsScreen extends BasicScreen {
 
 	@Override
 	protected void onQuit() {
+		SE.play("cancel");
 		U.switchScreen("start", 0.5f);
 	}
 

@@ -4,10 +4,12 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.zzzyt.jade.ui.grid.Grid;
 import com.zzzyt.jade.ui.grid.GridImage;
+import com.zzzyt.jade.ui.grid.NoisyGrid;
 import com.zzzyt.jade.ui.screen.BasicScreen;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.Global;
 import com.zzzyt.jade.util.J;
+import com.zzzyt.jade.util.SE;
 import com.zzzyt.jade.util.U;
 
 public class DifficultySelectScreen extends BasicScreen {
@@ -22,7 +24,7 @@ public class DifficultySelectScreen extends BasicScreen {
 	public void show() {
 		init("mus/E.0109.ogg", "bg/select.png");
 
-		this.grid = new Grid(true);
+		this.grid = new NoisyGrid(true);
 		st.addActor(grid);
 
 		final String switchTarget;
@@ -85,6 +87,7 @@ public class DifficultySelectScreen extends BasicScreen {
 
 	@Override
 	protected void onQuit() {
+		SE.play("cancel");
 		U.switchScreen("start", 0.5f);
 	}
 
