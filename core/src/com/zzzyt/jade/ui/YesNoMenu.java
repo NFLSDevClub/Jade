@@ -16,7 +16,7 @@ public class YesNoMenu extends Grid {
 	private GridButton yes, no;
 
 	public YesNoMenu(float x, float y) {
-		this(null, null, 0, 0, null, null);
+		this(null, null, 0, 0, true, null, null);
 		setNo(() -> {
 			exit();
 		});
@@ -27,14 +27,15 @@ public class YesNoMenu extends Grid {
 		setPosition(x, y);
 	}
 
-	public YesNoMenu(Runnable yesRunnable, Runnable noRunnable, int gridX, int gridY,
+	public YesNoMenu(Runnable yesRunnable, Runnable noRunnable, int gridX, int gridY, boolean hasSound,
 			Callable<? extends Action> activeAction, Callable<? extends Action> inactiveAction) {
-		super(gridX, gridY, true, activeAction, inactiveAction);
+		super(gridX, gridY, true, hasSound, activeAction, inactiveAction);
 		this.yesRunnable = yesRunnable;
 		this.noRunnable = noRunnable;
 		this.label = new GridLabel("Really?", 48, 0, 140, 400, 60, 0, 0);
 		this.yes = new GridButton("Yes!", 36, 10, 60, 400, 40, 0, 1, this.yesRunnable);
 		this.no = new GridButton("No!", 36, 20, 0, 400, 40, 0, 2, this.noRunnable);
+		no.setSound(false);
 		add(no);
 		add(yes);
 		add(label);

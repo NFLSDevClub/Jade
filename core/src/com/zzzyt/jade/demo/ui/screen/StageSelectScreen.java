@@ -8,11 +8,9 @@ import com.zzzyt.jade.demo.stageextra.StageExtra;
 import com.zzzyt.jade.game.Task;
 import com.zzzyt.jade.ui.grid.Grid;
 import com.zzzyt.jade.ui.grid.GridButton;
-import com.zzzyt.jade.ui.grid.NoisyGrid;
 import com.zzzyt.jade.ui.screen.BasicScreen;
 import com.zzzyt.jade.util.Global;
 import com.zzzyt.jade.util.J;
-import com.zzzyt.jade.util.SE;
 import com.zzzyt.jade.util.U;
 
 public class StageSelectScreen extends BasicScreen {
@@ -30,7 +28,7 @@ public class StageSelectScreen extends BasicScreen {
 	public void show() {
 		init("mus/E.0109.ogg", "bg/select.png");
 
-		this.grid = new NoisyGrid(true);
+		this.grid = new Grid(true);
 		st.addActor(grid);
 
 		this.names = new Array<String>();
@@ -73,8 +71,8 @@ public class StageSelectScreen extends BasicScreen {
 
 	@Override
 	protected void onQuit() {
-		SE.play("cancel");
 		U.switchScreen("difficultySelect", 0.5f);
+		super.onQuit();
 	}
 
 	@Override

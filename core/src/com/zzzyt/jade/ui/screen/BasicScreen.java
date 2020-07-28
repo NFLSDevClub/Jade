@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.zzzyt.jade.ui.KeyListener;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.BGM;
+import com.zzzyt.jade.util.SE;
 import com.zzzyt.jade.util.U;
 
 public class BasicScreen implements FadeableScreen {
@@ -28,7 +29,7 @@ public class BasicScreen implements FadeableScreen {
 
 	@Override
 	public void show() {
-		
+
 	}
 
 	public void init(String bgm) {
@@ -79,7 +80,7 @@ public class BasicScreen implements FadeableScreen {
 	}
 
 	protected void onQuit() {
-
+		SE.play("cancel");
 	}
 
 	@Override

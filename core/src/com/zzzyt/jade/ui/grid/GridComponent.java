@@ -24,4 +24,6 @@ public interface GridComponent {
 	public int getGridY();
 
 	public void trigger();
+	
+	public boolean hasSound();
 }

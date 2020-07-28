@@ -46,7 +46,9 @@ public class GameScreen extends BasicScreen {
 		init(null);
 
 		input.addProcessor(new KeyListener(U.config().keyPause, () -> {
-			pauseGame();
+			if (!jade.isPaused()) {
+				pauseGame();
+			}
 		}));
 
 		this.frame = new GameFrame();
@@ -60,7 +62,7 @@ public class GameScreen extends BasicScreen {
 		yesNoMenu.disable();
 		yesNoMenu.setColor(new Color(1, 1, 1, 0));
 
-		this.pauseMenu = new Grid(0, 0, true, () -> Actions.fadeIn(0.2f), () -> Actions.fadeOut(0.1f));
+		this.pauseMenu = new Grid(0, 0, true, true, () -> Actions.fadeIn(0.2f), () -> Actions.fadeOut(0.1f));
 		pauseMenu.setPosition(-60, 0);
 		st.addActor(pauseMenu);
 		yesNoMenu.setParent(pauseMenu);

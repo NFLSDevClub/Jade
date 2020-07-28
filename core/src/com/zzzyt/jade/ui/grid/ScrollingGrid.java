@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class ScrollingGrid extends NoisyGrid {
+public class ScrollingGrid extends Grid {
 
 	protected Rectangle region;
 	protected float offsetX, offsetY;
@@ -19,9 +19,9 @@ public class ScrollingGrid extends NoisyGrid {
 		this.offsetY = 0;
 	}
 
-	public ScrollingGrid(int gridX, int gridY, boolean cycle, Rectangle region, Callable<? extends Action> activeAction,
-			Callable<? extends Action> inactiveAction) {
-		super(gridX, gridY, cycle, activeAction, inactiveAction);
+	public ScrollingGrid(int gridX, int gridY, boolean cycle, boolean hasSound, Rectangle region,
+			Callable<? extends Action> activeAction, Callable<? extends Action> inactiveAction) {
+		super(gridX, gridY, cycle, hasSound, activeAction, inactiveAction);
 		this.region = region;
 		this.offsetX = 0;
 		this.offsetY = 0;
@@ -48,15 +48,14 @@ public class ScrollingGrid extends NoisyGrid {
 	public void draw(Batch batch, float parentAlpha) {
 		float tmpX1 = getX(), tmpY1 = getY();
 		Rectangle cullingArea = getCullingArea();
-		if(cullingArea!=null) {
+		if (cullingArea != null) {
 			float tmpX2 = cullingArea.getX(), tmpY2 = cullingArea.getY();
 			setPosition(tmpX1 + offsetX, tmpY1 + offsetY);
 			cullingArea.setPosition(tmpX2 - offsetX, tmpY2 - offsetY);
 			super.draw(batch, parentAlpha);
 			setPosition(tmpX1, tmpY1);
-			cullingArea.setPosition(tmpX2, tmpY2);			
-		}
-		else {
+			cullingArea.setPosition(tmpX2, tmpY2);
+		} else {
 			setPosition(tmpX1 + offsetX, tmpY1 + offsetY);
 			super.draw(batch, parentAlpha);
 			setPosition(tmpX1, tmpY1);

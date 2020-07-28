@@ -20,9 +20,9 @@ public class ScrollingCenteredGrid extends Grid {
 		this.offsetY = 0;
 	}
 
-	public ScrollingCenteredGrid(int gridX, int gridY, boolean cycle, float centerX, float centerY,
+	public ScrollingCenteredGrid(int gridX, int gridY, boolean cycle, boolean hasSound, float centerX, float centerY,
 			Callable<? extends Action> activeAction, Callable<? extends Action> inactiveAction) {
-		super(gridX, gridY, cycle, activeAction, inactiveAction);
+		super(gridX, gridY, cycle, true, activeAction, inactiveAction);
 		this.centerX = centerX;
 		this.centerY = centerY;
 		this.offsetX = 0;

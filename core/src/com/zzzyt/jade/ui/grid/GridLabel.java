@@ -131,4 +131,9 @@ public class GridLabel extends Label implements GridComponent {
 
 	}
 
+	@Override
+	public boolean hasSound() {
+		return false;
+	}
+
 }

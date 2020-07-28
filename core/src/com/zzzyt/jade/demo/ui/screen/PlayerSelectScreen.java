@@ -5,12 +5,10 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.zzzyt.jade.ui.grid.Grid;
 import com.zzzyt.jade.ui.grid.GridImage;
-import com.zzzyt.jade.ui.grid.NoisyGrid;
 import com.zzzyt.jade.ui.screen.BasicScreen;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.Global;
 import com.zzzyt.jade.util.J;
-import com.zzzyt.jade.util.SE;
 import com.zzzyt.jade.util.U;
 
 public class PlayerSelectScreen extends BasicScreen {
@@ -25,14 +23,14 @@ public class PlayerSelectScreen extends BasicScreen {
 	public void show() {
 		init("mus/E.0109.ogg", "bg/select.png");
 
-		this.grid = new NoisyGrid(true);
+		this.grid = new Grid(true);
 		st.addActor(grid);
 
-		grid.add(new GridImage(A.getRegion("diff/marisa_description.png"), 1440, 200, 1, 0,
+		grid.add(new GridImage(A.getRegion("diff/marisa_description.png"), 1440, 200, 1, 0, true,
 				() -> Actions.sequence(Actions.color(Color.WHITE), Actions.moveTo(680, 200, 0.2f, Interpolation.sine)),
 				() -> Actions.sequence(Actions.color(Color.GRAY), Actions.moveTo(1440, 200, 0.2f, Interpolation.sine)),
 				null));
-		grid.add(new GridImage(A.getRegion("diff/marisa_portrait.png"), 720, 200, 1, 0,
+		grid.add(new GridImage(A.getRegion("diff/marisa_portrait.png"), 720, 200, 1, 0, true,
 				() -> Actions.sequence(Actions.color(Color.WHITE), Actions.moveTo(400, 200, 0.2f, Interpolation.sine)),
 				() -> Actions.sequence(Actions.color(Color.GRAY), Actions.moveTo(720, 200, 0.2f, Interpolation.sine)),
 				() -> {
@@ -42,11 +40,11 @@ public class PlayerSelectScreen extends BasicScreen {
 					U.switchScreen("blank", 0.5f);
 				}));
 
-		grid.add(new GridImage(A.getRegion("diff/reimu_description.png"), 240, 200, 0, 0,
+		grid.add(new GridImage(A.getRegion("diff/reimu_description.png"), 240, 200, 0, 0, true,
 				() -> Actions.sequence(Actions.color(Color.WHITE), Actions.moveTo(240, 200, 0.2f, Interpolation.sine)),
 				() -> Actions.sequence(Actions.color(Color.GRAY), Actions.moveTo(-720, 200, 0.2f, Interpolation.sine)),
 				null));
-		grid.add(new GridImage(A.getRegion("diff/reimu_portrait.png"), 480, 200, 0, 0,
+		grid.add(new GridImage(A.getRegion("diff/reimu_portrait.png"), 480, 200, 0, 0, true,
 				() -> Actions.sequence(Actions.color(Color.WHITE), Actions.moveTo(480, 200, 0.2f, Interpolation.sine)),
 				() -> Actions.sequence(Actions.color(Color.GRAY), Actions.moveTo(160, 200, 0.2f, Interpolation.sine)),
 				() -> {
@@ -84,7 +82,6 @@ public class PlayerSelectScreen extends BasicScreen {
 
 	@Override
 	protected void onQuit() {
-		SE.play("cancel");
 		if (J.isGameModeSpellPractice()) {
 			U.switchScreen("spellSelect", 0.5f);
 		} else if (J.isGameModeStagePractice()) {
@@ -92,6 +89,7 @@ public class PlayerSelectScreen extends BasicScreen {
 		} else {
 			U.switchScreen("difficultySelect", 0.5f);
 		}
+		super.onQuit();
 	}
 
 	@Override

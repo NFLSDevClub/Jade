@@ -12,7 +12,6 @@ import com.badlogic.gdx.utils.ObjectMap;
  */
 public class SE {
 
-
 	private static ObjectMap<String, Sound> SEs = new ObjectMap<>();
 	private static Logger logger = new Logger("SE", U.config().logLevel);
 

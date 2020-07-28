@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.zzzyt.jade.ui.grid.Grid;
 import com.zzzyt.jade.ui.screen.FadeableScreen;
 import com.zzzyt.jade.ui.screen.ScreenState;
 import com.zzzyt.jade.util.A;
@@ -29,9 +30,9 @@ public class JadeApplication implements ApplicationListener {
 	public WindowedMean fpsCounter;
 
 	public void onStart() {
-		
+
 	}
-	
+
 	@Override
 	public void create() {
 		Gdx.app.setLogLevel(U.config().logLevel);
@@ -65,7 +66,7 @@ public class JadeApplication implements ApplicationListener {
 		A.finishLoading();
 		this.fps = new FPSDisplay();
 		st.addActor(fps);
-		
+
 		onStart();
 
 		BackgroundLoader backgroundLoader = new BackgroundLoader();
@@ -85,6 +86,7 @@ public class JadeApplication implements ApplicationListener {
 		}
 
 		fpsCounter.addValue(Gdx.graphics.getDeltaTime());
+		Grid.globalLock = false;
 
 		U.glClear();
 

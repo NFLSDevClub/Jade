@@ -15,21 +15,18 @@ public class GridImage extends Image implements GridComponent {
 	protected float staticX, staticY;
 	protected int gridX, gridY;
 	protected Runnable runnable;
-	protected boolean active, enabled;
+	protected boolean active, enabled, hasSound;
 	protected Callable<? extends Action> activeAction, inactiveAction;
 
 	public GridImage(TextureRegion texture, float x, float y, int gridX, int gridY, Runnable runnable) {
-		this(texture,x,y,gridX,gridY,null,null,runnable);
-		setActiveAction(() -> Actions.sequence(
-				Actions.moveTo(staticX, staticY), Actions.color(Color.WHITE),
-				Actions.sequence(
-						Actions.moveTo(staticX - 10, staticY, 0.1f, Interpolation.sine),
+		this(texture, x, y, gridX, gridY, true, null, null, runnable);
+		setActiveAction(() -> Actions.sequence(Actions.moveTo(staticX, staticY), Actions.color(Color.WHITE),
+				Actions.sequence(Actions.moveTo(staticX - 10, staticY, 0.1f, Interpolation.sine),
 						Actions.moveTo(staticX, staticY, 0.1f, Interpolation.sine))));
-		setInactiveAction(() -> Actions.forever(
-				Actions.color(Color.GRAY)));
+		setInactiveAction(() -> Actions.forever(Actions.color(Color.GRAY)));
 	}
 
-	public GridImage(TextureRegion texture, float x, float y, int gridX, int gridY,
+	public GridImage(TextureRegion texture, float x, float y, int gridX, int gridY, boolean hasSound,
 			Callable<? extends Action> activeAction, Callable<? extends Action> inactiveAction, Runnable runnable) {
 		super(texture);
 		setPosition(x, y);
@@ -41,6 +38,7 @@ public class GridImage extends Image implements GridComponent {
 		this.activeAction = activeAction;
 		this.inactiveAction = inactiveAction;
 		this.enabled = true;
+		this.hasSound = hasSound;
 		deactivate();
 	}
 
@@ -148,6 +146,11 @@ public class GridImage extends Image implements GridComponent {
 	@Override
 	public Grid getPartent() {
 		return parent;
+	}
+
+	@Override
+	public boolean hasSound() {
+		return hasSound;
 	}
 
 }

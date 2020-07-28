@@ -13,7 +13,7 @@ import com.zzzyt.jade.util.U;
 public class GridButton extends Label implements GridComponent {
 
 	public Runnable runnable;
-	public boolean active, enabled;
+	public boolean active, enabled, hasSound;
 
 	protected Grid parent;
 	protected int gridX, gridY;
@@ -26,9 +26,10 @@ public class GridButton extends Label implements GridComponent {
 		this.activeStyle = activeStyle;
 	}
 
-	public GridButton(CharSequence text, int fontSize, float x, float y, float width, float height, int gridX, int gridY,
-			Callable<? extends Action> activeAction, Callable<? extends Action> inactiveAction, LabelStyle activeStyle,
-			LabelStyle inactiveStyle, Runnable runnable) {
+	public GridButton(CharSequence text, int fontSize, float x, float y, float width, float height, int gridX,
+			int gridY, boolean hasSound, Callable<? extends Action> activeAction,
+			Callable<? extends Action> inactiveAction, LabelStyle activeStyle, LabelStyle inactiveStyle,
+			Runnable runnable) {
 		super(text, new LabelStyle(A.getFont(U.config().UIFont, fontSize, 4, Color.BLACK), U.config().UIFontColor));
 		this.staticX = x;
 		this.staticY = y;
@@ -41,28 +42,26 @@ public class GridButton extends Label implements GridComponent {
 		this.activeAction = activeAction;
 		this.inactiveAction = inactiveAction;
 		this.enabled = true;
+		this.hasSound = hasSound;
 		setBounds(x, y, width, height);
 	}
-	
-	public GridButton(CharSequence text, int fontSize, float x, float y, float width, float height, int gridX, int gridY,
-			Runnable runnable) {
-		this(text,fontSize,x,y,width,height,gridX,gridY,null,null,
-			new LabelStyle(A.getFont(U.config().UIFont, fontSize, 4, Color.BLACK),U.config().UIFontColor),
-			new LabelStyle(A.getFont(U.config().UIFont, fontSize, 4, Color.BLACK),U.config().UIFontColor),runnable);
+
+	public GridButton(CharSequence text, int fontSize, float x, float y, float width, float height, int gridX,
+			int gridY, Runnable runnable) {
+		this(text, fontSize, x, y, width, height, gridX, gridY, true, null, null,
+				new LabelStyle(A.getFont(U.config().UIFont, fontSize, 4, Color.BLACK), U.config().UIFontColor),
+				new LabelStyle(A.getFont(U.config().UIFont, fontSize, 4, Color.BLACK), U.config().UIFontColor),
+				runnable);
 		setActiveAction(() -> Actions.parallel(
-				Actions.sequence(
-					Actions.color(Color.WHITE),
-					Actions.moveTo(staticX + 2, staticY, 0.03f, Interpolation.sine),
-					Actions.moveTo(staticX - 4, staticY, 0.06f, Interpolation.sine),
-					Actions.moveTo(staticX, staticY, 0.03f, Interpolation.sine)),
-				Actions.forever(
-					Actions.sequence(
-							Actions.color(new Color(0.9f, 0.9f, 0.9f, 1f), 0.5f),
-							Actions.color(Color.WHITE, 0.5f)))));
-		setInactiveAction(() -> Actions.parallel(
-				Actions.alpha(1f),
-				Actions.moveTo(staticX, staticY, 0.1f, Interpolation.sine),
-				Actions.color(new Color(0.7f, 0.7f, 0.7f, 1))));
+				Actions.sequence(Actions.color(Color.WHITE),
+						Actions.moveTo(staticX + 2, staticY, 0.03f, Interpolation.sine),
+						Actions.moveTo(staticX - 4, staticY, 0.06f, Interpolation.sine),
+						Actions.moveTo(staticX, staticY, 0.03f, Interpolation.sine)),
+				Actions.forever(Actions.sequence(Actions.color(new Color(0.9f, 0.9f, 0.9f, 1f), 0.5f),
+						Actions.color(Color.WHITE, 0.5f)))));
+		setInactiveAction(
+				() -> Actions.parallel(Actions.alpha(1f), Actions.moveTo(staticX, staticY, 0.1f, Interpolation.sine),
+						Actions.color(new Color(0.7f, 0.7f, 0.7f, 1))));
 	}
 
 	@Override
@@ -188,6 +187,16 @@ public class GridButton extends Label implements GridComponent {
 	@Override
 	public Grid getPartent() {
 		return parent;
+	}
+
+	@Override
+	public boolean hasSound() {
+		return hasSound;
+	}
+
+	public GridButton setSound(boolean hasSound) {
+		this.hasSound = hasSound;
+		return this;
 	}
 
 }

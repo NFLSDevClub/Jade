@@ -7,9 +7,12 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
+import com.zzzyt.jade.util.SE;
 import com.zzzyt.jade.util.U;
 
 public class Grid extends Group implements InputProcessor, GridComponent {
+
+	public static boolean globalLock = false;
 
 	public Array<GridComponent> grid;
 	public int selectedX, selectedY;
@@ -19,13 +22,13 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 	protected Callable<? extends Action> activeAction, inactiveAction;
 	protected int gridX, gridY;
 	protected int minX, minY, maxX, maxY;
-	protected boolean enabled, active;
+	protected boolean enabled, active, hasSound;
 
 	public Grid(boolean cycle) {
-		this(0, 0, cycle, null, null);
+		this(0, 0, cycle, true, null, null);
 	}
 
-	public Grid(int gridX, int gridY, boolean cycle, Callable<? extends Action> activeAction,
+	public Grid(int gridX, int gridY, boolean cycle, boolean hasSound, Callable<? extends Action> activeAction,
 			Callable<? extends Action> inactiveAction) {
 		this.cycle = cycle;
 		this.gridX = gridX;
@@ -40,6 +43,7 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 		this.maxX = Integer.MIN_VALUE;
 		this.maxY = Integer.MIN_VALUE;
 		this.enabled = true;
+		this.hasSound = hasSound;
 		deactivate();
 	}
 
@@ -95,6 +99,9 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 		if (closest == null) {
 			return;
 		}
+		if (closest.getGridX() != selectedX || closest.getGridY() != selectedY) {
+			SE.play("select");
+		}
 		selectedX = closest.getGridX();
 		selectedY = closest.getGridY();
 		for (GridComponent component : grid) {
@@ -122,6 +129,9 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 		}
 		if (closest == null) {
 			return;
+		}
+		if (closest.getGridX() != selectedX || closest.getGridY() != selectedY) {
+			SE.play("select");
 		}
 		selectedX = closest.getGridX();
 		selectedY = closest.getGridY();
@@ -225,7 +235,7 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		if (!enabled || !active)
+		if (!enabled || !active || globalLock)
 			return false;
 		if (U.matchKey(keycode, U.config().keyUp)) {
 			select(selectedX, selectedY - 1, 0, -1);
@@ -245,22 +255,36 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 
 	/**
 	 * Trigger the current button in the grid <br/>
+	 * 
 	 * @return Success?
 	 */
 	public boolean fire() {
 		boolean flag = false;
+		boolean flag2 = false;
 		for (GridComponent button : grid) {
 			if (button.isActive()) {
 				button.trigger();
 				flag = true;
+				if (button.hasSound()) {
+					flag2 = true;
+				}
 			}
 		}
-		
+		if (flag) {
+			globalLock = true;
+		}
+		if (flag2) {
+			SE.play("ok");
+		}
 		return flag;
 	}
-	
+
 	public void exit() {
 		if (parent != null) {
+			globalLock = true;
+			if (hasSound) {
+				SE.play("cancel");
+			}
 			parent.enable();
 			disable();
 			deactivate();
@@ -407,5 +431,10 @@ public class Grid extends Group implements InputProcessor, GridComponent {
 	@Override
 	public Grid getPartent() {
 		return parent;
+	}
+
+	@Override
+	public boolean hasSound() {
+		return hasSound;
 	}
 }
