@@ -1,9 +1,5 @@
 package com.zzzyt.jade.game.entity;
 
-import com.zzzyt.jade.game.Player;
-import com.zzzyt.jade.util.Collision;
-import com.zzzyt.jade.util.J;
-
 /**
  * Player Bullet base class
  * @author XGN
@@ -27,6 +23,5 @@ public class PlayerBullet extends Bullet {
 		//TODO check collision with enemy
 		return false;
 	}
-	
 	
 }

@@ -26,39 +26,39 @@ public class B {
 	}
 
 	/**
-	 * You probably want to use {@link #newEnemyBullet(TextureRegion, int, float)} :)
+	 * You probably want to use {@link #newEnemyBullet(TextureRegion, int, float)}
+	 * :)
 	 */
 	public static Bullet newBullet(TextureRegion region, int tag, float radius) {
 		return newEnemyBullet(region, tag, radius);
 	}
-	
+
 	/**
-	 *Returns the enemy bullet by the basic argument
+	 * Returns the enemy bullet by the basic argument
 	 */
 	public static EnemyBullet newEnemyBullet(TextureRegion region, int tag, float radius) {
 		EnemyBullet tmp = new EnemyBullet();
 		tmp.sprite = new Sprite(region);
 		tmp.tag = tag;
-		tmp.radius = radius;
 		tmp.boundingRadius = Math.max(tmp.sprite.getHeight() * tmp.sprite.getScaleX(),
 				tmp.sprite.getWidth() * tmp.sprite.getScaleY());
 		return tmp;
 	}
-	
-	public static PlayerBullet newPlayerBullet(TextureRegion region, int tag,float radius, int penetration, int dmg) {
+
+	public static PlayerBullet newPlayerBullet(TextureRegion region, int tag, float radius, int penetration, int dmg) {
 		PlayerBullet tmp = new PlayerBullet();
 		tmp.sprite = new Sprite(region);
 		tmp.tag = tag;
-		tmp.radius = radius;
 		tmp.boundingRadius = Math.max(tmp.sprite.getHeight() * tmp.sprite.getScaleX(),
 				tmp.sprite.getWidth() * tmp.sprite.getScaleY());
-		tmp.penetration=penetration;
-		tmp.damage=dmg;
+		tmp.penetration = penetration;
+		tmp.damage = dmg;
 		return tmp;
 	}
-	
+
 	/**
 	 * Create an enemy shot with angle and speed
+	 * 
 	 * @param x
 	 * @param y
 	 * @param angle
@@ -68,11 +68,12 @@ public class B {
 	 * @return
 	 */
 	public static Bullet as(float x, float y, float angle, float speed, int id, int tag) {
-		return as(x, y, angle, speed, id, tag,false,-1,-1);
+		return as(x, y, angle, speed, id, tag, false, -1, -1);
 	}
-	
+
 	/**
 	 * Create shot with angle and speed
+	 * 
 	 * @param x
 	 * @param y
 	 * @param angle
@@ -80,35 +81,32 @@ public class B {
 	 * @param id
 	 * @param tag
 	 * @param isPlayerShot
-	 * @param penetration - anything if not player shot
-	 * @param dmg -anything if not player shot
+	 * @param penetration  - anything if not player shot
+	 * @param dmg          -anything if not player shot
 	 * @return
 	 */
-	public static Bullet as(float x, float y, float angle, float speed, int id, int tag,boolean isPlayerShot,int penetration,int dmg) {
+	public static Bullet as(float x, float y, float angle, float speed, int id, int tag, boolean isPlayerShot,
+			int penetration, int dmg) {
 		angle = M.normalizeAngle(angle);
 		BulletData data = sheet.findBullet(id);
 		Bullet bullet;
-		if(isPlayerShot) {
-			bullet=newPlayerBullet(data.texture,tag,data.radius,penetration,dmg);
-		}else {
+		if (isPlayerShot) {
+			bullet = newPlayerBullet(data.texture, tag, data.radius, penetration, dmg);
+		} else {
 			bullet = newBullet(data.texture, tag, data.radius);
 		}
-		if (data.texture.isAnimated()) {
-			bullet.animated = true;
-			bullet.texture = data.texture;
-		}
+		bullet.data = data;
 		bullet.sprite.setRotation(angle - data.rotation);
-		bullet.spinSpeed = data.spinSpeed;
-		bullet.type = id;
 		bullet.setXY(x, y);
 		bullet.setSpeed(speed);
 		bullet.setAngle(angle);
 		J.add(bullet);
 		return bullet;
 	}
-	
+
 	/**
 	 * {@link #as(float, float, float, float, int, int)}
+	 * 
 	 * @param x
 	 * @param y
 	 * @param angle

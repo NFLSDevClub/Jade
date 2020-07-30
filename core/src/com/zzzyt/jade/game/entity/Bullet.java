@@ -3,13 +3,11 @@ package com.zzzyt.jade.game.entity;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Pool.Poolable;
 import com.zzzyt.jade.game.Entity;
 import com.zzzyt.jade.game.Operator;
-import com.zzzyt.jade.game.shot.BulletTexture;
+import com.zzzyt.jade.game.shot.BulletData;
 import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.util.M;
 import com.zzzyt.jade.util.U;
@@ -18,84 +16,66 @@ import com.zzzyt.jade.util.U;
  * Base class for bullets
  *
  */
-public class Bullet implements Entity, Poolable {
+public class Bullet implements Entity {
 
-	public int id;
-	public int type;
+	public int internalId;
+
 	public int tag;
 	public int t;
-
 	public float x, y;
 	public Sprite sprite;
 	public float speed, angle;
-	/**
-	 * Collision Radius for the bullet
-	 * --XGN
-	 */
-	public float radius;
-	public float spinSpeed;
-	
 	public float boundingRadius;
-	public boolean animated;
-	public BulletTexture texture;
+//	public int type;
+//	public float radius;
+//	public float spinSpeed;
+//	public boolean animated;
+//	public BulletTexture texture;
+	public BulletData data;
 
 	public Bullet() {
 
 	}
 
-	public Bullet(TextureRegion region, int tag, float radius) {
-		this.sprite = new Sprite(region);
-		this.tag = tag;
-		this.boundingRadius = Math.max(sprite.getHeight() * sprite.getScaleX(), sprite.getWidth() * sprite.getScaleY());
-		this.speed = 0;
-		this.angle = 0;
-		this.x = 0;
-		this.y = 0;
-		this.radius = radius;
-		updateSpritePosition();
+	public Bullet(BulletData data) {
+		this.data = data;
 	}
 
-	public Bullet(TextureRegion region, int tag, float radius, float x, float y) {
-		this.sprite = new Sprite(region);
-		this.tag = tag;
-		this.boundingRadius = Math.max(sprite.getHeight() * sprite.getScaleX(), sprite.getWidth() * sprite.getScaleY());
-		this.speed = 0;
-		this.angle = 0;
-		this.x = x;
-		this.y = y;
-		this.radius = radius;
-		updateSpritePosition();
-	}
-
-	public Bullet(TextureRegion region, int tag, float radius, float x, float y, float speed, float dir) {
-		this.sprite = new Sprite(region);
-		this.tag = tag;
-		this.boundingRadius = Math.max(sprite.getHeight() * sprite.getScaleX(), sprite.getWidth() * sprite.getScaleY());
-		this.speed = speed;
-		this.angle = dir;
-		this.x = x;
-		this.y = y;
-		this.radius = radius;
-		updateSpritePosition();
-	}
-
-	@Override
-	public void reset() {
-		id = -1;
-		type = 0;
-		tag = 0;
-		x = 0;
-		y = 0;
-		t = 0;
-		sprite = null;
-		speed = 0;
-		angle = 0;
-		spinSpeed = 0;
-		boundingRadius = 0;
-		animated = false;
-		texture = null;
-		radius = -1;
-	}
+//	public Bullet(TextureRegion region, int tag, float radius) {
+//		this.sprite = new Sprite(region);
+//		this.tag = tag;
+//		this.boundingRadius = Math.max(sprite.getHeight() * sprite.getScaleX(), sprite.getWidth() * sprite.getScaleY());
+//		this.speed = 0;
+//		this.angle = 0;
+//		this.x = 0;
+//		this.y = 0;
+//		this.radius = radius;
+//		updateSpritePosition();
+//	}
+//
+//	public Bullet(TextureRegion region, int tag, float radius, float x, float y) {
+//		this.sprite = new Sprite(region);
+//		this.tag = tag;
+//		this.boundingRadius = Math.max(sprite.getHeight() * sprite.getScaleX(), sprite.getWidth() * sprite.getScaleY());
+//		this.speed = 0;
+//		this.angle = 0;
+//		this.x = x;
+//		this.y = y;
+//		this.radius = radius;
+//		updateSpritePosition();
+//	}
+//
+//	public Bullet(TextureRegion region, int tag, float radius, float x, float y, float speed, float dir) {
+//		this.sprite = new Sprite(region);
+//		this.tag = tag;
+//		this.boundingRadius = Math.max(sprite.getHeight() * sprite.getScaleX(), sprite.getWidth() * sprite.getScaleY());
+//		this.speed = speed;
+//		this.angle = dir;
+//		this.x = x;
+//		this.y = y;
+//		this.radius = radius;
+//		updateSpritePosition();
+//	}
 
 	public float getBoundingRadius() {
 		return boundingRadius;
@@ -190,17 +170,17 @@ public class Bullet implements Entity, Poolable {
 			for (int i = 0; i < tmp.size; i++) {
 				if (tmp.get(i) != null) {
 					tmp.get(i).apply(this, t);
-					if (id == -1)
+					if (internalId == -1)
 						return;
 				}
 			}
-			if (id == -1)
+			if (internalId == -1)
 				return;
 		}
-		if (animated) {
-			sprite.setRegion(texture.getRegion(t));
+		if (data.texture.isAnimated()) {
+			sprite.setRegion(data.texture.getRegion(t));
 		}
-		sprite.setRotation(M.normalizeAngle(sprite.getRotation() + spinSpeed));
+		sprite.setRotation(M.normalizeAngle(sprite.getRotation() + data.spinSpeed));
 		x += speed * MathUtils.cosDeg(angle);
 		y += speed * MathUtils.sinDeg(angle);
 		if (U.outOfWorld(x, y, sprite.getWidth() * sprite.getScaleX(), sprite.getHeight() * sprite.getScaleY())) {
@@ -213,17 +193,16 @@ public class Bullet implements Entity, Poolable {
 	/**
 	 * Implement this function to check collision with others. <br/>
 	 * This is called at the beginning of update function <br/>
+	 * 
 	 * @return if a collision has happened
 	 */
 	public boolean checkCollision() {
-		
+
 		return false;
 	}
-	
 
 	/**
-	 * Unknown. Not used
-	 * --XGN
+	 * Unknown. Not used --XGN
 	 */
 	public void onHit() {
 		J.onHit();

@@ -15,15 +15,13 @@ public class EnemyBullet extends Bullet {
 	public boolean checkCollision() {
 		if (collide(J.getPlayer())) {
 			J.onHit();
-			
 			return true;
 		}
 		
 		return false;
 	}
 	
-
 	public boolean collide(Player player) {
-		return Collision.collide(player.getX(), player.getY(), player.getRadius(), x, y, radius);
+		return Collision.defaultCollision(player.getX(), player.getY(), player.getRadius(), x, y, data.radius);
 	}
 }

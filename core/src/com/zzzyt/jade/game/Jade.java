@@ -129,7 +129,7 @@ public class Jade implements Disposable {
 			logger.info("Cleaning up blanks in bullet array: bulletCount=" + bulletCount + " blankCount=" + blankCount);
 			U.cleanupArray(bullets);
 			for (int i = 0; i < bullets.size; i++) {
-				bullets.get(i).id = i;
+				bullets.get(i).internalId = i;
 			}
 			blankCount = 0;
 		}
@@ -145,17 +145,17 @@ public class Jade implements Disposable {
 
 	public Jade add(Bullet bullet) {
 		bulletCount++;
-		bullet.id = bullets.size;
+		bullet.internalId = bullets.size;
 		bullets.add(bullet);
 		return this;
 	}
 
 	public Jade remove(Bullet bullet) {
-		if (bullet.id != bullets.size - 1)
+		if (bullet.internalId != bullets.size - 1)
 			blankCount++;
 		bulletCount--;
-		bullets.set(bullet.id, null);
-		bullet.id = -1;
+		bullets.set(bullet.internalId, null);
+		bullet.internalId = -1;
 		return this;
 	}
 
