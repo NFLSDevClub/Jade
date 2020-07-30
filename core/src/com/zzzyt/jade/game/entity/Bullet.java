@@ -9,13 +9,15 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.zzzyt.jade.game.Entity;
 import com.zzzyt.jade.game.Operator;
-import com.zzzyt.jade.game.Player;
 import com.zzzyt.jade.game.shot.BulletTexture;
-import com.zzzyt.jade.util.Collision;
 import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.util.M;
 import com.zzzyt.jade.util.U;
 
+/**
+ * Base class for bullets
+ *
+ */
 public class Bullet implements Entity, Poolable {
 
 	public int id;
@@ -26,9 +28,13 @@ public class Bullet implements Entity, Poolable {
 	public float x, y;
 	public Sprite sprite;
 	public float speed, angle;
+	/**
+	 * Collision Radius for the bullet
+	 * --XGN
+	 */
 	public float radius;
 	public float spinSpeed;
-
+	
 	public float boundingRadius;
 	public boolean animated;
 	public BulletTexture texture;
@@ -176,9 +182,7 @@ public class Bullet implements Entity, Poolable {
 	}
 
 	public void update(int frame) {
-		if (collide(J.getPlayer())) {
-			J.onHit();
-		}
+		checkCollision();
 
 		t++;
 		Array<Operator> tmp = J.getOperators(tag);
@@ -206,10 +210,21 @@ public class Bullet implements Entity, Poolable {
 		updateSpritePosition();
 	}
 
-	public boolean collide(Player player) {
-		return Collision.collide(player.getX(), player.getY(), player.getRadius(), x, y, radius);
+	/**
+	 * Implement this function to check collision with others. <br/>
+	 * This is called at the beginning of update function <br/>
+	 * @return if a collision has happened
+	 */
+	public boolean checkCollision() {
+		
+		return false;
 	}
+	
 
+	/**
+	 * Unknown. Not used
+	 * --XGN
+	 */
 	public void onHit() {
 		J.onHit();
 	}

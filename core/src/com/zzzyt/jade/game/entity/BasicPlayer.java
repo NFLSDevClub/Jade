@@ -20,6 +20,11 @@ public class BasicPlayer implements Player {
 	private int dx, dy;
 	private int timer1, timer2, pos;
 
+	/**
+	 * allow to trigger {@link #onShot()} {@link #onBomb()}?
+	 */
+	public boolean permitBomb,permitShot;
+	
 	public BasicPlayer() {
 
 	}
@@ -44,6 +49,7 @@ public class BasicPlayer implements Player {
 		this.timer1 = 0;
 		this.timer2 = 0;
 		this.pos = 0;
+		this.permitBomb=this.permitShot=true;
 	}
 
 	public BasicPlayer(TextureAtlas atlas, String regionName, int frameLength, int transitionFrameLength, float radius,
@@ -65,6 +71,7 @@ public class BasicPlayer implements Player {
 		this.timer1 = 0;
 		this.timer2 = 0;
 		this.pos = 0;
+		this.permitBomb=this.permitShot=true;
 	}
 
 	public BasicPlayer(TextureRegion region, float radius, float speedHigh, float speedLow) {
@@ -85,6 +92,7 @@ public class BasicPlayer implements Player {
 		this.timer1 = 0;
 		this.timer2 = 0;
 		this.pos = 0;
+		this.permitBomb=this.permitShot=true;
 	}
 
 	public void draw(Batch batch) {
@@ -141,6 +149,20 @@ public class BasicPlayer implements Player {
 		return this;
 	}
 
+	/**
+	 * Event shot
+	 */
+	public void onShot() {
+		
+	}
+	
+	/**
+	 * Event bomb
+	 */
+	public void onBomb() {
+		
+	}
+	
 	@Override
 	public void update(int t) {
 		dx = 0;
@@ -161,6 +183,13 @@ public class BasicPlayer implements Player {
 		if (U.checkKey(U.config().keyRight)) {
 			dx++;
 		}
+		if(permitShot && U.checkKey(U.config().keySelect)) {
+			onShot();
+		}
+		if(permitBomb && U.checkKey(U.config().keyBomb)) {
+			onBomb();
+		}
+		
 		if (Math.abs(dx) > 0 && Math.abs(dy) == 0) {
 			x += speed * dx;
 		} else if (Math.abs(dx) == 0 && Math.abs(dy) > 0) {

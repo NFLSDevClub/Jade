@@ -3,6 +3,8 @@ package com.zzzyt.jade.util;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.zzzyt.jade.game.entity.Bullet;
+import com.zzzyt.jade.game.entity.EnemyBullet;
+import com.zzzyt.jade.game.entity.PlayerBullet;
 import com.zzzyt.jade.game.shot.BulletData;
 import com.zzzyt.jade.game.shot.ShotSheet;
 
@@ -23,8 +25,18 @@ public class B {
 		return new Bullet();
 	}
 
+	/**
+	 * You probably want to use {@link #newEnemyBullet(TextureRegion, int, float)} :)
+	 */
 	public static Bullet newBullet(TextureRegion region, int tag, float radius) {
-		Bullet tmp = newBullet();
+		return newEnemyBullet(region, tag, radius);
+	}
+	
+	/**
+	 *Returns the enemy bullet by the basic argument
+	 */
+	public static EnemyBullet newEnemyBullet(TextureRegion region, int tag, float radius) {
+		EnemyBullet tmp = new EnemyBullet();
 		tmp.sprite = new Sprite(region);
 		tmp.tag = tag;
 		tmp.radius = radius;
@@ -32,11 +44,55 @@ public class B {
 				tmp.sprite.getWidth() * tmp.sprite.getScaleY());
 		return tmp;
 	}
-
+	
+	public static PlayerBullet newPlayerBullet(TextureRegion region, int tag,float radius, int penetration, int dmg) {
+		PlayerBullet tmp = new PlayerBullet();
+		tmp.sprite = new Sprite(region);
+		tmp.tag = tag;
+		tmp.radius = radius;
+		tmp.boundingRadius = Math.max(tmp.sprite.getHeight() * tmp.sprite.getScaleX(),
+				tmp.sprite.getWidth() * tmp.sprite.getScaleY());
+		tmp.penetration=penetration;
+		tmp.damage=dmg;
+		return tmp;
+	}
+	
+	/**
+	 * Create an enemy shot with angle and speed
+	 * @param x
+	 * @param y
+	 * @param angle
+	 * @param speed
+	 * @param id
+	 * @param tag
+	 * @return
+	 */
 	public static Bullet as(float x, float y, float angle, float speed, int id, int tag) {
+		return as(x, y, angle, speed, id, tag,false,-1,-1);
+	}
+	
+	/**
+	 * Create shot with angle and speed
+	 * @param x
+	 * @param y
+	 * @param angle
+	 * @param speed
+	 * @param id
+	 * @param tag
+	 * @param isPlayerShot
+	 * @param penetration - anything if not player shot
+	 * @param dmg -anything if not player shot
+	 * @return
+	 */
+	public static Bullet as(float x, float y, float angle, float speed, int id, int tag,boolean isPlayerShot,int penetration,int dmg) {
 		angle = M.normalizeAngle(angle);
 		BulletData data = sheet.findBullet(id);
-		Bullet bullet = newBullet(data.texture, tag, data.radius);
+		Bullet bullet;
+		if(isPlayerShot) {
+			bullet=newPlayerBullet(data.texture,tag,data.radius,penetration,dmg);
+		}else {
+			bullet = newBullet(data.texture, tag, data.radius);
+		}
 		if (data.texture.isAnimated()) {
 			bullet.animated = true;
 			bullet.texture = data.texture;
@@ -50,7 +106,17 @@ public class B {
 		J.add(bullet);
 		return bullet;
 	}
-
+	
+	/**
+	 * {@link #as(float, float, float, float, int, int)}
+	 * @param x
+	 * @param y
+	 * @param angle
+	 * @param speed
+	 * @param name
+	 * @param tag
+	 * @return
+	 */
 	public static Bullet as(float x, float y, float angle, float speed, String name, int tag) {
 		return as(x, y, angle, speed, sheet.getId(name), tag);
 	}
