@@ -1,15 +1,25 @@
 package com.zzzyt.jade.game.entity;
 
 import com.zzzyt.jade.game.Player;
+import com.zzzyt.jade.game.shot.BulletData;
 import com.zzzyt.jade.util.Collision;
 import com.zzzyt.jade.util.J;
 
 /**
  * Enemy Bullet base class
+ * 
  * @author XGN
  *
  */
 public class EnemyBullet extends Bullet {
+
+	public EnemyBullet() {
+		super();
+	}
+
+	public EnemyBullet(BulletData data, int tag) {
+		super(data, tag);
+	}
 
 	@Override
 	public boolean checkCollision() {
@@ -17,10 +27,10 @@ public class EnemyBullet extends Bullet {
 			J.onHit();
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	public boolean collide(Player player) {
 		return Collision.defaultCollision(player.getX(), player.getY(), player.getRadius(), x, y, data.radius);
 	}

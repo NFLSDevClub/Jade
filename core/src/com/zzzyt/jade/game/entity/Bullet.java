@@ -25,60 +25,31 @@ public class Bullet implements Entity {
 	public float x, y;
 	public Sprite sprite;
 	public float speed, angle;
-	public float boundingRadius;
-//	public int type;
-//	public float radius;
-//	public float spinSpeed;
-//	public boolean animated;
-//	public BulletTexture texture;
+	public float boundingWidth, boundingHeight;
 	public BulletData data;
 
 	public Bullet() {
 
 	}
 
-	public Bullet(BulletData data) {
+	public Bullet(BulletData data, int tag) {
 		this.data = data;
+		this.tag = tag;
+		this.boundingWidth = data.texture.getMaxWidth();
+		this.boundingHeight = data.texture.getMaxHeight();
+		this.sprite = new Sprite(data.texture.getFrame(0));
 	}
 
-//	public Bullet(TextureRegion region, int tag, float radius) {
-//		this.sprite = new Sprite(region);
-//		this.tag = tag;
-//		this.boundingRadius = Math.max(sprite.getHeight() * sprite.getScaleX(), sprite.getWidth() * sprite.getScaleY());
-//		this.speed = 0;
-//		this.angle = 0;
-//		this.x = 0;
-//		this.y = 0;
-//		this.radius = radius;
-//		updateSpritePosition();
-//	}
-//
-//	public Bullet(TextureRegion region, int tag, float radius, float x, float y) {
-//		this.sprite = new Sprite(region);
-//		this.tag = tag;
-//		this.boundingRadius = Math.max(sprite.getHeight() * sprite.getScaleX(), sprite.getWidth() * sprite.getScaleY());
-//		this.speed = 0;
-//		this.angle = 0;
-//		this.x = x;
-//		this.y = y;
-//		this.radius = radius;
-//		updateSpritePosition();
-//	}
-//
-//	public Bullet(TextureRegion region, int tag, float radius, float x, float y, float speed, float dir) {
-//		this.sprite = new Sprite(region);
-//		this.tag = tag;
-//		this.boundingRadius = Math.max(sprite.getHeight() * sprite.getScaleX(), sprite.getWidth() * sprite.getScaleY());
-//		this.speed = speed;
-//		this.angle = dir;
-//		this.x = x;
-//		this.y = y;
-//		this.radius = radius;
-//		updateSpritePosition();
-//	}
+	public BulletData getData() {
+		return data;
+	}
 
-	public float getBoundingRadius() {
-		return boundingRadius;
+	public float getBoundingWidth() {
+		return boundingWidth;
+	}
+
+	public float getBoundingHeight() {
+		return boundingHeight;
 	}
 
 	public Bullet setSpeed(float speed) {
@@ -136,7 +107,8 @@ public class Bullet implements Entity {
 
 	public Bullet setScale(float scaleXY) {
 		sprite.setScale(scaleXY);
-		this.boundingRadius = Math.max(sprite.getHeight() * sprite.getScaleX(), sprite.getWidth() * sprite.getScaleY());
+		boundingWidth = data.texture.getMaxWidth() * sprite.getScaleX();
+		boundingHeight = data.texture.getMaxHeight() * sprite.getScaleY();
 		updateSpritePosition();
 		return this;
 	}
@@ -156,7 +128,7 @@ public class Bullet implements Entity {
 	}
 
 	public void draw(Batch batch) {
-		if (!U.outOfFrame(x, y, boundingRadius, boundingRadius)) {
+		if (!U.outOfFrame(x, y, boundingWidth, boundingHeight)) {
 			sprite.draw(batch);
 		}
 	}
@@ -177,9 +149,7 @@ public class Bullet implements Entity {
 			if (internalId == -1)
 				return;
 		}
-		if (data.texture.isAnimated()) {
-			sprite.setRegion(data.texture.getRegion(t));
-		}
+		sprite.setRegion(data.texture.getFrame(t));
 		sprite.setRotation(M.normalizeAngle(sprite.getRotation() + data.spinSpeed));
 		x += speed * MathUtils.cosDeg(angle);
 		y += speed * MathUtils.sinDeg(angle);

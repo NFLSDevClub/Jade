@@ -37,7 +37,7 @@ public class StageExtraMid2 extends Single {
 
 	private void genCircle(float x, float y, float speed, float off, int cnt, int bullet) {
 		for (int i = 0; i < cnt; i++) {
-			B.as(x, y, i * 360f / cnt + off, speed, bullet, 0);
+			B.create(x, y, i * 360f / cnt + off, speed, bullet, 0);
 		}
 	}
 

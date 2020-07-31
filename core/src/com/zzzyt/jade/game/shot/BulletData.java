@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.zzzyt.jade.game.shot.RawShotSheet.RawBulletData;
 
 public class BulletData {
+	
 	public int id;
 	public String render;
 	public String name;

@@ -19,8 +19,8 @@ public class Stage1Mid2 extends Single {
 			}
 			if (frame % J.diffSelect(16, 10, 5, 2) == 0) {
 				for (int i = 0; i < 360; i += 72) {
-					B.as(0, -100, i + tmpf, 2, "DS_RICE_S_RED", 0);
-					B.as(0, -100, i - tmpf, 2, "DS_RICE_S_BLUE", 0);
+					B.towards(0, -100, i + tmpf, 2, "DS_RICE_S_RED", 0);
+					B.towards(0, -100, i - tmpf, 2, "DS_RICE_S_BLUE", 0);
 				}
 				tmpf += M.sin(frame / 2f) * 6;
 			}

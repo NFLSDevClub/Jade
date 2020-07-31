@@ -24,7 +24,7 @@ public class StageExtraMid1 extends Single {
 			}
 			if (frame % 3 == 0) {
 				for (int i = 0; i < 7; i++) {
-					B.as(0, -100, i * 360f / 7f + tmpf, M.min(frame % 60, 60 - frame % 60) / 60f + 1, i + 9, 0);
+					B.create(0, -100, i * 360f / 7f + tmpf, M.min(frame % 60, 60 - frame % 60) / 60f + 1, i + 9, 0);
 				}
 			}
 			tmpf += (float) (frame / 30) / 8 + 1;
