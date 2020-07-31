@@ -44,11 +44,15 @@ public class OptionScreen extends BasicScreen {
 							Actions.moveTo(button.staticX - 4, button.staticY, 0.06f, Interpolation.sine),
 							Actions.moveTo(button.staticX, button.staticY, 0.03f, Interpolation.sine)),
 					Actions.forever(Actions.sequence(Actions.color(new Color(0.9f, 0.9f, 0.9f, 1f), 0.5f),
-							Actions.color(Color.WHITE, 0.5f)))));
+							Actions.color(Color.WHITE, 0.5f))),
+					Actions.run(()->{
+						U.config().musicVolume = i / 20f;
+						BGM.setVolume(i / 20f);
+					})));
 			button.setInactiveAction(() -> Actions.hide());
 			button.setAction(() -> {
-				U.config().musicVolume = (float) i / 20;
-				BGM.setVolume((float) i / 20);
+				U.config().musicVolume = i / 20f;
+				BGM.setVolume(i / 20f);
 			});
 		}
 		musicVolume.select(M.clamp(M.round(U.config().musicVolume * 20), 0, 20), 0);
@@ -60,6 +64,7 @@ public class OptionScreen extends BasicScreen {
 		SEVolume = new ScrollingCenteredGrid(false, 0, 0);
 		SEVolume.setPosition(1040, 280);
 		SEVolume.setGridX(0).setGridY(1);
+		
 		for (int ii = 0; ii <= 20; ii++) {
 			final int i = ii;
 			GridButton button = (GridButton) SEVolume.add(new GridButton(i * 5 + "%", 48, 0, 0, 200, 60, i, 0, null));
@@ -69,11 +74,12 @@ public class OptionScreen extends BasicScreen {
 							Actions.moveTo(button.staticX - 4, button.staticY, 0.06f, Interpolation.sine),
 							Actions.moveTo(button.staticX, button.staticY, 0.03f, Interpolation.sine)),
 					Actions.forever(Actions.sequence(Actions.color(new Color(0.9f, 0.9f, 0.9f, 1f), 0.5f),
-							Actions.color(Color.WHITE, 0.5f)))));
+							Actions.color(Color.WHITE, 0.5f))),
+					Actions.run(()->{
+						U.config().SEVolume = i / 20f;
+						SE.play("die");
+					})));
 			button.setInactiveAction(() -> Actions.hide());
-			button.setAction(() -> {
-				U.config().SEVolume = (float) i / 20;
-			});
 		}
 		SEVolume.select(M.clamp(M.round(U.config().SEVolume * 20), 0, 20), 0);
 		SEVolume.update();
@@ -87,6 +93,8 @@ public class OptionScreen extends BasicScreen {
 		grid.add(new GridButton("Default", 48, 700, 160, 200, 60, 0, 3, () -> {
 			U.config().setDefault();
 			BGM.setVolume(U.config().musicVolume);
+			musicVolume.select(M.clamp(M.round(U.config().musicVolume * 20), 0, 20), 0);
+			SEVolume.select(M.clamp(M.round(U.config().SEVolume * 20), 0, 20), 0);
 		}));
 
 		((GridButton)grid.add(new GridButton("Quit", 48, 680, 100, 200, 60, 0, 4, () -> {
