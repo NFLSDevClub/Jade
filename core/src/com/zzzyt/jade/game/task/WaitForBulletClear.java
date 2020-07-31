@@ -1,13 +1,22 @@
 package com.zzzyt.jade.game.task;
 
+import com.badlogic.gdx.utils.Array;
 import com.zzzyt.jade.game.Task;
+import com.zzzyt.jade.game.entity.Bullet;
+import com.zzzyt.jade.game.entity.EnemyBullet;
 import com.zzzyt.jade.util.J;
 
 public class WaitForBulletClear implements Task {
 
 	@Override
 	public boolean isFinished() {
-		return J.getSession().getBulletCount() == 0;
+		Array<Bullet> bullets = J.getBullets();
+		for (int i = 0; i < bullets.size; i++) {
+			if (bullets.get(i) != null && bullets.get(i) instanceof EnemyBullet) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override
@@ -17,7 +26,7 @@ public class WaitForBulletClear implements Task {
 
 	@Override
 	public void init() {
-		
+
 	}
 
 }
