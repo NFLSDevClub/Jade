@@ -2,11 +2,9 @@ package com.zzzyt.jade.ui.grid;
 
 import java.util.concurrent.Callable;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.zzzyt.jade.util.A;
-import com.zzzyt.jade.util.U;
 
 public class GridLabel extends Label implements GridComponent {
 
@@ -25,7 +23,7 @@ public class GridLabel extends Label implements GridComponent {
 	public GridLabel(CharSequence text, int fontSize, float x, float y, float width, float height, int gridX, int gridY,
 			Callable<? extends Action> activeAction, Callable<? extends Action> inactiveAction, LabelStyle activeStyle,
 			LabelStyle inactiveStyle) {
-		super(text, new LabelStyle(A.getFont(U.config().UIFont, fontSize, 2, Color.BLACK), U.config().UIFontColor));
+		super(text, A.getUILabelStyle(fontSize));
 		this.staticX = x;
 		this.staticY = y;
 		this.gridX = gridX;
@@ -40,9 +38,8 @@ public class GridLabel extends Label implements GridComponent {
 
 	public GridLabel(CharSequence text, int fontSize, float x, float y, float width, float height, int gridX,
 			int gridY) {
-		this(text, fontSize, x, y, width, height, gridX, gridY, null, null,
-				new LabelStyle(A.getFont(U.config().UIFont, fontSize, 2, Color.BLACK), U.config().UIFontColor),
-				new LabelStyle(A.getFont(U.config().UIFont, fontSize, 2, Color.BLACK), U.config().UIFontColor));
+		this(text, fontSize, x, y, width, height, gridX, gridY, null, null, A.getUILabelStyle(fontSize),
+				A.getUILabelStyle(fontSize));
 	}
 
 	@Override

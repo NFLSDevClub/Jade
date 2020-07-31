@@ -1,11 +1,9 @@
 package com.zzzyt.jade.demo.ui.screen;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.zzzyt.jade.music.BackgroundMusic;
@@ -34,8 +32,7 @@ public class MusicRoomScreen extends BasicScreen {
 	public void show() {
 		init("mus/E.0109.ogg", "bg/select.png");
 
-		this.comment = new Label("",
-				new LabelStyle(A.getFont(U.config().UIFont, 36, 4, Color.BLACK), U.config().UIFontColor));
+		this.comment = new Label("", A.getUILabelStyle(36));
 		comment.setBounds(640, 64, 576, 832);
 		comment.setWrap(true);
 		comment.setAlignment(Align.topLeft);

@@ -8,14 +8,13 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.zzzyt.jade.util.A;
-import com.zzzyt.jade.util.U;
 
 public class GridButton extends Label implements GridComponent {
 
 	public Runnable runnable;
 	public boolean active, enabled, hasSound;
 	public float staticX, staticY;
-	
+
 	protected Grid parent;
 	protected int gridX, gridY;
 	protected LabelStyle activeStyle, inactiveStyle;
@@ -30,7 +29,7 @@ public class GridButton extends Label implements GridComponent {
 			int gridY, boolean hasSound, Callable<? extends Action> activeAction,
 			Callable<? extends Action> inactiveAction, LabelStyle activeStyle, LabelStyle inactiveStyle,
 			Runnable runnable) {
-		super(text, new LabelStyle(A.getFont(U.config().UIFont, fontSize, 4, Color.BLACK), U.config().UIFontColor));
+		super(text, A.getUILabelStyle(fontSize));
 		this.staticX = x;
 		this.staticY = y;
 		this.gridX = gridX;
@@ -48,10 +47,8 @@ public class GridButton extends Label implements GridComponent {
 
 	public GridButton(CharSequence text, int fontSize, float x, float y, float width, float height, int gridX,
 			int gridY, Runnable runnable) {
-		this(text, fontSize, x, y, width, height, gridX, gridY, true, null, null,
-				new LabelStyle(A.getFont(U.config().UIFont, fontSize, 4, Color.BLACK), U.config().UIFontColor),
-				new LabelStyle(A.getFont(U.config().UIFont, fontSize, 4, Color.BLACK), U.config().UIFontColor),
-				runnable);
+		this(text, fontSize, x, y, width, height, gridX, gridY, true, null, null, A.getUILabelStyle(fontSize),
+				A.getUILabelStyle(fontSize), runnable);
 		setActiveAction(() -> Actions.parallel(
 				Actions.sequence(Actions.color(Color.WHITE),
 						Actions.moveTo(staticX + 2, staticY, 0.03f, Interpolation.sine),

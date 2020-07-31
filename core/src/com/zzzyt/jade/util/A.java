@@ -17,6 +17,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.zzzyt.jade.game.shot.ShotSheet;
@@ -149,9 +150,9 @@ public class A {
 		}
 	}
 
-	public static BitmapFont getFont(String name, int size, float borderWidth, Color borderColor) {
+	public static BitmapFont getFont(String name, int size, Color color, float borderWidth, Color borderColor) {
 		StringBuilder tmp = new StringBuilder(64);
-		tmp.append(name).append(':').append(size).append(':');
+		tmp.append(name).append(':').append(size).append(':').append(color).append(':');
 		if (borderWidth != 0) {
 			tmp.append(borderWidth).append(':').append(borderColor.toString());
 		}
@@ -162,6 +163,7 @@ public class A {
 		FreeTypeFontGenerator generator = get(name);
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
 		parameter.size = size;
+		parameter.color = color;
 		if (borderWidth != 0) {
 			parameter.borderWidth = borderWidth;
 			parameter.borderColor = borderColor;
@@ -174,7 +176,12 @@ public class A {
 	}
 
 	public static BitmapFont getFont(String name, int size) {
-		return getFont(name, size, 0, null);
+		return getFont(name, size, Color.WHITE, 0, null);
+	}
+
+	public static LabelStyle getUILabelStyle(int fontSize) {
+		return new LabelStyle(A.getFont(U.config().UIFont, fontSize, U.config().UIFontColor,
+				U.config().UIFontBorderWidth, U.config().UIFontBorderColor), Color.WHITE);
 	}
 
 	public static TextureParameter defaultTextureParameter() {

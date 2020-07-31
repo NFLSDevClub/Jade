@@ -27,12 +27,14 @@ public class TitleScreen extends BasicScreen {
 	public void show() {
 		init("mus/E.0109.ogg", "bg/title.png");
 
-		this.title = new Label("Jade Demo Game", new LabelStyle(A.getFont("font/LBRITE.ttf", 120), Color.BLACK));
+		this.title = new Label("Jade Demo Game",
+				new LabelStyle(A.getFont("font/LBRITE.ttf", 120, Color.BLACK, 5, Color.WHITE), Color.WHITE));
 		title.setPosition(180, 780);
-		
-		this.subtitle = new Label("by Zzzyt", new LabelStyle(A.getFont("font/LBRITEI.ttf", 60), Color.BLACK));
-		subtitle.setPosition(960, 720);
-		
+
+		this.subtitle = new Label("by Hell Hole Studios 2020",
+				new LabelStyle(A.getFont("font/LBRITEI.ttf", 36), Color.BLACK));
+		subtitle.setPosition(800, 720);
+
 		this.titles = new Group();
 		titles.addActor(title);
 		titles.addActor(subtitle);

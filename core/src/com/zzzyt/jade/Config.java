@@ -63,6 +63,8 @@ public class Config {
 
 	public String UIFont;
 	public Color UIFontColor;
+	public float UIFontBorderWidth;
+	public Color UIFontBorderColor;
 	public boolean debugActorLayout;
 
 	public Config() {
@@ -120,6 +122,8 @@ public class Config {
 
 		UIFont = "font/SongSC.ttf";
 		UIFontColor = Color.WHITE;
+		UIFontBorderWidth = 4;
+		UIFontBorderColor = Color.BLACK;
 		debugActorLayout = false;
 	}
 }
