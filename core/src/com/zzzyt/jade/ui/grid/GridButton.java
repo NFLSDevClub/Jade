@@ -14,10 +14,10 @@ public class GridButton extends Label implements GridComponent {
 
 	public Runnable runnable;
 	public boolean active, enabled, hasSound;
-
+	public float staticX, staticY;
+	
 	protected Grid parent;
 	protected int gridX, gridY;
-	protected float staticX, staticY;
 	protected LabelStyle activeStyle, inactiveStyle;
 	protected Callable<? extends Action> activeAction, inactiveAction;
 

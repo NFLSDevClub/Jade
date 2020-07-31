@@ -60,7 +60,7 @@ public class MusicRoomScreen extends BasicScreen {
 		st.addActor(grid);
 		for (int i = 0; i < bgms.size; i++) {
 			final int tmpint = i;
-			grid.add(new GridButton((i + 1) + ". " + names.get(i), 36, 80, 840 - i * 40, 40, 80, 0, i, () -> {
+			grid.add(new GridButton((i + 1) + ". " + names.get(i), 36, 80, 840 - i * 40, 500, 40, 0, i, () -> {
 				setComment(tmpint);
 				BGM.stop();
 				BGM.play(bgms.get(tmpint).getName());
@@ -99,7 +99,7 @@ public class MusicRoomScreen extends BasicScreen {
 
 	@Override
 	protected void onQuit() {
-		U.switchScreen("start", 0.5f);
+		U.switchScreen("title", 0.5f);
 		super.onQuit();
 	}
 

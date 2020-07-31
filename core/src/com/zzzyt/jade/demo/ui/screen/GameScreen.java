@@ -22,6 +22,7 @@ import com.zzzyt.jade.ui.screen.BasicScreen;
 import com.zzzyt.jade.ui.screen.ScreenState;
 import com.zzzyt.jade.util.Global;
 import com.zzzyt.jade.util.J;
+import com.zzzyt.jade.util.SE;
 import com.zzzyt.jade.util.U;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.BGM;
@@ -90,7 +91,7 @@ public class GameScreen extends BasicScreen {
 				yesNoMenu.disable();
 				pauseMenu.deactivate();
 				pauseMenu.disable();
-				switchToStart();
+				switchToTitle();
 			});
 			yesNoMenu.activate();
 			yesNoMenu.enable();
@@ -122,7 +123,7 @@ public class GameScreen extends BasicScreen {
 			jade.update();
 		}
 		if (!jade.isRunning()) {
-			U.switchScreen("start");
+			U.switchScreen("title");
 		}
 		jade.draw();
 
@@ -182,9 +183,10 @@ public class GameScreen extends BasicScreen {
 		pauseMenu.addAction(Actions.moveTo(-60, 0, 0.1f, Interpolation.sine));
 	}
 
-	private void switchToStart() {
+	private void switchToTitle() {
+		SE.play("cancel");
 		U.switchScreen("blank", 0.5f);
-		Global.put("_redirect", "start");
+		Global.put("_redirect", "title");
 		Global.put("_redirectDelay", 0.5f);
 	}
 

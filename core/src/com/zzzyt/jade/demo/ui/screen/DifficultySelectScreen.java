@@ -85,7 +85,7 @@ public class DifficultySelectScreen extends BasicScreen {
 
 	@Override
 	protected void onQuit() {
-		U.switchScreen("start", 0.5f);
+		U.switchScreen("title", 0.5f);
 		super.onQuit();
 	}
 

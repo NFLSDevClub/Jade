@@ -35,6 +35,7 @@ public class YesNoMenu extends Grid {
 		this.label = new GridLabel("Really?", 48, 0, 140, 400, 60, 0, 0);
 		this.yes = new GridButton("Yes!", 36, 10, 60, 400, 40, 0, 1, this.yesRunnable);
 		this.no = new GridButton("No!", 36, 20, 0, 400, 40, 0, 2, this.noRunnable);
+		yes.setSound(false);
 		no.setSound(false);
 		add(no);
 		add(yes);

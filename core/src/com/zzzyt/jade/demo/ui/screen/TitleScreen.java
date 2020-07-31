@@ -13,19 +13,19 @@ import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.Global;
 import com.zzzyt.jade.util.U;
 
-public class StartScreen extends BasicScreen {
+public class TitleScreen extends BasicScreen {
 
 	private Grid grid;
 	private Label title, subtitle;
 	private Group titles;
 
-	public StartScreen() {
+	public TitleScreen() {
 		super();
 	}
 
 	@Override
 	public void show() {
-		init("mus/E.0109.ogg", "bg/start.png");
+		init("mus/E.0109.ogg", "bg/title.png");
 
 		this.title = new Label("Jade Demo Game", new LabelStyle(A.getFont("font/LBRITE.ttf", 120), Color.BLACK));
 		title.setPosition(180, 780);
@@ -70,9 +70,9 @@ public class StartScreen extends BasicScreen {
 			A.finishLoading();
 			U.switchScreen("musicRoom", 0.5f);
 		}));
-		grid.add(new GridButton("Settings", 48, 720, 160, 400, 60, 0, 7, () -> {
+		grid.add(new GridButton("Option", 48, 720, 160, 400, 60, 0, 7, () -> {
 			A.finishLoading();
-			U.switchScreen("settings", 0.5f);
+			U.switchScreen("option", 0.5f);
 		}));
 		grid.add(new GridButton("Quit", 48, 700, 100, 400, 60, 0, 8, () -> {
 			U.quit();
@@ -113,8 +113,8 @@ public class StartScreen extends BasicScreen {
 	@Override
 	protected void onQuit() {
 		if (grid.selectedY == 8) {
-			U.quit();
 			super.onQuit();
+			U.quit();
 		} else {
 			grid.select(0, 8);
 		}
@@ -122,7 +122,7 @@ public class StartScreen extends BasicScreen {
 
 	@Override
 	public String getName() {
-		return "start";
+		return "title";
 	}
 
 }

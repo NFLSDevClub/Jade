@@ -120,6 +120,6 @@ public class Config {
 
 		UIFont = "font/SongSC.ttf";
 		UIFontColor = Color.WHITE;
-		debugActorLayout = true;
+		debugActorLayout = false;
 	}
 }
