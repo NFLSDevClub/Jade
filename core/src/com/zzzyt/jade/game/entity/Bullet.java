@@ -167,7 +167,6 @@ public class Bullet implements Entity {
 	 * @return if a collision has happened
 	 */
 	public boolean checkCollision() {
-
 		return false;
 	}
 

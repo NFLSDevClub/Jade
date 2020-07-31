@@ -103,7 +103,7 @@ public class J {
 				J.remove(tmp.get(i));
 		}
 	}
-	
+
 	public static void addDrawable(Drawable drawable) {
 		Jade.session.addDrawable(drawable);
 	}
@@ -114,6 +114,10 @@ public class J {
 
 	public static boolean isRunning() {
 		return Jade.session.isRunning();
+	}
+
+	public static boolean isKeyPressed(int[] keycode) {
+		return U.checkKey(keycode);
 	}
 
 	public static String gameMode() {

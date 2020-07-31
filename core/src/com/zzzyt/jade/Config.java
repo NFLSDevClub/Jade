@@ -45,8 +45,7 @@ public class Config {
 	public int speedUpMultiplier;
 	public float musicVolume;
 	/**
-	 * Guessed from 0.0-1.0
-	 * --XGN
+	 * Guessed from 0.0-1.0 --XGN
 	 */
 	public float SEVolume;
 
@@ -56,6 +55,7 @@ public class Config {
 	public int[] keyRight;
 	public int[] keySelect;
 	public int[] keyCancel;
+	public int[] keyShot;
 	public int[] keySlow;
 	public int[] keyBomb;
 	public int[] keyPause;
@@ -112,6 +112,7 @@ public class Config {
 		keyRight = new int[] { Keys.RIGHT };
 		keySelect = new int[] { Keys.Z, Keys.ENTER };
 		keyCancel = new int[] { Keys.X, Keys.ESCAPE };
+		keyShot = new int[] { Keys.Z };
 		keySlow = new int[] { Keys.SHIFT_LEFT };
 		keyBomb = new int[] { Keys.X };
 		keyPause = new int[] { Keys.ESCAPE };

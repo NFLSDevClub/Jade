@@ -1,6 +1,7 @@
 package com.zzzyt.jade.game.entity;
 
 import com.zzzyt.jade.game.Player;
+import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.util.M;
 import com.zzzyt.jade.util.U;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -23,8 +24,8 @@ public class BasicPlayer implements Player {
 	/**
 	 * allow to trigger {@link #onShot()} {@link #onBomb()}?
 	 */
-	public boolean permitBomb,permitShot;
-	
+	public boolean canBomb, canShot;
+
 	public BasicPlayer() {
 
 	}
@@ -49,7 +50,7 @@ public class BasicPlayer implements Player {
 		this.timer1 = 0;
 		this.timer2 = 0;
 		this.pos = 0;
-		this.permitBomb=this.permitShot=true;
+		this.canBomb = this.canShot = true;
 	}
 
 	public BasicPlayer(TextureAtlas atlas, String regionName, int frameLength, int transitionFrameLength, float radius,
@@ -71,7 +72,7 @@ public class BasicPlayer implements Player {
 		this.timer1 = 0;
 		this.timer2 = 0;
 		this.pos = 0;
-		this.permitBomb=this.permitShot=true;
+		this.canBomb = this.canShot = true;
 	}
 
 	public BasicPlayer(TextureRegion region, float radius, float speedHigh, float speedLow) {
@@ -92,7 +93,7 @@ public class BasicPlayer implements Player {
 		this.timer1 = 0;
 		this.timer2 = 0;
 		this.pos = 0;
-		this.permitBomb=this.permitShot=true;
+		this.canBomb = this.canShot = true;
 	}
 
 	public void draw(Batch batch) {
@@ -149,47 +150,43 @@ public class BasicPlayer implements Player {
 		return this;
 	}
 
-	/**
-	 * Event shot
-	 */
+	@Override
 	public void onShot() {
-		
+
 	}
-	
-	/**
-	 * Event bomb
-	 */
+
+	@Override
 	public void onBomb() {
-		
+
 	}
-	
+
 	@Override
 	public void update(int t) {
 		dx = 0;
 		dy = 0;
 		float speed = speedHigh;
-		if (U.checkKey(U.config().keySlow)) {
+		if (J.isKeyPressed(U.config().keySlow)) {
 			speed = speedLow;
 		}
-		if (U.checkKey(U.config().keyUp)) {
+		if (J.isKeyPressed(U.config().keyUp)) {
 			dy++;
 		}
-		if (U.checkKey(U.config().keyDown)) {
+		if (J.isKeyPressed(U.config().keyDown)) {
 			dy--;
 		}
-		if (U.checkKey(U.config().keyLeft)) {
+		if (J.isKeyPressed(U.config().keyLeft)) {
 			dx--;
 		}
-		if (U.checkKey(U.config().keyRight)) {
+		if (J.isKeyPressed(U.config().keyRight)) {
 			dx++;
 		}
-		if(permitShot && U.checkKey(U.config().keySelect)) {
+		if (canShot && J.isKeyPressed(U.config().keyShot)) {
 			onShot();
 		}
-		if(permitBomb && U.checkKey(U.config().keyBomb)) {
+		if (canBomb && J.isKeyPressed(U.config().keyBomb)) {
 			onBomb();
 		}
-		
+
 		if (Math.abs(dx) > 0 && Math.abs(dy) == 0) {
 			x += speed * dx;
 		} else if (Math.abs(dx) == 0 && Math.abs(dy) > 0) {
