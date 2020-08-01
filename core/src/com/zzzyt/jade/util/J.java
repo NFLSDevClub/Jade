@@ -3,6 +3,7 @@ package com.zzzyt.jade.util;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
 import com.zzzyt.jade.game.Drawable;
+import com.zzzyt.jade.game.EntityArray;
 import com.zzzyt.jade.game.Jade;
 import com.zzzyt.jade.game.Operator;
 import com.zzzyt.jade.game.Player;
@@ -38,7 +39,7 @@ public class J {
 		return Jade.session.getPlayer().getY();
 	}
 
-	public static Array<Bullet> getBullets() {
+	public static EntityArray<Bullet> getBullets() {
 		return Jade.session.getBullets();
 	}
 
@@ -97,8 +98,8 @@ public class J {
 	}
 
 	public static void clearBullets() {
-		Array<Bullet> tmp = J.getBullets();
-		for (int i = tmp.size - 1; i >= 0; i--) {
+		EntityArray<Bullet> tmp = J.getBullets();
+		for (int i = tmp.size() - 1; i >= 0; i--) {
 			if (tmp.get(i) != null)
 				J.remove(tmp.get(i));
 		}

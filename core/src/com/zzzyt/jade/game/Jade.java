@@ -27,7 +27,7 @@ public class Jade implements Disposable {
 	public Array<Task> tasks;
 	public Array<Drawable> nDrawables, pDrawables;
 	public ObjectMap<Integer, Array<Operator>> operators;
-	public Array<Bullet> bullets;
+	public EntityArray<Bullet> bullets;
 	public Player player;
 
 	private boolean running;
@@ -53,7 +53,7 @@ public class Jade implements Disposable {
 		batch.setProjectionMatrix(cam.combined);
 
 		this.operators = new ObjectMap<Integer, Array<Operator>>();
-		this.bullets = new Array<Bullet>(false, 1024);
+		this.bullets = new EntityArray<>();
 		this.tasks = new Array<Task>(true, 16);
 		this.nDrawables = new Array<Drawable>(true, 16);
 		this.pDrawables = new Array<Drawable>(true, 16);
@@ -77,11 +77,9 @@ public class Jade implements Disposable {
 					nDrawables.get(i).draw(batch);
 				}
 			}
-			for (int i = 0; i < bullets.size; i++) {
-				if (bullets.get(i) != null) {
-					bullets.get(i).draw(batch);
-				}
-			}
+			
+			bullets.draw(batch);
+			
 			for (int i = 0; i < pDrawables.size; i++) {
 				if (pDrawables.get(i) != null) {
 					pDrawables.get(i).draw(batch);
@@ -113,11 +111,9 @@ public class Jade implements Disposable {
 				nDrawables.get(i).update(frame);
 			}
 		}
-		for (int i = 0; i < bullets.size; i++) {
-			if (bullets.get(i) != null) {
-				bullets.get(i).update(frame);
-			}
-		}
+		
+		bullets.update(frame);
+		
 		for (int i = 0; i < pDrawables.size; i++) {
 			if (pDrawables.get(i) != null) {
 				pDrawables.get(i).update(frame);
@@ -125,10 +121,10 @@ public class Jade implements Disposable {
 		}
 
 		if ((bulletCount <= U.config().cleanupBulletCount && blankCount >= U.config().cleanupBlankCount)
-				|| (bullets.size >= 1048576)) {
+				|| (bullets.size() >= 1048576)) {
 			logger.info("Cleaning up blanks in bullet array: bulletCount=" + bulletCount + " blankCount=" + blankCount);
-			U.cleanupArray(bullets);
-			for (int i = 0; i < bullets.size; i++) {
+			U.cleanupArray(bullets.entities);
+			for (int i = 0; i < bullets.size(); i++) {
 				bullets.get(i).internalId = i;
 			}
 			blankCount = 0;
@@ -145,13 +141,13 @@ public class Jade implements Disposable {
 
 	public Jade add(Bullet bullet) {
 		bulletCount++;
-		bullet.internalId = bullets.size;
+		bullet.internalId = bullets.size();
 		bullets.add(bullet);
 		return this;
 	}
 
 	public Jade remove(Bullet bullet) {
-		if (bullet.internalId != bullets.size - 1)
+		if (bullet.internalId != bullets.size() - 1)
 			blankCount++;
 		bulletCount--;
 		bullets.set(bullet.internalId, null);
@@ -245,7 +241,7 @@ public class Jade implements Disposable {
 		return logger;
 	}
 
-	public Array<Bullet> getBullets() {
+	public EntityArray<Bullet> getBullets() {
 		return bullets;
 	}
 
