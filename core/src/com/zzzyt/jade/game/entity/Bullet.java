@@ -16,7 +16,7 @@ import com.zzzyt.jade.util.U;
  * Base class for bullets
  *
  */
-public class Bullet implements Entity {
+public class Bullet extends Entity {
 
 	public int internalId;
 

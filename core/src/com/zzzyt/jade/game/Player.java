@@ -1,17 +1,17 @@
 package com.zzzyt.jade.game;
 
-public interface Player extends Entity {
+public abstract class Player extends Entity {
 	
-	public float getRadius();
+	public abstract float getRadius();
 
 	/**
 	 * Event shot
 	 */
-	public void onShot();
+	public abstract void onShot();
 
 	/**
 	 * Event bomb
 	 */
-	public void onBomb();
+	public abstract void onBomb();
 	
 }

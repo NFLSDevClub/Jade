@@ -1,15 +1,17 @@
 package com.zzzyt.jade.game;
 
-public interface Entity extends Drawable {
+public abstract class Entity implements Drawable {
+	
+	public int internalId=Integer.MAX_VALUE;
+	
+	public abstract float getX();
 
-	public float getX();
+	public abstract float getY();
 
-	public float getY();
+	public abstract Entity setX(float x);
 
-	public Entity setX(float x);
+	public abstract Entity setY(float y);
 
-	public Entity setY(float y);
-
-	public Entity setXY(float x, float y);
+	public abstract Entity setXY(float x, float y);
 
 }

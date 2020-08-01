@@ -31,7 +31,6 @@ public class Jade implements Disposable {
 	public Player player;
 
 	private boolean running;
-	private int bulletCount, blankCount;
 	private boolean paused;
 
 	public Jade() {
@@ -120,14 +119,10 @@ public class Jade implements Disposable {
 			}
 		}
 
-		if ((bulletCount <= U.config().cleanupBulletCount && blankCount >= U.config().cleanupBlankCount)
+		if ((bullets.count <= U.config().cleanupBulletCount && bullets.blankCount >= U.config().cleanupBlankCount)
 				|| (bullets.size() >= 1048576)) {
-			logger.info("Cleaning up blanks in bullet array: bulletCount=" + bulletCount + " blankCount=" + blankCount);
-			U.cleanupArray(bullets.entities);
-			for (int i = 0; i < bullets.size(); i++) {
-				bullets.get(i).internalId = i;
-			}
-			blankCount = 0;
+			logger.info("Cleaning up blanks in bullet array: bulletCount=" + bullets.count + " blankCount=" + bullets.blankCount);
+			bullets.cleanUp();
 		}
 	}
 
@@ -140,18 +135,12 @@ public class Jade implements Disposable {
 	}
 
 	public Jade add(Bullet bullet) {
-		bulletCount++;
-		bullet.internalId = bullets.size();
 		bullets.add(bullet);
 		return this;
 	}
 
 	public Jade remove(Bullet bullet) {
-		if (bullet.internalId != bullets.size() - 1)
-			blankCount++;
-		bulletCount--;
-		bullets.set(bullet.internalId, null);
-		bullet.internalId = -1;
+		bullets.remove(bullet);
 		return this;
 	}
 
@@ -247,7 +236,7 @@ public class Jade implements Disposable {
 	}
 
 	public int getBulletCount() {
-		return bulletCount;
+		return bullets.count;
 	}
 
 	public Jade addDrawable(Drawable drawable) {

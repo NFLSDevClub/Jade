@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
-public class BasicPlayer implements Player {
+public class BasicPlayer extends Player {
 
 	public transient Array<? extends TextureRegion> left, center, right, toLeft, toRight;
 	public transient Sprite hitbox;
