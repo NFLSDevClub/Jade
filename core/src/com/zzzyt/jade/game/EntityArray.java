@@ -2,7 +2,6 @@ package com.zzzyt.jade.game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
-import com.zzzyt.jade.game.entity.Bullet;
 import com.zzzyt.jade.util.U;
 
 /**
@@ -48,6 +47,7 @@ public class EntityArray<T extends Entity> {
 	public void set(int index,T value) {
 		entities.set(index, value);
 	}
+	
 	public EntityArray() {
 		entities=new Array<>(false,1024);
 	}
