@@ -155,6 +155,7 @@ public class Jade implements Disposable {
 		return this;
 	}
 
+	
 	public Jade addOperator(Operator operator) {
 		int tag = operator.getTag();
 		Array<Operator> tmp = operators.get(tag);
@@ -282,5 +283,6 @@ public class Jade implements Disposable {
 	public boolean isPaused() {
 		return paused;
 	}
+
 
 }
