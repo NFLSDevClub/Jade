@@ -4,6 +4,7 @@ import com.zzzyt.jade.game.Player;
 import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.util.M;
 import com.zzzyt.jade.util.U;
+import com.zzzyt.jade.util.WAS;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -12,14 +13,12 @@ import com.badlogic.gdx.utils.Array;
 
 public class BasicPlayer extends Player {
 
-	public transient Array<? extends TextureRegion> left, center, right, toLeft, toRight;
+	public transient WAS was;
 	public transient Sprite hitbox;
 	public float radius, speedHigh, speedLow;
 	public float x, y;
-	public int frameLength, transitionFrameLength;
 
 	private int dx, dy;
-	private int timer1, timer2, pos;
 
 	/**
 	 * allow to trigger {@link #onShot()} {@link #onBomb()}?
@@ -34,70 +33,53 @@ public class BasicPlayer extends Player {
 			Array<? extends TextureRegion> right, Array<? extends TextureRegion> toLeft,
 			Array<? extends TextureRegion> toRight, Sprite hitbox, int frameLength, int transitionFrameLength,
 			float radius, float speedHigh, float speedLow) {
-		this.left = left;
-		this.center = center;
-		this.right = right;
-		this.toLeft = toLeft;
-		this.toRight = toRight;
+		
+		was=new WAS(left, center, right, toLeft, toRight, frameLength, transitionFrameLength);
 		this.hitbox = hitbox;
 		this.radius = radius;
 		this.speedHigh = speedHigh;
 		this.speedLow = speedLow;
 		this.x = U.screenToWorldX(U.config().w / 2);
 		this.y = U.screenToWorldY(32);
-		this.frameLength = frameLength;
-		this.transitionFrameLength = transitionFrameLength;
-		this.timer1 = 0;
-		this.timer2 = 0;
-		this.pos = 0;
 		this.canBomb = this.canShot = true;
 	}
 
 	public BasicPlayer(TextureAtlas atlas, String regionName, int frameLength, int transitionFrameLength, float radius,
 			float speedHigh, float speedLow) {
-		this.left = atlas.findRegions(regionName + "_left");
-		this.center = atlas.findRegions(regionName + "_center");
-		this.right = atlas.findRegions(regionName + "_right");
-		this.toLeft = atlas.findRegions(regionName + "_toLeft");
-		this.toRight = atlas.findRegions(regionName + "_toRight");
+		
+		was=new WAS(atlas.findRegions(regionName + "_left"),
+				atlas.findRegions(regionName + "_center"),
+				atlas.findRegions(regionName + "_right"),
+				atlas.findRegions(regionName + "_toLeft"),
+				atlas.findRegions(regionName + "_toRight"),
+				frameLength,
+				transitionFrameLength);
+		
 		this.hitbox = new Sprite(atlas.findRegion(regionName + "_hitbox"));
 		hitbox.setAlpha(0);
-		this.frameLength = frameLength;
-		this.transitionFrameLength = transitionFrameLength;
 		this.radius = radius;
 		this.speedHigh = speedHigh;
 		this.speedLow = speedLow;
 		this.x = U.screenToWorldX(U.config().w / 2);
 		this.y = U.screenToWorldY(32);
-		this.timer1 = 0;
-		this.timer2 = 0;
-		this.pos = 0;
 		this.canBomb = this.canShot = true;
 	}
 
 	public BasicPlayer(TextureRegion region, float radius, float speedHigh, float speedLow) {
 		Array<TextureRegion> tmp = new Array<TextureRegion>();
 		tmp.add(region);
-		this.left = tmp;
-		this.center = tmp;
-		this.right = tmp;
-		this.toLeft = tmp;
-		this.toRight = tmp;
-		this.frameLength = 1;
-		this.transitionFrameLength = 1;
+		
+		was=new WAS(tmp,tmp,tmp,tmp,tmp,1,1);
 		this.radius = radius;
 		this.speedHigh = speedHigh;
 		this.speedLow = speedLow;
 		this.x = U.screenToWorldX(U.config().w / 2);
 		this.y = U.screenToWorldY(32);
-		this.timer1 = 0;
-		this.timer2 = 0;
-		this.pos = 0;
 		this.canBomb = this.canShot = true;
 	}
 
 	public void draw(Batch batch) {
-		TextureRegion tmp = getTexture();
+		TextureRegion tmp = was.getTexture();
 		batch.draw(tmp, x - tmp.getRegionWidth() / 2, y - tmp.getRegionHeight() / 2);
 		if (U.checkKey(U.config().keySlow)) {
 			U.addAlpha(hitbox, 0.1f);
@@ -110,25 +92,6 @@ public class BasicPlayer extends Player {
 			hitbox.draw(batch);
 			hitbox.setRotation(-hitbox.getRotation());
 		}
-	}
-
-	public TextureRegion getTexture() {
-		if (pos == -toLeft.size * transitionFrameLength) {
-			return left.get(timer2);
-		}
-		if (pos < 0) {
-			return toLeft.get((-pos + transitionFrameLength - 1) / transitionFrameLength - 1);
-		}
-		if (pos == 0) {
-			return center.get(timer2);
-		}
-		if (pos == toRight.size * transitionFrameLength) {
-			return right.get(timer2);
-		}
-		if (pos > 0) {
-			return toRight.get((pos + transitionFrameLength - 1) / transitionFrameLength - 1);
-		}
-		return center.get(timer2);
 	}
 
 	@Override
@@ -201,38 +164,7 @@ public class BasicPlayer extends Player {
 		hitbox.setPosition(x - hitbox.getWidth() / 2, y - hitbox.getHeight() / 2);
 		hitbox.setRotation(M.normalizeAngle(hitbox.getRotation() + 4f));
 
-		timer1 = t % frameLength;
-		if (dx < 0) {
-			if (pos > -toLeft.size * transitionFrameLength) {
-				pos--;
-				timer2 = 0;
-			} else {
-				if (timer1 == 0) {
-					timer2 = (timer2 + 1) % left.size;
-				}
-			}
-		} else if (dx > 0) {
-			if (pos < toRight.size * transitionFrameLength) {
-				pos++;
-				timer2 = 0;
-			} else {
-				if (timer1 == 0) {
-					timer2 = (timer2 + 1) % right.size;
-				}
-			}
-		} else {
-			if (pos > 0) {
-				pos--;
-				timer2 = 0;
-			} else if (pos < 0) {
-				pos++;
-				timer2 = 0;
-			} else {
-				if (timer1 == 0) {
-					timer2 = (timer2 + 1) % center.size;
-				}
-			}
-		}
+		was.update(t,dx);
 	}
 
 	@Override
