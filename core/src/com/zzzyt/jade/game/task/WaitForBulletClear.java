@@ -1,6 +1,5 @@
 package com.zzzyt.jade.game.task;
 
-import com.badlogic.gdx.utils.Array;
 import com.zzzyt.jade.game.EntityArray;
 import com.zzzyt.jade.game.Task;
 import com.zzzyt.jade.game.entity.Bullet;
