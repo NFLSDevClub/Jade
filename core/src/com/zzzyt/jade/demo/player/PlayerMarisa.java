@@ -8,7 +8,7 @@ import com.zzzyt.jade.util.B;
 public class PlayerMarisa extends BasicPlayer {
 	
 	public PlayerMarisa() {
-		super(A.get("th10_player.atlas"), "th10_marisa", 5, 2, 3.5f, 5, 2);
+		super(A.get("th10_player.atlas"), "th10_marisa", 5, 2, 3.5f, 5, 2,30,300);
 	}
 	
 	private int shotTimer;

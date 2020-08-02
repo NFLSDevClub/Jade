@@ -184,10 +184,13 @@ public class Jade implements Disposable {
 		logger.info("Resuming Jade seesion...");
 		paused = false;
 	}
-
+	
+	/**
+	 * When player is hit
+	 */
 	public void onHit() {
-		if (!U.config().invulnerable) {
-			terminate();
+		if(!U.config().invulnerable) {
+			player.onHit();
 		}
 	}
 
