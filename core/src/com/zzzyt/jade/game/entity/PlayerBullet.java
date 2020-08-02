@@ -40,6 +40,9 @@ public class PlayerBullet extends Bullet {
 		
 		for(int i=0;i<J.getEnemies().size();i++) {
 			Enemy e=J.getEnemies().get(i);
+			if(e==null) {
+				continue;
+			}
 			if(penetration==0) { //can't go forward anymore
 				J.remove(this);
 				return hit;
