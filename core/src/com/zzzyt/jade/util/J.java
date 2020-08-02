@@ -10,7 +10,6 @@ import com.zzzyt.jade.game.Player;
 import com.zzzyt.jade.game.Task;
 import com.zzzyt.jade.game.entity.Bullet;
 import com.zzzyt.jade.game.entity.Enemy;
-import com.zzzyt.jade.game.entity.TaskedEnemy;
 
 public class J {
 

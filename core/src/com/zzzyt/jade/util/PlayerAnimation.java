@@ -4,11 +4,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
 /**
- * WAS= Walking Animation System
- * @author XGN
+ * 
+ * @author Zzzyt, XGN
  *
  */
-public class WAS {
+public class PlayerAnimation {
 
 	public transient Array<? extends TextureRegion> left, center, right, toLeft, toRight;
 	
@@ -19,7 +19,7 @@ public class WAS {
 	public int timer1,timer2;
 	
 	
-	public WAS(Array<? extends TextureRegion> left, Array<? extends TextureRegion> center,
+	public PlayerAnimation(Array<? extends TextureRegion> left, Array<? extends TextureRegion> center,
 			Array<? extends TextureRegion> right, Array<? extends TextureRegion> toLeft,
 			Array<? extends TextureRegion> toRight, int frameLength, int transitionFrameLength) {
 		this.left = left;
@@ -29,8 +29,6 @@ public class WAS {
 		this.toRight = toRight;
 		this.frameLength = frameLength;
 		this.transitionFrameLength = transitionFrameLength;
-		
-//		System.out.println(left+" "+center+" "+right+" "+toLeft+" "+toRight+" "+frameLength+" "+transitionFrameLength);
 	}
 
 	public TextureRegion getTexture() {

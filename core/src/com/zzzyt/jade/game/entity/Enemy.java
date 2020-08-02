@@ -5,7 +5,7 @@ import com.zzzyt.jade.game.Player;
 import com.zzzyt.jade.util.Collision;
 import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.util.U;
-import com.zzzyt.jade.util.WAS;
+import com.zzzyt.jade.util.PlayerAnimation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -17,7 +17,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  */
 public class Enemy extends Entity {
 
-	public transient WAS was;
+	public transient PlayerAnimation was;
 	public float x, y;
 	/**
 	 * The health point of the enemy
@@ -35,7 +35,7 @@ public class Enemy extends Entity {
 	
 	public Enemy(TextureAtlas atlas, String regionName,int frameLength, int transitionFrameLength,float x, float y, float hp, float radiusS, float radiusP) {
 		super();
-		was=new WAS(atlas.findRegions(regionName + "_left"),
+		was=new PlayerAnimation(atlas.findRegions(regionName + "_left"),
 				atlas.findRegions(regionName + "_center"),
 				atlas.findRegions(regionName + "_right"),
 				atlas.findRegions(regionName + "_toLeft"),
