@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.zzzyt.jade.game.entity.Bullet;
+import com.zzzyt.jade.game.entity.Enemy;
 import com.zzzyt.jade.util.U;
 
 public class Jade implements Disposable {
@@ -27,6 +28,7 @@ public class Jade implements Disposable {
 	public Array<Task> tasks;
 	public Array<Drawable> nDrawables, pDrawables;
 	public ObjectMap<Integer, Array<Operator>> operators;
+	public EntityArray<Enemy> enemies;
 	public EntityArray<Bullet> bullets;
 	public Player player;
 
@@ -53,6 +55,7 @@ public class Jade implements Disposable {
 
 		this.operators = new ObjectMap<Integer, Array<Operator>>();
 		this.bullets = new EntityArray<>();
+		this.enemies = new EntityArray<>();
 		this.tasks = new Array<Task>(true, 16);
 		this.nDrawables = new Array<Drawable>(true, 16);
 		this.pDrawables = new Array<Drawable>(true, 16);
@@ -77,6 +80,7 @@ public class Jade implements Disposable {
 				}
 			}
 			
+			enemies.draw(batch);
 			bullets.draw(batch);
 			
 			for (int i = 0; i < pDrawables.size; i++) {
@@ -111,6 +115,7 @@ public class Jade implements Disposable {
 			}
 		}
 		
+		enemies.update(frame);
 		bullets.update(frame);
 		
 		for (int i = 0; i < pDrawables.size; i++) {
@@ -123,6 +128,12 @@ public class Jade implements Disposable {
 				|| (bullets.size() >= 1048576)) {
 			logger.info("Cleaning up blanks in bullet array: bulletCount=" + bullets.count + " blankCount=" + bullets.blankCount);
 			bullets.cleanUp();
+		}
+		
+		if ((enemies.count <= U.config().cleanupBulletCount && enemies.blankCount >= U.config().cleanupBlankCount)
+				|| (enemies.size() >= 1048576)) {
+			logger.info("Cleaning up blanks in enemy array: enemyCount=" + enemies.count + " blankCount=" + enemies.blankCount);
+			enemies.cleanUp();
 		}
 	}
 
@@ -144,6 +155,15 @@ public class Jade implements Disposable {
 		return this;
 	}
 
+	public Jade add(Enemy enemy) {
+		enemies.add(enemy);
+		return this;
+	}
+	
+	public Jade remove(Enemy enemy) {
+		enemies.remove(enemy);
+		return this;
+	}
 	
 	public Jade addOperator(Operator operator) {
 		int tag = operator.getTag();
@@ -238,6 +258,11 @@ public class Jade implements Disposable {
 		return bullets;
 	}
 
+	public EntityArray<Enemy> getEnemies() {
+		return enemies;
+	}
+
+	
 	public int getBulletCount() {
 		return bullets.count;
 	}

@@ -9,6 +9,7 @@ import com.zzzyt.jade.game.Operator;
 import com.zzzyt.jade.game.Player;
 import com.zzzyt.jade.game.Task;
 import com.zzzyt.jade.game.entity.Bullet;
+import com.zzzyt.jade.game.entity.Enemy;
 
 public class J {
 
@@ -43,6 +44,10 @@ public class J {
 		return Jade.session.getBullets();
 	}
 
+	public static EntityArray<Enemy> getEnemies() {
+		return Jade.session.getEnemies();
+	}
+	
 	public static Operator addOperator(Operator operator) {
 		Jade.session.addOperator(operator);
 		return operator;
@@ -97,6 +102,10 @@ public class J {
 		Jade.session.remove(bullet);
 	}
 
+	public static void remove(Enemy enemy) {
+		Jade.session.remove(enemy);
+	}
+	
 	public static void clearBullets() {
 		EntityArray<Bullet> tmp = J.getBullets();
 		for (int i = tmp.size() - 1; i >= 0; i--) {

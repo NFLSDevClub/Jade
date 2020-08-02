@@ -1,6 +1,8 @@
 package com.zzzyt.jade.game.entity;
 
 import com.zzzyt.jade.game.shot.BulletData;
+import com.zzzyt.jade.util.Collision;
+import com.zzzyt.jade.util.J;
 
 /**
  * Player Bullet base class
@@ -33,8 +35,26 @@ public class PlayerBullet extends Bullet {
 
 	@Override
 	public boolean checkCollision() {
-		// TODO check collision with enemy
-		return false;
+		
+		boolean hit=false;
+		
+		for(int i=0;i<J.getEnemies().size();i++) {
+			Enemy e=J.getEnemies().get(i);
+			if(penetration==0) { //can't go forward anymore
+				J.remove(this);
+				return hit;
+			}
+			if(collide(e)) {
+				hit=true;
+				e.onHit(damage);
+				penetration--;
+			}
+		}
+		
+		return hit;
 	}
 
+	public boolean collide(Enemy e) {
+		return Collision.defaultCollision(x, y, data.radius, e.x, e.y, e.radiusS);
+	}
 }

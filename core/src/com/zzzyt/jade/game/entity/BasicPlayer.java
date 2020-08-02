@@ -214,7 +214,6 @@ public class BasicPlayer extends Player {
 
 			was.update(t,dx);
 		}else if(state==PLDB) {
-			logger.debug("Waiting for deathbomb:"+internalFrameCounter);
 			//deathbombing
 			if(J.isKeyPressed(U.config().keyBomb)) {
 				logger.debug("Deathbomb Succeed");
@@ -223,6 +222,7 @@ public class BasicPlayer extends Player {
 				
 				addInvincibilityFrame(120);
 			}else{
+				logger.debug("Deathbomb Fail");
 				internalFrameCounter--;
 				if(internalFrameCounter<=0) {
 					state=PLRB;
@@ -234,7 +234,6 @@ public class BasicPlayer extends Player {
 
 			was.update(t,dx);
 		}else if(state==PLRB) {
-			logger.debug("Waiting for rebirth:"+internalFrameCounter);
 			
 			internalFrameCounter--;
 			if(internalFrameCounter<=0) {
