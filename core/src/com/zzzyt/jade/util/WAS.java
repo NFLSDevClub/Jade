@@ -52,7 +52,7 @@ public class WAS {
 		return center.get(timer2);
 	}
 	
-	public void update(int t,int dx) {
+	public void update(int t,float dx) {
 		timer1 = t % frameLength;
 		if (dx < 0) {
 			if (pos > -toLeft.size * transitionFrameLength) {

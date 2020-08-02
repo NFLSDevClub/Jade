@@ -55,6 +55,8 @@ public class Enemy extends Entity {
 	}
 	
 
+	private float lastx;
+	
 	/**
 	 * When overriding this, please call <code>super.update()</code> first!!! <br/>
 	 * VERY IMPORTANT
@@ -65,6 +67,10 @@ public class Enemy extends Entity {
 		if(collide(J.getPlayer())) {
 			J.onHit();
 		}
+		
+		was.update(t, x-lastx);
+		
+		lastx=x;
 	}
 	
 	public void draw(Batch batch) {
