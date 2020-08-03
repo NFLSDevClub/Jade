@@ -56,6 +56,7 @@ public class Enemy extends Entity {
 	
 
 	private float lastx;
+	public boolean isBoss;
 	
 	/**
 	 * When overriding this, please call <code>super.update()</code> first!!! <br/>
