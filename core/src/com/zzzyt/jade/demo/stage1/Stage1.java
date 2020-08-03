@@ -1,8 +1,10 @@
 package com.zzzyt.jade.demo.stage1;
 
 import com.zzzyt.jade.game.task.Wait;
+import com.zzzyt.jade.game.task.WaitForBossScene;
 import com.zzzyt.jade.game.task.Plural;
 import com.zzzyt.jade.game.drawable.TiledScrollingBackground;
+import com.zzzyt.jade.game.task.AddBossScene;
 import com.zzzyt.jade.game.task.AddDrawable;
 import com.zzzyt.jade.game.task.SwitchBGM;
 import com.zzzyt.jade.game.task.WaitForBulletClear;
@@ -20,12 +22,14 @@ public class Stage1 extends Plural {
 				new TiledScrollingBackground(A.getRegion("bg/st3_shore_right.png"), 1, 1, -2046, 256, 128)));
 		add(new Wait(120));
 		add(new SwitchBGM("mus/Idea12.ogg"));
-		add(new Stage1Mid1());
-		add(new WaitForBulletClear());
-		add(new Wait(300));
-		add(new Stage1Mid2());
-		add(new WaitForBulletClear());
-		add(new Wait(600));
+//		add(new Stage1Mid1());
+//		add(new WaitForBulletClear());
+//		add(new Wait(300));
+//		add(new Stage1Mid2());
+//		add(new WaitForBulletClear());
+//		add(new Wait(600));
+		add(new AddBossScene(new Stage1BossScene()));
+		add(new WaitForBossScene());
 	}
 
 }

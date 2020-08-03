@@ -16,12 +16,12 @@ public class Spellcard {
 	public int time;
 	
 	public boolean isSurvival;
-	public Updatable updatable;
+	public Single updatable;
 	
 	public long bonus;
 	private int firstT=-1;
 	
-	public Spellcard(int maxhp, int maxtime, boolean isSurvival,long bonus, Updatable updatable) {
+	public Spellcard(int maxhp, int maxtime, boolean isSurvival,long bonus, Single updatable) {
 		super();
 		this.maxhp = maxhp;
 		this.maxtime = maxtime;
@@ -34,19 +34,28 @@ public class Spellcard {
 		this.hp=this.maxhp;
 		this.time=this.maxtime;
 		firstT=-1;
+		
+		updatable.init();
 	}
 	
+	@Override
+	public String toString() {
+		return "Spellcard [maxhp=" + maxhp + ", hp=" + hp + ", maxtime=" + maxtime + ", time=" + time + ", isSurvival="
+				+ isSurvival + ", bonus=" + bonus + ", firstT=" + firstT + "]";
+	}
+
 	public void update(int t) {
 		if(firstT==-1) {
 			firstT=t;
 		}
 		updatable.update(t-firstT);
 		
-		time-=t;
+		time--;
 	}
 	
 	public void onEnd() {
 		J.clearBullets();
+		J.clearEnemies(false);
 	}
 	
 	public boolean isFinished() {

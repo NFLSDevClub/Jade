@@ -20,10 +20,14 @@ public class BossScene {
 	public int currentPhase;
 	public int spellIndex;
 
-	public final static int MAXHP=1000000000;
+	public final static double MAXHP=1e9;
 	
 	public BossScene(Array<Array<Spellcard>> phases) {
 		this.phases=phases;
+	}
+	
+	public BossScene() {
+		
 	}
 	
 	/**
@@ -35,6 +39,12 @@ public class BossScene {
 				s.init();
 			}
 		}
+		
+		for(Enemy e:J.getSession().enemies.entities) {
+			if(e!=null && e.isBoss) {
+				e.hp=MAXHP;
+			}
+		}
 	}
 	
 	public void onSpellcardFinish() {
@@ -42,7 +52,7 @@ public class BossScene {
 		getCurrentSpellcard().onEnd();
 		
 		for(Enemy e:J.getSession().enemies.entities) {
-			if(e.isBoss) {
+			if(e!=null && e.isBoss) {
 				e.hp=MAXHP;
 			}
 		}
@@ -78,15 +88,20 @@ public class BossScene {
 			return;
 		}
 		
+		System.out.println("boss state:"+currentPhase+" "+spellIndex+" "+getCurrentSpellcard());
 		updateHP(t);
 		updateSC(t);
 	}
 
 	
 	private void updateHP(int t) {
+		if(getCurrentSpellcard().isSurvival) {
+			return;
+		}
+		
 		int lostHP=0;
 		for(Enemy e:J.getSession().enemies.entities) {
-			if(e.isBoss) {
+			if(e!=null && e.isBoss) {
 				lostHP+=MAXHP-e.hp;
 			}
 		}
@@ -105,9 +120,12 @@ public class BossScene {
 			onSpellcardFinish();
 		}
 		
-		csc=getCurrentSpellcard();
-		
-		csc.update(t);
+		if(!isFinished()) {
+			csc=getCurrentSpellcard();
+			
+			csc.update(t);
+		}
 	}
 
+	
 }

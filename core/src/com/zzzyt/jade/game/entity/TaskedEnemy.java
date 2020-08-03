@@ -11,8 +11,8 @@ import com.zzzyt.jade.game.Updatable;
 public class TaskedEnemy extends Enemy {
 
 	public TaskedEnemy(TextureAtlas atlas, String regionName, int frameLength, int transitionFrameLength, float x,
-			float y, float hp, float radiusS, float radiusP) {
-		super(atlas, regionName, frameLength, transitionFrameLength, x, y, hp, radiusS, radiusP);
+			float y, float hp, float radiusS, float radiusP,boolean isBoss) {
+		super(atlas, regionName, frameLength, transitionFrameLength, x, y, hp, radiusS, radiusP,isBoss);
 	}
 
 

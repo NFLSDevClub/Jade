@@ -31,7 +31,8 @@ public class Jade implements Disposable {
 	public EntityArray<Enemy> enemies;
 	public EntityArray<Bullet> bullets;
 	public Player player;
-
+	public BossScene bossScene;
+	
 	private boolean running;
 	private boolean paused;
 
@@ -134,6 +135,14 @@ public class Jade implements Disposable {
 				|| (enemies.size() >= 1048576)) {
 			logger.info("Cleaning up blanks in enemy array: enemyCount=" + enemies.count + " blankCount=" + enemies.blankCount);
 			enemies.cleanUp();
+		}
+		
+		//updating bossScene
+		if(bossScene!=null) {
+			bossScene.update(frame);
+			if(bossScene.isFinished()) {
+				bossScene=null;
+			}
 		}
 	}
 

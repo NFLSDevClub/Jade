@@ -1,5 +1,6 @@
 package com.zzzyt.jade.game.entity;
 
+import com.zzzyt.jade.game.BossScene;
 import com.zzzyt.jade.game.Entity;
 import com.zzzyt.jade.game.Player;
 import com.zzzyt.jade.util.Collision;
@@ -22,7 +23,7 @@ public class Enemy extends Entity {
 	/**
 	 * The health point of the enemy
 	 */
-	public float hp;
+	public double hp;
 	/**
 	 * Hitbox radius for shot
 	 */
@@ -31,9 +32,16 @@ public class Enemy extends Entity {
 	 * Hitbox radius for players
 	 */
 	public float radiusP;
+
+	private float lastx;
+	public boolean isBoss;
 	
+	/**
+	 * Auto remove when out of bound for too far
+	 */
+	public boolean enableOOBCheck=true;
 	
-	public Enemy(TextureAtlas atlas, String regionName,int frameLength, int transitionFrameLength,float x, float y, float hp, float radiusS, float radiusP) {
+	public Enemy(TextureAtlas atlas, String regionName,int frameLength, int transitionFrameLength,float x, float y, float hp, float radiusS, float radiusP, boolean isBoss) {
 		super();
 		was=new PlayerAnimation(atlas.findRegions(regionName + "_left"),
 				atlas.findRegions(regionName + "_center"),
@@ -47,16 +55,16 @@ public class Enemy extends Entity {
 		this.hp = hp;
 		this.radiusS = radiusS;
 		this.radiusP = radiusP;
+		if(isBoss) {
+			this.hp=BossScene.MAXHP;
+		}
+		this.isBoss=isBoss;
 	}
 
 
 	public boolean collide(Player player) {
 		return Collision.defaultCollision(player.getX(), player.getY(), player.getRadius(), x, y, radiusP);
 	}
-	
-
-	private float lastx;
-	public boolean isBoss;
 	
 	/**
 	 * When overriding this, please call <code>super.update()</code> first!!! <br/>
@@ -69,9 +77,16 @@ public class Enemy extends Entity {
 			J.onHit();
 		}
 		
-		was.update(t, x-lastx);
-		
-		lastx=x;
+		//OOB Check
+		if(enableOOBCheck && x>=U.config().frameWidth+300 || x<=-300
+				|| y>=U.config().frameHeight+300 || y<=-300) {
+			J.remove(this);
+		}else {
+
+			was.update(t, x-lastx);
+			
+			lastx=x;
+		}
 	}
 	
 	public void draw(Batch batch) {

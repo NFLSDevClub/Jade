@@ -119,6 +119,18 @@ public class J {
 		}
 	}
 
+	public static void clearEnemies(boolean clearBoss) {
+		EntityArray<Enemy> tmp = J.getEnemies();
+		for (int i = tmp.size() - 1; i >= 0; i--) {
+			if (tmp.get(i) != null) {
+				if(!tmp.get(i).isBoss || clearBoss) {
+					J.remove(tmp.get(i));
+				}
+			}
+				
+		}
+	}
+	
 	public static void addDrawable(Drawable drawable) {
 		Jade.session.addDrawable(drawable);
 	}

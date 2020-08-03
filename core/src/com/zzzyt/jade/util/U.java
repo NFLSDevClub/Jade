@@ -191,5 +191,8 @@ public class U {
 			game.logger.info("Switching to no screen.");
 		}
 	}
-
+	
+	public static <T> Array<T> makeArray(T... ts){
+		return new Array<>(ts);
+	}
 }
