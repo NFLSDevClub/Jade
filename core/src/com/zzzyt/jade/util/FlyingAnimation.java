@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Array;
  * @author Zzzyt, XGN
  *
  */
-public class PlayerAnimation {
+public class FlyingAnimation {
 
 	public transient Array<? extends TextureRegion> left, center, right, toLeft, toRight;
 	
@@ -19,7 +19,7 @@ public class PlayerAnimation {
 	public int timer1,timer2;
 	
 	
-	public PlayerAnimation(Array<? extends TextureRegion> left, Array<? extends TextureRegion> center,
+	public FlyingAnimation(Array<? extends TextureRegion> left, Array<? extends TextureRegion> center,
 			Array<? extends TextureRegion> right, Array<? extends TextureRegion> toLeft,
 			Array<? extends TextureRegion> toRight, int frameLength, int transitionFrameLength) {
 		this.left = left;

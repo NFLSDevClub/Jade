@@ -1,6 +1,5 @@
 package com.zzzyt.jade.game.task;
 
-import com.zzzyt.jade.game.Updatable;
 import com.zzzyt.jade.util.J;
 
 /**

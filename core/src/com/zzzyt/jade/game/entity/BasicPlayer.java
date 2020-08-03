@@ -5,7 +5,7 @@ import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.util.M;
 import com.zzzyt.jade.util.SE;
 import com.zzzyt.jade.util.U;
-import com.zzzyt.jade.util.PlayerAnimation;
+import com.zzzyt.jade.util.FlyingAnimation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.Logger;
 
 public class BasicPlayer extends Player {
 
-	public transient PlayerAnimation was;
+	public transient FlyingAnimation was;
 	public transient Sprite hitbox;
 	public float radius, speedHigh, speedLow;
 	public float x, y;
@@ -75,7 +75,7 @@ public class BasicPlayer extends Player {
 			Array<? extends TextureRegion> toRight, Sprite hitbox, int frameLength, int transitionFrameLength,
 			float radius, float speedHigh, float speedLow,int deathbombWindow, int rebirthFrame) {
 		
-		was=new PlayerAnimation(left, center, right, toLeft, toRight, frameLength, transitionFrameLength);
+		was=new FlyingAnimation(left, center, right, toLeft, toRight, frameLength, transitionFrameLength);
 		this.hitbox = hitbox;
 		this.radius = radius;
 		this.speedHigh = speedHigh;
@@ -90,7 +90,7 @@ public class BasicPlayer extends Player {
 	public BasicPlayer(TextureAtlas atlas, String regionName, int frameLength, int transitionFrameLength, float radius,
 			float speedHigh, float speedLow,int deathbombWindow, int rebirthFrame) {
 		
-		was=new PlayerAnimation(atlas.findRegions(regionName + "_left"),
+		was=new FlyingAnimation(atlas.findRegions(regionName + "_left"),
 				atlas.findRegions(regionName + "_center"),
 				atlas.findRegions(regionName + "_right"),
 				atlas.findRegions(regionName + "_toLeft"),
@@ -115,7 +115,7 @@ public class BasicPlayer extends Player {
 		Array<TextureRegion> tmp = new Array<TextureRegion>();
 		tmp.add(region);
 		
-		was=new PlayerAnimation(tmp,tmp,tmp,tmp,tmp,1,1);
+		was=new FlyingAnimation(tmp,tmp,tmp,tmp,tmp,1,1);
 		this.radius = radius;
 		this.speedHigh = speedHigh;
 		this.speedLow = speedLow;

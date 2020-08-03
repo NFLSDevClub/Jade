@@ -1,6 +1,5 @@
 package com.zzzyt.jade.demo.player;
 
-import com.badlogic.gdx.math.MathUtils;
 import com.zzzyt.jade.game.entity.BasicPlayer;
 import com.zzzyt.jade.game.entity.PlayerBullet;
 import com.zzzyt.jade.util.A;
@@ -20,8 +19,8 @@ public class PlayerReimu extends BasicPlayer {
 		if (shotTimer >= 4) {
 			shotTimer = 0;
 
-			B.setAngleSpeed(new PlayerBullet(B.get(MathUtils.random(1, 16)), 1024, 1, 3), x - 10, y, 90, 20);
-			B.setAngleSpeed(new PlayerBullet(B.get(MathUtils.random(1, 16)), 1024, 1, 3), x + 10, y, 90, 20);
+			B.setAngleSpeed(new PlayerBullet(B.get(512), 1024, 1, 3), x - 10, y, 90, 20);
+			B.setAngleSpeed(new PlayerBullet(B.get(512), 1024, 1, 3), x + 10, y, 90, 20);
 		}
 	}
 }
