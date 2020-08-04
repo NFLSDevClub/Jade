@@ -3,13 +3,12 @@ package com.zzzyt.jade.ui;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
 import com.zzzyt.jade.game.task.Spellcard;
 import com.zzzyt.jade.util.A;
-import com.zzzyt.jade.util.U;
+import com.zzzyt.jade.util.J;
 
 /**
  * Timer Actor will display the timer of the spellcard on screen
@@ -44,6 +43,12 @@ public class TimerActor extends Label {
 			getStyle().fontColor=Color.RED;
 		}else if(realtime<=10) {
 			getStyle().fontColor=Color.PINK;
+		}
+		
+		if(J.getPlayer().getY()>=-200) {
+			addAction(Actions.alpha(0.5f,0.5f));
+		}else {
+			addAction(Actions.alpha(1f,0.5f));
 		}
 	}
 	
