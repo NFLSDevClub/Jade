@@ -1,9 +1,17 @@
 package com.zzzyt.jade.game;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 import com.zzzyt.jade.game.entity.Enemy;
 import com.zzzyt.jade.game.task.Spellcard;
+import com.zzzyt.jade.ui.TimerActor;
 import com.zzzyt.jade.util.J;
+import com.zzzyt.jade.util.U;
 
 /**
  * Boss Scene object is the same as Danmakufu <br/>
@@ -22,12 +30,15 @@ public class BossScene {
 
 	public final static double MAXHP=1e9;
 	
+	public Stage st;
+	
 	public BossScene(Array<Array<Spellcard>> phases) {
+		this();
 		this.phases=phases;
 	}
 	
 	public BossScene() {
-		
+		st=new Stage();
 	}
 	
 	/**
@@ -45,10 +56,24 @@ public class BossScene {
 				e.hp=MAXHP;
 			}
 		}
+		
+		//add the first SC information
+		st.addActor(new TimerActor(getCurrentSpellcard()));
 	}
+	
 	
 	public void onSpellcardFinish() {
 		// TODO effects
+		
+		//remove old actors
+		for(Actor a:st.getActors()) {
+			if(a instanceof TimerActor) {
+				System.out.println("fuck");
+				a.addAction(Actions.sequence(Actions.moveBy(0, 200,1f,Interpolation.sineIn),
+							Actions.removeActor()));
+			}
+		}
+		
 		getCurrentSpellcard().onEnd();
 		
 		for(Enemy e:J.getSession().enemies.entities) {
@@ -60,6 +85,11 @@ public class BossScene {
 		spellIndex++;
 		if(spellIndex==phases.get(currentPhase).size) {
 			onPhaseFinish();
+		}
+		
+		//add new actor
+		if(!isFinished()) {
+			st.addActor(new TimerActor(getCurrentSpellcard()));
 		}
 	}
 	
@@ -82,8 +112,12 @@ public class BossScene {
 		return currentPhase==phases.size;
 	}
 	
-	public void draw() {
+	public void draw(SpriteBatch batch) {
 		//TODO Draw something
+		batch.end();
+		st.act(U.safeDeltaTime());
+		st.draw();
+		batch.begin();
 	}
 	
 	public void update(int t) {
@@ -92,7 +126,7 @@ public class BossScene {
 			return;
 		}
 		
-		System.out.println("boss state:"+currentPhase+" "+spellIndex+" "+getCurrentSpellcard());
+//		System.out.println("boss state:"+currentPhase+" "+spellIndex+" "+getCurrentSpellcard());
 		updateHP(t);
 		updateSC(t);
 	}
