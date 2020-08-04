@@ -10,6 +10,7 @@ import com.zzzyt.jade.game.Player;
 import com.zzzyt.jade.game.Task;
 import com.zzzyt.jade.game.entity.Bullet;
 import com.zzzyt.jade.game.entity.Enemy;
+import com.zzzyt.jade.game.entity.Item;
 
 public class J {
 
@@ -103,11 +104,20 @@ public class J {
 		return e;
 	}
 	
+	public static Item add(Item e) {
+		Jade.session.add(e);
+		return e;
+	}
+	
 	public static void remove(Bullet bullet) {
 		Jade.session.remove(bullet);
 	}
 
 	public static void remove(Enemy enemy) {
+		Jade.session.remove(enemy);
+	}
+	
+	public static void remove(Item enemy) {
 		Jade.session.remove(enemy);
 	}
 	

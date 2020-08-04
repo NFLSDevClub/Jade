@@ -31,4 +31,21 @@ public abstract class Player extends Entity {
 	 * Player has just rebirthed
 	 */
 	public abstract void onRebirthEnd();
+
+	/**
+	 * The item collection line height.
+	 * @return
+	 */
+	public float getItemCollectionLineHeight() {
+		return 0;
+	}
+
+	/**
+	 * The item collection radius <br/>
+	 * Defaults to be the hitbox radius*10
+	 * @return
+	 */
+	public float getItemRadius() {
+		return getRadius()*10;
+	}
 }
