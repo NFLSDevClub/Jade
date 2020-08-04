@@ -130,7 +130,7 @@ public class GameScreen extends BasicScreen {
 		// Important!!!! Or viewport will become stretched.
 		Gdx.gl20.glViewport(viewport.getScreenX(), viewport.getScreenY(), viewport.getScreenWidth(),
 				viewport.getScreenHeight());
-
+		
 		if (Gdx.input.isKeyPressed(Keys.CONTROL_LEFT)
 				&& (!J.isGameModeReplay() || U.config().allowSpeedUpOutOfReplay)) {
 			for (int i = 0; i < U.config().speedUpMultiplier - 1; i++) {
@@ -139,6 +139,10 @@ public class GameScreen extends BasicScreen {
 		}
 		st.act(U.safeDeltaTime());
 		st.draw();
+		
+		if(jade.bossScene!=null) {
+			jade.bossScene.draw();
+		}
 	}
 
 	@Override

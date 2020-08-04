@@ -44,12 +44,12 @@ public class TimerActor extends Label {
 		}else if(realtime<=10) {
 			getStyle().fontColor=Color.PINK;
 		}
-		
-		if(J.getPlayer().getY()>=-200) {
-			addAction(Actions.alpha(0.5f,0.5f));
-		}else {
-			addAction(Actions.alpha(1f,0.5f));
-		}
+
+//		if(J.getPlayer().getY()>=-200) {
+//			addAction(Actions.alpha(0.5f,0.5f));
+//		}else {
+//			addAction(Actions.alpha(1f,0.5f));
+//		}
 	}
 	
 	@Override

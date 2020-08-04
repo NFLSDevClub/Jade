@@ -83,10 +83,6 @@ public class Jade implements Disposable {
 			
 			enemies.draw(batch);
 			bullets.draw(batch);
-
-			if(bossScene!=null) {
-				bossScene.draw(batch);
-			}
 			
 			for (int i = 0; i < pDrawables.size; i++) {
 				if (pDrawables.get(i) != null) {
@@ -95,7 +91,10 @@ public class Jade implements Disposable {
 			}
 			
 			batch.end();
+			
 			fbo.end();
+			
+			
 		}
 	}
 

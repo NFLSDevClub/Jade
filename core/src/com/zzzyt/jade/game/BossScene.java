@@ -115,10 +115,8 @@ public class BossScene {
 		return currentPhase==phases.size;
 	}
 	
-	public void draw(SpriteBatch batch) {
+	public void draw() {
 		//TODO Draw something
-
-		batch.end();
 		
 		//draw circles
 		int leftHP=0,totalHP=0;
@@ -136,7 +134,6 @@ public class BossScene {
 		st.act(U.safeDeltaTime());
 		st.draw();
 		
-		batch.begin();
 	}
 	
 	public void update(int t) {
