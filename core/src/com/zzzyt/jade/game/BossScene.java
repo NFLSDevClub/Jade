@@ -1,11 +1,13 @@
 package com.zzzyt.jade.game;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -33,7 +35,7 @@ public class BossScene {
 
 	public final static double MAXHP=1e9;
 	
-	public Stage st;
+	public Group st;
 	
 	public BossScene(Array<Array<Spellcard>> phases) {
 		this();
@@ -41,7 +43,7 @@ public class BossScene {
 	}
 	
 	public BossScene() {
-		st=new Stage();
+		st=new Group();
 	}
 	
 	/**
@@ -69,7 +71,7 @@ public class BossScene {
 		// TODO effects
 		
 		//remove old actors
-		for(Actor a:st.getActors()) {
+		for(Actor a:st.getChildren()) {
 			if(a instanceof TimerActor) {
 				System.out.println("fuck");
 				a.addAction(Actions.sequence(Actions.moveBy(0, 200,1f,Interpolation.sineIn),
@@ -115,7 +117,7 @@ public class BossScene {
 		return currentPhase==phases.size;
 	}
 	
-	public void draw() {
+	public void draw(Batch batch,float a) {
 		//TODO Draw something
 		
 		//draw circles
@@ -132,7 +134,7 @@ public class BossScene {
 //		System.out.println(leftHP+" "+totalHP);
 		
 		st.act(U.safeDeltaTime());
-		st.draw();
+		st.draw(batch,a);
 		
 	}
 	

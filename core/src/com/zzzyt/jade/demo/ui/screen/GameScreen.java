@@ -140,9 +140,7 @@ public class GameScreen extends BasicScreen {
 		st.act(U.safeDeltaTime());
 		st.draw();
 		
-		if(jade.bossScene!=null) {
-			jade.bossScene.draw();
-		}
+		
 	}
 
 	@Override

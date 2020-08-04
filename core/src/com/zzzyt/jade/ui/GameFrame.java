@@ -35,6 +35,9 @@ public class GameFrame extends Actor {
 			batch.setColor(tempColor2);
 			batch.draw(jade.getFrameTexture(), getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(),
 					getScaleX(), getScaleY(), getRotation());
+			if(jade.bossScene!=null) {
+				jade.bossScene.draw(batch,parentAlpha);
+			}
 			batch.setColor(tempColor1);
 		}
 	}
