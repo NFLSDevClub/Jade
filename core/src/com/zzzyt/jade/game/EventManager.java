@@ -4,6 +4,7 @@ import com.zzzyt.jade.game.entity.BasicPlayer;
 
 /**
  * An event manager receives event and you can do custom things! Hooray <br/>
+ * This class implements an empty event manager
  * @author XGN
  *
  */

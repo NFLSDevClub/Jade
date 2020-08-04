@@ -32,7 +32,7 @@ public class Jade implements Disposable {
 	public EntityArray<Bullet> bullets;
 	public Player player;
 	public BossScene bossScene;
-	public EventManager event;
+	public EventManager event=new EventManager();
 	
 	private boolean running;
 	private boolean paused;
