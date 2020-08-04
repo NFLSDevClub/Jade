@@ -36,7 +36,7 @@ public class Item extends Entity {
 
 	}
 
-	public Item(Texture t, int tag,float radius) {
+	public Item(Texture t, int tag,float radius,float x,float y) {
 		this.tag = tag;
 		this.boundingWidth = t.getWidth();
 		this.boundingHeight = t.getHeight();
@@ -44,7 +44,9 @@ public class Item extends Entity {
 		this.texture=t;
 		this.radius=radius;
 		
-		this.angle=270;
+		this.x=x;
+		this.y=y;
+		this.angle=90;
 		this.speed=3;
 	}
 	
@@ -155,7 +157,7 @@ public class Item extends Entity {
 			speed=5;
 			angle=M.atan2(x, y, J.getPlayer().getX(), J.getPlayer().getY());
 		}else {
-			speed+=0.163f;
+			speed-=0.05f;
 		}
 		
 		x += speed * MathUtils.cosDeg(angle);
@@ -168,9 +170,6 @@ public class Item extends Entity {
 		
 		updateSpritePosition();
 	}
-
-	
-	
 
 	/**
 	 * Implement this to make the item has super cool effects!!!

@@ -120,8 +120,13 @@ public class Enemy extends Entity {
 	public void onHit(float damage) {
 		hp-=damage;
 		if(hp<=0) {
+			onDie();
 			J.remove(this);
 		}
+	}
+	
+	public void onDie() {
+		
 	}
 	
 	@Override
