@@ -82,6 +82,10 @@ public class BossScene {
 		return currentPhase==phases.size;
 	}
 	
+	public void draw() {
+		//TODO Draw something
+	}
+	
 	public void update(int t) {
 		
 		if(isFinished()) {

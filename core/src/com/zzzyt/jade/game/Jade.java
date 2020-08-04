@@ -89,6 +89,11 @@ public class Jade implements Disposable {
 					pDrawables.get(i).draw(batch);
 				}
 			}
+			
+			if(bossScene!=null) {
+				bossScene.draw();
+			}
+			
 			batch.end();
 			fbo.end();
 		}
