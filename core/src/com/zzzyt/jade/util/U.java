@@ -16,7 +16,7 @@ import com.zzzyt.jade.ui.screen.ScreenState;
 
 public class U {
 
-	public static final Json json = new Json();
+	public static Json json;
 	public static JadeApplication game;
 
 	public static Config config() {
@@ -69,7 +69,7 @@ public class U {
 
 	public static TextureRegion setToCoverWorld(TextureRegion region) {
 		region.setRegionWidth(U.config().w);
-		region.setRegionHeight(U.config().h*2);
+		region.setRegionHeight(U.config().h * 2);
 		return region;
 	}
 
@@ -82,10 +82,18 @@ public class U {
 	}
 
 	public static Json getJson() {
+		if (json == null) {
+			json = new Json();
+			json.setIgnoreUnknownFields(true);
+		}
 		return json;
 	}
 
 	public static <T> T fromJson(FileHandle file, Class<T> type) {
+		if (json == null) {
+			json = new Json();
+			json.setIgnoreUnknownFields(true);
+		}
 		return json.fromJson(type, file);
 	}
 
@@ -191,8 +199,8 @@ public class U {
 			game.logger.info("Switching to no screen.");
 		}
 	}
-	
-	public static <T> Array<T> makeArray(T... ts){
+
+	public static <T> Array<T> makeArray(T... ts) {
 		return new Array<>(ts);
 	}
 }

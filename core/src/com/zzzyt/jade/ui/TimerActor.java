@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
 import com.zzzyt.jade.game.task.Spellcard;
 import com.zzzyt.jade.util.A;
-import com.zzzyt.jade.util.J;
 
 /**
  * Timer Actor will display the timer of the spellcard on screen

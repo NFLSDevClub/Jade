@@ -2,8 +2,6 @@ package com.zzzyt.jade.game;
 
 public abstract class Player extends Entity {
 	
-	public abstract float getRadius();
-
 	/**
 	 * Event shot
 	 */
@@ -40,12 +38,4 @@ public abstract class Player extends Entity {
 		return 0;
 	}
 
-	/**
-	 * The item collection radius <br/>
-	 * Defaults to be the hitbox radius*10
-	 * @return
-	 */
-	public float getItemRadius() {
-		return getRadius()*10;
-	}
 }

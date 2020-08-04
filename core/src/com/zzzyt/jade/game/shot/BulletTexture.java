@@ -1,35 +1,33 @@
 package com.zzzyt.jade.game.shot;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
 public class BulletTexture {
 	public TextureRegion texture;
-	public Array<TextureRegion> frames;
+	public Array<? extends TextureRegion> frames;
 	public Array<Integer> frameTime;
 
-	public BulletTexture(Texture texture, int[] rect) {
-		this.texture = new TextureRegion(texture, rect[0], rect[1], rect[2] - rect[0], rect[3] - rect[1]);
+	public BulletTexture(TextureAtlas atlas, String name) {
+		this.texture = atlas.findRegion(name);
 		this.frames = null;
 		this.frameTime = null;
 	}
 
-	public BulletTexture(Texture texture, int[][] animation) {
-		this.texture = null;
-		this.frames = new Array<TextureRegion>();
+	public BulletTexture(TextureAtlas atlas,String name,int[] frames) {
+		this.texture=null;
+		this.frames = atlas.findRegions(name);
 		this.frameTime = new Array<Integer>();
-		for (int i = 0; i < animation.length; i++) {
-			this.frames.add(new TextureRegion(texture, animation[i][1], animation[i][2],
-					animation[i][3] - animation[i][1], animation[i][4] - animation[i][2]));
+		for (int i = 0; i < frames.length; i++) {
 			if (i == 0) {
-				this.frameTime.add(animation[i][0]);
+				this.frameTime.add(frames[0]);
 			} else {
-				this.frameTime.add(this.frameTime.get(i - 1) + animation[i][0]);
+				this.frameTime.add(this.frameTime.get(i - 1) + frames[0]);
 			}
 		}
 	}
-
+	
 	public TextureRegion getFrame(int frame) {
 		if (!isAnimated()) {
 			return texture;
@@ -68,5 +66,5 @@ public class BulletTexture {
 		}
 		return ret;
 	}
-	
+
 }

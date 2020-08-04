@@ -1,9 +1,11 @@
 package com.zzzyt.jade.game;
 
+import com.zzzyt.jade.util.Collision.CollisionMethod;
+
 public abstract class Entity implements Drawable {
-	
-	public int internalId=Integer.MAX_VALUE;
-	
+
+	public int internalId = Integer.MAX_VALUE;
+
 	public abstract float getX();
 
 	public abstract float getY();
@@ -13,5 +15,7 @@ public abstract class Entity implements Drawable {
 	public abstract Entity setY(float y);
 
 	public abstract Entity setXY(float x, float y);
+
+	public abstract CollisionMethod getCollisionMethod(Entity other);
 
 }

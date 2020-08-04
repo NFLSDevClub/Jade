@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.zzzyt.jade.game.Entity;
 import com.zzzyt.jade.game.Player;
 import com.zzzyt.jade.util.Collision;
+import com.zzzyt.jade.util.Collision.CollisionMethod;
 import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.util.M;
 import com.zzzyt.jade.util.SE;
@@ -24,33 +25,32 @@ public class Item extends Entity {
 	public float x, y;
 	public Sprite sprite;
 	public float boundingWidth, boundingHeight;
-	public float radius;
-	
+	public CollisionMethod collision;
+
 	public Texture texture;
-	
-	public float angle,speed;
-	
-	public boolean canAutoCollect=true;
+
+	public float angle, speed;
+
+	public boolean canAutoCollect = true;
 	public boolean follow;
-	
+
 	public Item() {
 
 	}
 
-	public Item(Texture t, int tag,float radius,float x,float y) {
+	public Item(Texture t, int tag, float radius, float x, float y) {
 		this.tag = tag;
 		this.boundingWidth = t.getWidth();
 		this.boundingHeight = t.getHeight();
 		this.sprite = new Sprite(t);
-		this.texture=t;
-		this.radius=radius;
-		
-		this.x=x;
-		this.y=y;
-		this.angle=90;
-		this.speed=3;
+		this.texture = t;
+		this.collision = new Collision.Circle(0, 0, radius);
+
+		this.x = x;
+		this.y = y;
+		this.angle = 90;
+		this.speed = 3;
 	}
-	
 
 	public float getBoundingWidth() {
 		return boundingWidth;
@@ -132,43 +132,42 @@ public class Item extends Entity {
 	}
 
 	public boolean collide(Player player) {
-		return Collision.defaultCollision(player.getX(), player.getY(), player.getRadius(), x, y, radius);
+		return Collision.collide(player.getX(), player.getY(), player.getCollisionMethod(null), x, y, collision);
 	}
-	
-	public boolean collide2(Player player) {
-		return Collision.defaultCollision(player.getX(), player.getY(), player.getItemRadius(), x, y, radius);
+
+	public boolean closeTo(Player player) {
+		return Collision.collide(player.getX(), player.getY(), player.getCollisionMethod(this), x, y, collision);
 	}
-	
+
 	public void update(int frame) {
-		if(collide(J.getPlayer())) { //collide with player
+		if (collide(J.getPlayer())) { // collide with player
 			onGet();
 			J.remove(this);
 		}
-		if(collide2(J.getPlayer())) { //collide with item sucking circle
-			follow=true;
+		if (closeTo(J.getPlayer())) { // collide with item sucking circle
+			follow = true;
 		}
-		if(J.getPlayer().getY()>=J.getPlayer().getItemCollectionLineHeight()
-				&& canAutoCollect) {
-			follow=true;
+		if (J.getPlayer().getY() >= J.getPlayer().getItemCollectionLineHeight() && canAutoCollect) {
+			follow = true;
 		}
 
 		t++;
-		
-		if(follow) {
-			speed=10;
-			angle=M.atan2(x, y, J.getPlayer().getX(), J.getPlayer().getY());
-		}else {
-			speed-=0.05f;
+
+		if (follow) {
+			speed = 10;
+			angle = M.atan2(x, y, J.getPlayer().getX(), J.getPlayer().getY());
+		} else {
+			speed -= 0.05f;
 		}
-		
+
 		x += speed * MathUtils.cosDeg(angle);
 		y += speed * MathUtils.sinDeg(angle);
-		
+
 		if (U.outOfWorld(x, y, sprite.getWidth() * sprite.getScaleX(), sprite.getHeight() * sprite.getScaleY())) {
 			J.remove(this);
 			return;
 		}
-		
+
 		updateSpritePosition();
 	}
 
@@ -176,13 +175,18 @@ public class Item extends Entity {
 	 * Implement this to make the item has super cool effects!!!
 	 */
 	public void onGet() {
-		J.getSession().event.onItem(this,J.getPlayer());
+		J.getSession().event.onItem(this, J.getPlayer());
 		SE.play("item");
 	}
-	
+
 	@Override
 	public int getZIndex() {
 		return 0;
+	}
+
+	@Override
+	public CollisionMethod getCollisionMethod(Entity other) {
+		return collision;
 	}
 
 }

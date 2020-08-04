@@ -33,11 +33,6 @@ public class PlayerMarisa extends BasicPlayer {
 	}
 	
 	@Override
-	public float getItemRadius() {
-		return 100;
-	}
-	
-	@Override
 	public void onBomb() {
 		super.onBomb();
 		

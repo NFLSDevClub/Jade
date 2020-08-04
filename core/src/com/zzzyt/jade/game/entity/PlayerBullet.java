@@ -35,29 +35,29 @@ public class PlayerBullet extends Bullet {
 
 	@Override
 	public boolean checkCollision() {
-		
-		boolean hit=false;
-		
-		for(int i=0;i<J.getEnemies().size();i++) {
-			Enemy e=J.getEnemies().get(i);
-			if(e==null) {
+
+		boolean hit = false;
+
+		for (int i = 0; i < J.getEnemies().size(); i++) {
+			Enemy e = J.getEnemies().get(i);
+			if (e == null) {
 				continue;
 			}
-			if(penetration==0) { //can't go forward anymore
+			if (penetration == 0) { // can't go forward anymore
 				J.remove(this);
 				return hit;
 			}
-			if(collide(e)) {
-				hit=true;
+			if (collide(e)) {
+				hit = true;
 				e.onHit(damage);
 				penetration--;
 			}
 		}
-		
+
 		return hit;
 	}
 
 	public boolean collide(Enemy e) {
-		return Collision.defaultCollision(x, y, data.radius, e.x, e.y, e.radiusS);
+		return Collision.collide(this, e);
 	}
 }

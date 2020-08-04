@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Array;
 import com.zzzyt.jade.game.Entity;
 import com.zzzyt.jade.game.Operator;
 import com.zzzyt.jade.game.shot.BulletData;
+import com.zzzyt.jade.util.Collision.CollisionMethod;
 import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.util.M;
 import com.zzzyt.jade.util.U;
@@ -17,7 +18,6 @@ import com.zzzyt.jade.util.U;
  *
  */
 public class Bullet extends Entity {
-
 
 	public int tag;
 	public int t;
@@ -94,8 +94,7 @@ public class Bullet extends Entity {
 	}
 
 	public Bullet updateSpritePosition() {
-		sprite.setPosition(x - sprite.getWidth() * sprite.getScaleX() / 2,
-				y - sprite.getHeight() * sprite.getScaleY() / 2);
+		sprite.setPosition(x - data.originX * sprite.getScaleX(), y - data.originY * sprite.getScaleY() / 2);
 		return this;
 	}
 
@@ -149,7 +148,7 @@ public class Bullet extends Entity {
 				return;
 		}
 		sprite.setRegion(data.texture.getFrame(t));
-		sprite.setRotation(M.normalizeAngle(sprite.getRotation() + data.spinSpeed));
+		sprite.setRotation(M.normalizeAngle(sprite.getRotation() + data.spinVelocity));
 		x += speed * MathUtils.cosDeg(angle);
 		y += speed * MathUtils.sinDeg(angle);
 		if (U.outOfWorld(x, y, sprite.getWidth() * sprite.getScaleX(), sprite.getHeight() * sprite.getScaleY())) {
@@ -179,6 +178,11 @@ public class Bullet extends Entity {
 	@Override
 	public int getZIndex() {
 		return 0;
+	}
+
+	@Override
+	public CollisionMethod getCollisionMethod(Entity other) {
+		return data.collision;
 	}
 
 }

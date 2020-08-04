@@ -4,9 +4,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.zzzyt.jade.util.U;
 
 public class RawShotSheet {
-	public String image;
-	public String name;
-	public int[] delayRect;
+	public String atlas;
 	public RawBulletData[] data;
 
 	public RawShotSheet() {
@@ -20,13 +18,15 @@ public class RawShotSheet {
 	public static class RawBulletData {
 		public int id;
 		public String name;
+		public int[] frames;
 		public String render;
-		public int[] rect;
-		public int[] delayColor;
-		public int[][] animation;
-		public float radius;
+		public String delatSrc;
+		public String delayColor;
+		public String collisionMethod;
+		public float[] collisionData;
 		public float rotation;
-		public float spinSpeed;
+		public float spinVelocity;
+		public float originX, originY;
 
 		public RawBulletData() {
 

@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.Scaling;
-import com.zzzyt.jade.util.Collision.CollisionMode;
 
 public class Config {
 
@@ -36,7 +35,7 @@ public class Config {
 	public float originY;
 	public float deleteDistance;
 	public float safeDistance;
-	public CollisionMode collisionMode;
+	public boolean orthoCircleCollision;
 	public boolean invulnerable;
 	public int cleanupBulletCount;
 	public int cleanupBlankCount;
@@ -98,7 +97,7 @@ public class Config {
 		originY = h;
 		deleteDistance = 256;
 		safeDistance = 16;
-		collisionMode = CollisionMode.circleCircleOrtho;
+		orthoCircleCollision = true;
 		invulnerable = false;
 		cleanupBulletCount = 8192;
 		cleanupBlankCount = 512;

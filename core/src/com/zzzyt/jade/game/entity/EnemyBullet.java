@@ -32,6 +32,6 @@ public class EnemyBullet extends Bullet {
 	}
 
 	public boolean collide(Player player) {
-		return Collision.defaultCollision(player.getX(), player.getY(), player.getRadius(), x, y, data.radius);
+		return Collision.collide(this, player);
 	}
 }

@@ -22,19 +22,14 @@ public class PlayerReimu extends BasicPlayer {
 		if (shotTimer >= 4) {
 			shotTimer = 0;
 
-			B.setAngleSpeed(new PlayerBullet(B.get(512), 1024, 1, 3), x - 10, y, 90, 20);
-			B.setAngleSpeed(new PlayerBullet(B.get(512), 1024, 1, 3), x + 10, y, 90, 20);
+			B.setAngleSpeed(new PlayerBullet(B.get("PLAYER_REIMU_STANDARD"), 1024, 1, 3), x - 10, y, 90, 20);
+			B.setAngleSpeed(new PlayerBullet(B.get("PLAYER_REIMU_STANDARD"), 1024, 1, 3), x + 10, y, 90, 20);
 		}
 	}
 	
 	@Override
 	public float getItemCollectionLineHeight() {
 		return -100;
-	}
-	
-	@Override
-	public float getItemRadius() {
-		return 50;
 	}
 	
 	@Override
