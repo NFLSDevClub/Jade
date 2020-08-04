@@ -24,7 +24,7 @@ public class Stage1Mid1 extends Single {
 			}
 			if (frame % J.diffSelect(60,45,30,15) == 0) {
 //				B.create(MathUtils.random(-150, 150), 50, MathUtils.random(-150, -30), 2, MathUtils.random(9, 16), 0);
-				TaskedEnemy te=new TaskedEnemy(A.get("th10_player.atlas"), "th10_reimu", 5, 2, -200, 0, 30, 50, 5,true);
+				TaskedEnemy te=new TaskedEnemy(A.get("th10_player.atlas"), "th10_reimu", 5, 2, -200, 0, 30, 50, 5,false);
 				
 				te.task=(t)->{
 					

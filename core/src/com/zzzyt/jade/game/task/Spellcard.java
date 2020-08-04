@@ -77,8 +77,8 @@ public class Spellcard {
 		if(this.maxtime-this.time<=300) {
 			return bonus;
 		}else {
-			long delta=(long)(bonus/(maxtime-300.0)*(2/3.0));
-			return bonus-delta*(this.maxtime-this.time-300);
+			double delta=(bonus/(maxtime-300.0)*(2/3.0));
+			return (long)(bonus-delta*(this.maxtime-this.time-300));
 		}
 	}
 }

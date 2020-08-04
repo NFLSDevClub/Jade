@@ -37,7 +37,9 @@ public class TimerActor extends Label {
 		float realtime=sc.time/60f;
 		setText(String.format("%02d", (int)realtime)
 				+"."
-				+String.format("%02d", (int)(realtime*100)%100));
+				+String.format("%02d", (int)(realtime*100)%100)
+				+"\nHP:"+sc.hp+"/"+sc.maxhp
+				+"\nBonus:"+sc.getBonus());
 		
 		if(realtime<=5) {
 			getStyle().fontColor=Color.RED;
