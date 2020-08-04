@@ -171,23 +171,24 @@ public class BasicPlayer extends Player {
 
 	@Override
 	public void onShot() {
-
+		J.getSession().event.onPlayerShoot(this);
 	}
 
 	@Override
 	public void onBomb() {
-
+		J.getSession().event.onBomb(this);
 	}
 
 	@Override
 	public void onRebirthStart() {
-		
+		J.getSession().event.onRebirthStart(this);
 	}
 	
 	@Override
 	public void onRebirthEnd() {
 		this.x = U.screenToWorldX(U.config().w / 2);
 		this.y = U.screenToWorldY(32);
+		J.getSession().event.onRebirthEnd(this);
 	}
 	
 	@Override
@@ -196,6 +197,7 @@ public class BasicPlayer extends Player {
 			state=PLDB;
 			internalFrameCounter=deathbombWindow;
 			SE.play("die");
+			J.getSession().event.onPlayerHit(this);
 		}else {
 			//no hitting 
 		}
@@ -220,6 +222,7 @@ public class BasicPlayer extends Player {
 				onBomb();
 				state=PLOK;
 				
+				J.getSession().event.onPlayerDeathbomb(this);
 				addInvincibilityFrame(120);
 			}else{
 				logger.debug("Deathbomb Fail");

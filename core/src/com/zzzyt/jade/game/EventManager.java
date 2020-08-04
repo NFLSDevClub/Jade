@@ -1,0 +1,56 @@
+package com.zzzyt.jade.game;
+
+import com.zzzyt.jade.game.entity.BasicPlayer;
+
+/**
+ * An event manager receives event and you can do custom things! Hooray <br/>
+ * @author XGN
+ *
+ */
+public class EventManager {
+
+	public void onBomb(BasicPlayer basicPlayer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void onRebirthStart(BasicPlayer basicPlayer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void onRebirthEnd(BasicPlayer basicPlayer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void onPlayerHit(BasicPlayer basicPlayer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void onPlayerShoot(BasicPlayer basicPlayer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * Please note that onBomb will also be fired along with this event
+	 * @param basicPlayer
+	 */
+	public void onPlayerDeathbomb(BasicPlayer basicPlayer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void onUpdate(int frame) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void onDraw() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

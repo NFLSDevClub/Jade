@@ -15,6 +15,8 @@ public class PlayerMarisa extends BasicPlayer {
 
 	@Override
 	public void onShot() {
+		super.onShot();
+		
 		shotTimer++;
 		if (shotTimer >= 2) {
 			shotTimer = 0;

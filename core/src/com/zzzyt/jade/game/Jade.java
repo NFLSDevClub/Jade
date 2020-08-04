@@ -32,6 +32,7 @@ public class Jade implements Disposable {
 	public EntityArray<Bullet> bullets;
 	public Player player;
 	public BossScene bossScene;
+	public EventManager event;
 	
 	private boolean running;
 	private boolean paused;
@@ -72,6 +73,9 @@ public class Jade implements Disposable {
 
 	public void draw() {
 		if (running && !paused) {
+			
+			event.onDraw();
+			
 			fbo.begin();
 			U.glClear();
 			batch.begin();
@@ -104,6 +108,9 @@ public class Jade implements Disposable {
 			return;
 		}
 		frame++;
+		
+		event.onUpdate(frame);
+		
 		for (int i = 0; i < tasks.size; i++) {
 			if (tasks.get(i) != null) {
 				tasks.get(i).update(frame);

@@ -15,6 +15,8 @@ public class PlayerReimu extends BasicPlayer {
 
 	@Override
 	public void onShot() {
+		super.onShot();
+		
 		shotTimer++;
 		if (shotTimer >= 4) {
 			shotTimer = 0;
