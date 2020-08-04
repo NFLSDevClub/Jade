@@ -4,6 +4,7 @@ import com.zzzyt.jade.game.entity.BasicPlayer;
 import com.zzzyt.jade.game.entity.PlayerBullet;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.B;
+import com.zzzyt.jade.util.J;
 
 public class PlayerReimu extends BasicPlayer {
 	
@@ -33,6 +34,13 @@ public class PlayerReimu extends BasicPlayer {
 	
 	@Override
 	public float getItemRadius() {
-		return 20;
+		return 50;
+	}
+	
+	@Override
+	public void onBomb() {
+		super.onBomb();
+		
+		J.clearBullets(true);
 	}
 }

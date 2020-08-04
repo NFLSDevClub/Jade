@@ -53,7 +53,7 @@ public class Spellcard {
 	}
 	
 	public void onEnd() {
-		J.clearBullets();
+		J.clearBullets(true);
 		J.clearEnemies(false);
 	}
 	

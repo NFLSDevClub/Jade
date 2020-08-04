@@ -10,6 +10,7 @@ import com.zzzyt.jade.game.Player;
 import com.zzzyt.jade.game.Task;
 import com.zzzyt.jade.game.entity.Bullet;
 import com.zzzyt.jade.game.entity.Enemy;
+import com.zzzyt.jade.game.entity.EnemyBullet;
 import com.zzzyt.jade.game.entity.Item;
 
 public class J {
@@ -121,11 +122,18 @@ public class J {
 		Jade.session.remove(enemy);
 	}
 	
-	public static void clearBullets() {
+	public static void clearBullets(boolean toItem) {
 		EntityArray<Bullet> tmp = J.getBullets();
 		for (int i = tmp.size() - 1; i >= 0; i--) {
-			if (tmp.get(i) != null)
+			if (tmp.get(i) != null && tmp.get(i) instanceof EnemyBullet) {
+				if(toItem) {
+					Item itm=new Item(A.getTexture("item/point.png"),1,10,tmp.get(i).x,tmp.get(i).y);
+					itm.follow=true;
+					J.add(itm);
+				}
+				
 				J.remove(tmp.get(i));
+			}
 		}
 	}
 

@@ -10,6 +10,7 @@ import com.zzzyt.jade.game.Player;
 import com.zzzyt.jade.util.Collision;
 import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.util.M;
+import com.zzzyt.jade.util.SE;
 import com.zzzyt.jade.util.U;
 
 /**
@@ -29,7 +30,7 @@ public class Item extends Entity {
 	
 	public float angle,speed;
 	
-	public boolean canAutoCollect;
+	public boolean canAutoCollect=true;
 	public boolean follow;
 	
 	public Item() {
@@ -154,7 +155,7 @@ public class Item extends Entity {
 		t++;
 		
 		if(follow) {
-			speed=5;
+			speed=10;
 			angle=M.atan2(x, y, J.getPlayer().getX(), J.getPlayer().getY());
 		}else {
 			speed-=0.05f;
@@ -175,7 +176,7 @@ public class Item extends Entity {
 	 * Implement this to make the item has super cool effects!!!
 	 */
 	public void onGet() {
-		
+		SE.play("item");
 	}
 	
 	@Override

@@ -12,7 +12,7 @@ public class ClearBullets implements Task {
 
 	@Override
 	public void update(int t) {
-		J.clearBullets();
+		J.clearBullets(true);
 	}
 
 	@Override
