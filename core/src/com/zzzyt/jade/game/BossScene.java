@@ -1,6 +1,9 @@
 package com.zzzyt.jade.game;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -114,9 +117,25 @@ public class BossScene {
 	
 	public void draw(SpriteBatch batch) {
 		//TODO Draw something
+
 		batch.end();
+		
+		//draw circles
+		int leftHP=0,totalHP=0;
+		for(int i=0;i<phases.get(currentPhase).size;i++) {
+			if(i<spellIndex) {
+				totalHP+=phases.get(currentPhase).get(i).maxhp;
+			}else {
+				totalHP+=phases.get(currentPhase).get(i).maxhp;
+				leftHP+=phases.get(currentPhase).get(i).hp;
+			}
+		}
+		
+//		System.out.println(leftHP+" "+totalHP);
+		
 		st.act(U.safeDeltaTime());
 		st.draw();
+		
 		batch.begin();
 	}
 	
