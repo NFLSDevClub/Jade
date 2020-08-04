@@ -20,7 +20,7 @@ public class RawShotSheet {
 		public String name;
 		public int[] frames;
 		public String render;
-		public String delatSrc;
+		public String delaySrc;
 		public String delayColor;
 		public String collisionMethod;
 		public float[] collisionData;

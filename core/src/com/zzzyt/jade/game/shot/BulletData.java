@@ -26,6 +26,7 @@ public class BulletData {
 		this.spinVelocity = raw.spinVelocity;
 		this.rotation = raw.rotation;
 		this.delayColor = Color.valueOf(raw.delayColor);
+		this.delayTexture = parent.atlas.findRegion(raw.delaySrc);
 		this.originX = raw.originX;
 		this.originY = raw.originY;
 		if (raw.frames == null) {
