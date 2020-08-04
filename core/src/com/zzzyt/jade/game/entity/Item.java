@@ -176,6 +176,7 @@ public class Item extends Entity {
 	 * Implement this to make the item has super cool effects!!!
 	 */
 	public void onGet() {
+		J.getSession().event.onItem(this,J.getPlayer());
 		SE.play("item");
 	}
 	

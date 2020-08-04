@@ -1,6 +1,7 @@
 package com.zzzyt.jade.game;
 
 import com.zzzyt.jade.game.entity.BasicPlayer;
+import com.zzzyt.jade.game.entity.Item;
 
 /**
  * An event manager receives event and you can do custom things! Hooray <br/>
@@ -50,6 +51,11 @@ public class EventManager {
 	}
 
 	public void onDraw() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void onItem(Item item, Player player) {
 		// TODO Auto-generated method stub
 		
 	}
