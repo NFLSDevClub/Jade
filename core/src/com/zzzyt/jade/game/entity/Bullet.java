@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Array;
 import com.zzzyt.jade.game.Entity;
 import com.zzzyt.jade.game.Operator;
 import com.zzzyt.jade.game.shot.BulletData;
-import com.zzzyt.jade.util.Collision.CollisionMethod;
+import com.zzzyt.jade.util.Collision.CollisionData;
 import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.util.M;
 import com.zzzyt.jade.util.U;
@@ -181,7 +181,7 @@ public class Bullet extends Entity {
 	}
 
 	@Override
-	public CollisionMethod getCollisionMethod(Entity other) {
+	public CollisionData getCollisionData(Entity other) {
 		return data.collision;
 	}
 

@@ -24,9 +24,9 @@ public class RawShotSheet {
 		public String delayColor;
 		public String collisionMethod;
 		public float[] collisionData;
-		public float rotation;
-		public float spinVelocity;
-		public float originX, originY;
+		public Float rotation;
+		public Float spinVelocity;
+		public Float originX, originY;
 
 		public RawBulletData() {
 

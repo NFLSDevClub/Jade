@@ -1,6 +1,6 @@
 package com.zzzyt.jade.game;
 
-import com.zzzyt.jade.util.Collision.CollisionMethod;
+import com.zzzyt.jade.util.Collision.CollisionData;
 
 public abstract class Entity implements Drawable {
 
@@ -16,6 +16,6 @@ public abstract class Entity implements Drawable {
 
 	public abstract Entity setXY(float x, float y);
 
-	public abstract CollisionMethod getCollisionMethod(Entity other);
+	public abstract CollisionData getCollisionData(Entity other);
 
 }

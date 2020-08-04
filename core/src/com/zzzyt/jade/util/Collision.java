@@ -4,13 +4,13 @@ import com.zzzyt.jade.game.Entity;
 
 public class Collision {
 
-	public static abstract class CollisionMethod {
-		public abstract float getHalfHeight();
+	public static abstract class CollisionData {
+		public abstract float getBoundingHeight();
 
-		public abstract float getHalfWidth();
+		public abstract float getBoundingWidth();
 	}
 
-	public static class Circle extends CollisionMethod {
+	public static class Circle extends CollisionData {
 		public float offsetX, offsetY;
 		public float radius;
 
@@ -25,17 +25,17 @@ public class Collision {
 		}
 
 		@Override
-		public float getHalfWidth() {
-			return radius;
+		public float getBoundingWidth() {
+			return radius*2;
 		}
 
 		@Override
-		public float getHalfHeight() {
-			return radius;
+		public float getBoundingHeight() {
+			return radius*2;
 		}
 	}
 
-	public static class Rectangle extends CollisionMethod {
+	public static class Rectangle extends CollisionData {
 		public float offsetX, offsetY;
 		public float width, height;
 
@@ -51,17 +51,17 @@ public class Collision {
 		}
 
 		@Override
-		public float getHalfWidth() {
-			return width / 2;
+		public float getBoundingWidth() {
+			return width;
 		}
 
 		@Override
-		public float getHalfHeight() {
-			return height / 2;
+		public float getBoundingHeight() {
+			return height;
 		}
 	}
 
-	public static boolean collide(float x1, float y1, CollisionMethod m1, float x2, float y2, CollisionMethod m2) {
+	public static boolean collide(float x1, float y1, CollisionData m1, float x2, float y2, CollisionData m2) {
 		if (m1 instanceof Circle) {
 			Circle tmp1 = (Circle) m1;
 			if (m2 instanceof Circle) {
@@ -93,8 +93,8 @@ public class Collision {
 	}
 
 	public static boolean collide(Entity e1, Entity e2) {
-		return collide(e1.getX(), e1.getY(), e1.getCollisionMethod(e2), e2.getX(), e2.getY(),
-				e2.getCollisionMethod(e1));
+		return collide(e1.getX(), e1.getY(), e1.getCollisionData(e2), e2.getX(), e2.getY(),
+				e2.getCollisionData(e1));
 	}
 
 	public static boolean circleCircle(float x1, float y1, float r1, float x2, float y2, float r2) {

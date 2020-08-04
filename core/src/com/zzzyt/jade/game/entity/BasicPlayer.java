@@ -7,7 +7,7 @@ import com.zzzyt.jade.util.M;
 import com.zzzyt.jade.util.SE;
 import com.zzzyt.jade.util.U;
 import com.zzzyt.jade.util.Collision;
-import com.zzzyt.jade.util.Collision.CollisionMethod;
+import com.zzzyt.jade.util.Collision.CollisionData;
 import com.zzzyt.jade.util.FlyingAnimation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -21,7 +21,7 @@ public class BasicPlayer extends Player {
 	public transient FlyingAnimation was;
 	public transient Sprite hitbox;
 	public float speedHigh, speedLow;
-	public CollisionMethod collision, collisionItem,collisionGraze;
+	public CollisionData collision, collisionItem, collisionGraze;
 	public float x, y;
 
 	private int dx, dy;
@@ -31,7 +31,7 @@ public class BasicPlayer extends Player {
 	 * In frames
 	 */
 	public int deathbombWindow;
-	
+
 	/**
 	 * The number of frames from death to reborn <br/>
 	 */
@@ -42,16 +42,15 @@ public class BasicPlayer extends Player {
 	 */
 	public int invFrame;
 
-
 	private static Logger logger = new Logger("BasicPlayer", U.config().logLevel);
 
 	public BasicPlayer() {
 
 	}
 
-	public static final int ITEM_MUL=15;
-	public static final int GRAZE_MUL=10;
-	
+	public static final int ITEM_MUL = 15;
+	public static final int GRAZE_MUL = 10;
+
 	public BasicPlayer(Array<? extends TextureRegion> left, Array<? extends TextureRegion> center,
 			Array<? extends TextureRegion> right, Array<? extends TextureRegion> toLeft,
 			Array<? extends TextureRegion> toRight, Sprite hitbox, int frameLength, int transitionFrameLength,
@@ -61,8 +60,8 @@ public class BasicPlayer extends Player {
 		this.hitbox = hitbox;
 		this.collision = new Collision.Circle(0, 0, radius);
 		this.collisionItem = new Collision.Circle(0, 0, radius * ITEM_MUL);
-		this.collisionGraze= new Collision.Circle(0, 0, radius * GRAZE_MUL);
-		
+		this.collisionGraze = new Collision.Circle(0, 0, radius * GRAZE_MUL);
+
 		this.speedHigh = speedHigh;
 		this.speedLow = speedLow;
 		this.x = U.screenToWorldX(U.config().w / 2);
@@ -83,7 +82,7 @@ public class BasicPlayer extends Player {
 		hitbox.setAlpha(0);
 		this.collision = new Collision.Circle(0, 0, radius);
 		this.collisionItem = new Collision.Circle(0, 0, radius * ITEM_MUL);
-		this.collisionGraze= new Collision.Circle(0, 0, radius * GRAZE_MUL);
+		this.collisionGraze = new Collision.Circle(0, 0, radius * GRAZE_MUL);
 		this.speedHigh = speedHigh;
 		this.speedLow = speedLow;
 		this.x = U.screenToWorldX(U.config().w / 2);
@@ -102,7 +101,7 @@ public class BasicPlayer extends Player {
 		was = new FlyingAnimation(tmp, tmp, tmp, tmp, tmp, 1, 1);
 		this.collision = new Collision.Circle(0, 0, radius);
 		this.collisionItem = new Collision.Circle(0, 0, radius * ITEM_MUL);
-		this.collisionGraze= new Collision.Circle(0, 0, radius * GRAZE_MUL);
+		this.collisionGraze = new Collision.Circle(0, 0, radius * GRAZE_MUL);
 		this.speedHigh = speedHigh;
 		this.speedLow = speedLow;
 		this.x = U.screenToWorldX(U.config().w / 2);
@@ -167,10 +166,10 @@ public class BasicPlayer extends Player {
 
 	@Override
 	public void onGraze(EnemyBullet eb) {
-		J.getSession().event.onGraze(this,eb);
+		J.getSession().event.onGraze(this, eb);
 		SE.play("graze");
 	}
-	
+
 	@Override
 	public void onRebirthStart() {
 		J.getSession().event.onRebirthStart(this);
@@ -183,12 +182,11 @@ public class BasicPlayer extends Player {
 		J.getSession().event.onRebirthEnd(this);
 	}
 
-
 	/**
 	 * Frame counter for reborn and deathbombing
 	 */
 	private int internalFrameCounter;
-	
+
 	@Override
 	public void onHit() {
 		if (state == PLOK && invFrame == 0) {
@@ -288,10 +286,10 @@ public class BasicPlayer extends Player {
 			x += speed * dx / M.SQRT2;
 			y += speed * dy / M.SQRT2;
 		}
-		x = M.clamp(x, collision.getHalfWidth() - U.config().originX,
-				U.config().w - collision.getHalfWidth() - U.config().originX);
-		y = M.clamp(y, collision.getHalfHeight() - U.config().originY,
-				U.config().h - collision.getHalfHeight() - U.config().originY);
+		x = M.clamp(x, collision.getBoundingWidth() / 2 - U.config().originX,
+				U.config().w - collision.getBoundingWidth() / 2 - U.config().originX);
+		y = M.clamp(y, collision.getBoundingHeight() / 2 - U.config().originY,
+				U.config().h - collision.getBoundingHeight() / 2 - U.config().originY);
 
 		hitbox.setPosition(x - hitbox.getWidth() / 2, y - hitbox.getHeight() / 2);
 		hitbox.setRotation(M.normalizeAngle(hitbox.getRotation() + 4f));
@@ -314,15 +312,15 @@ public class BasicPlayer extends Player {
 	}
 
 	@Override
-	public CollisionMethod getCollisionMethod(Entity other) {
+	public CollisionData getCollisionData(Entity other) {
 		if (other instanceof Item) {
 			return collisionItem;
 		}
 		return collision;
 	}
-	
+
 	@Override
-	public CollisionMethod getGrazeCollisionMethod() {
+	public CollisionData getGrazeCollisionData() {
 		return collisionGraze;
 	}
 }

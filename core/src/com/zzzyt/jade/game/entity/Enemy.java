@@ -4,7 +4,7 @@ import com.zzzyt.jade.game.BossScene;
 import com.zzzyt.jade.game.Entity;
 import com.zzzyt.jade.game.Player;
 import com.zzzyt.jade.util.Collision;
-import com.zzzyt.jade.util.Collision.CollisionMethod;
+import com.zzzyt.jade.util.Collision.CollisionData;
 import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.util.U;
 import com.zzzyt.jade.util.FlyingAnimation;
@@ -29,11 +29,11 @@ public class Enemy extends Entity {
 	/**
 	 * Hitbox radius for shot
 	 */
-	public CollisionMethod collisionS;
+	public CollisionData collisionS;
 	/**
 	 * Hitbox radius for players
 	 */
-	public CollisionMethod collisionP;
+	public CollisionData collisionP;
 
 	private float lastx;
 	public boolean isBoss;
@@ -144,7 +144,7 @@ public class Enemy extends Entity {
 	}
 
 	@Override
-	public CollisionMethod getCollisionMethod(Entity other) {
+	public CollisionData getCollisionData(Entity other) {
 		if (other instanceof Player) {
 			return collisionP;
 		}

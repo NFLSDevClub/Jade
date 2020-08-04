@@ -1,8 +1,7 @@
 package com.zzzyt.jade.game;
 
-import com.zzzyt.jade.util.Collision.CollisionMethod;
+import com.zzzyt.jade.util.Collision.CollisionData;
 import com.zzzyt.jade.game.entity.EnemyBullet;
-import com.zzzyt.jade.util.SE;
 
 public abstract class Player extends Entity {
 	
@@ -28,8 +27,6 @@ public abstract class Player extends Entity {
 	 * Waiting for respawn state
 	 */
 	public static final int PLRB = 2;
-	
-
 	
 	/**
 	 * Event shot
@@ -69,6 +66,6 @@ public abstract class Player extends Entity {
 
 	public abstract void onGraze(EnemyBullet eb);
 
-	public abstract CollisionMethod getGrazeCollisionMethod();
+	public abstract CollisionData getGrazeCollisionData();
 
 }

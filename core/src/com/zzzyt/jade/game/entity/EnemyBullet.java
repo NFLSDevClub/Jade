@@ -38,7 +38,7 @@ public class EnemyBullet extends Bullet {
 	}
 
 	public boolean closeTo(Player player) {
-		return Collision.collide(player.getX(), player.getY(), player.getGrazeCollisionMethod(), x, y, data.collision);
+		return Collision.collide(player.getX(), player.getY(), player.getGrazeCollisionData(), x, y, data.collision);
 	}
 	
 	public boolean collide(Player player) {

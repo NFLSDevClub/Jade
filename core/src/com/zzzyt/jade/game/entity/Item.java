@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.zzzyt.jade.game.Entity;
 import com.zzzyt.jade.game.Player;
 import com.zzzyt.jade.util.Collision;
-import com.zzzyt.jade.util.Collision.CollisionMethod;
+import com.zzzyt.jade.util.Collision.CollisionData;
 import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.util.M;
 import com.zzzyt.jade.util.SE;
@@ -25,7 +25,7 @@ public class Item extends Entity {
 	public float x, y;
 	public Sprite sprite;
 	public float boundingWidth, boundingHeight;
-	public CollisionMethod collision;
+	public CollisionData collision;
 
 	public Texture texture;
 
@@ -132,11 +132,11 @@ public class Item extends Entity {
 	}
 
 	public boolean collide(Player player) {
-		return Collision.collide(player.getX(), player.getY(), player.getCollisionMethod(null), x, y, collision);
+		return Collision.collide(player.getX(), player.getY(), player.getCollisionData(null), x, y, collision);
 	}
 
 	public boolean closeTo(Player player) {
-		return Collision.collide(player.getX(), player.getY(), player.getCollisionMethod(this), x, y, collision);
+		return Collision.collide(player.getX(), player.getY(), player.getCollisionData(this), x, y, collision);
 	}
 
 	public void update(int frame) {
@@ -185,7 +185,7 @@ public class Item extends Entity {
 	}
 
 	@Override
-	public CollisionMethod getCollisionMethod(Entity other) {
+	public CollisionData getCollisionData(Entity other) {
 		return collision;
 	}
 
