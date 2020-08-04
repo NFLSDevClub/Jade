@@ -21,38 +21,17 @@ public class BasicPlayer extends Player {
 	public transient FlyingAnimation was;
 	public transient Sprite hitbox;
 	public float speedHigh, speedLow;
-	public CollisionMethod collision, collisionItem;
+	public CollisionMethod collision, collisionItem,collisionGraze;
 	public float x, y;
 
 	private int dx, dy;
-
-	/**
-	 * allow to trigger {@link #onShot()} {@link #onBomb()}?
-	 */
-	public boolean canBomb, canShot;
-
-	/**
-	 * Normal player state
-	 */
-	public static final int PLOK = 0;
-	/**
-	 * Waiting for deadbombing state
-	 */
-	public static final int PLDB = 1;
-	/**
-	 * Waiting for respawn state
-	 */
-	public static final int PLRB = 2;
 
 	/**
 	 * The duration of death-bombing <br/>
 	 * In frames
 	 */
 	public int deathbombWindow;
-	/**
-	 * Player state: PLOK, PLDB, PLRB <br/>
-	 */
-	public int state;
+	
 	/**
 	 * The number of frames from death to reborn <br/>
 	 */
@@ -63,10 +42,6 @@ public class BasicPlayer extends Player {
 	 */
 	public int invFrame;
 
-	/**
-	 * Frame counter for reborn and deathbombing
-	 */
-	private int internalFrameCounter;
 
 	private static Logger logger = new Logger("BasicPlayer", U.config().logLevel);
 
@@ -74,6 +49,9 @@ public class BasicPlayer extends Player {
 
 	}
 
+	public static final int ITEM_MUL=15;
+	public static final int GRAZE_MUL=10;
+	
 	public BasicPlayer(Array<? extends TextureRegion> left, Array<? extends TextureRegion> center,
 			Array<? extends TextureRegion> right, Array<? extends TextureRegion> toLeft,
 			Array<? extends TextureRegion> toRight, Sprite hitbox, int frameLength, int transitionFrameLength,
@@ -82,7 +60,9 @@ public class BasicPlayer extends Player {
 		was = new FlyingAnimation(left, center, right, toLeft, toRight, frameLength, transitionFrameLength);
 		this.hitbox = hitbox;
 		this.collision = new Collision.Circle(0, 0, radius);
-		this.collisionItem = new Collision.Circle(0, 0, radius * 10);
+		this.collisionItem = new Collision.Circle(0, 0, radius * ITEM_MUL);
+		this.collisionGraze= new Collision.Circle(0, 0, radius * GRAZE_MUL);
+		
 		this.speedHigh = speedHigh;
 		this.speedLow = speedLow;
 		this.x = U.screenToWorldX(U.config().w / 2);
@@ -102,7 +82,8 @@ public class BasicPlayer extends Player {
 		this.hitbox = new Sprite(atlas.findRegion(regionName + "_hitbox"));
 		hitbox.setAlpha(0);
 		this.collision = new Collision.Circle(0, 0, radius);
-		this.collisionItem = new Collision.Circle(0, 0, radius * 10);
+		this.collisionItem = new Collision.Circle(0, 0, radius * ITEM_MUL);
+		this.collisionGraze= new Collision.Circle(0, 0, radius * GRAZE_MUL);
 		this.speedHigh = speedHigh;
 		this.speedLow = speedLow;
 		this.x = U.screenToWorldX(U.config().w / 2);
@@ -120,7 +101,8 @@ public class BasicPlayer extends Player {
 
 		was = new FlyingAnimation(tmp, tmp, tmp, tmp, tmp, 1, 1);
 		this.collision = new Collision.Circle(0, 0, radius);
-		this.collisionItem = new Collision.Circle(0, 0, radius * 10);
+		this.collisionItem = new Collision.Circle(0, 0, radius * ITEM_MUL);
+		this.collisionGraze= new Collision.Circle(0, 0, radius * GRAZE_MUL);
 		this.speedHigh = speedHigh;
 		this.speedLow = speedLow;
 		this.x = U.screenToWorldX(U.config().w / 2);
@@ -175,6 +157,7 @@ public class BasicPlayer extends Player {
 	@Override
 	public void onShot() {
 		J.getSession().event.onPlayerShoot(this);
+		SE.play("shoot");
 	}
 
 	@Override
@@ -182,6 +165,12 @@ public class BasicPlayer extends Player {
 		J.getSession().event.onBomb(this);
 	}
 
+	@Override
+	public void onGraze(EnemyBullet eb) {
+		J.getSession().event.onGraze(this,eb);
+		SE.play("graze");
+	}
+	
 	@Override
 	public void onRebirthStart() {
 		J.getSession().event.onRebirthStart(this);
@@ -194,6 +183,12 @@ public class BasicPlayer extends Player {
 		J.getSession().event.onRebirthEnd(this);
 	}
 
+
+	/**
+	 * Frame counter for reborn and deathbombing
+	 */
+	private int internalFrameCounter;
+	
 	@Override
 	public void onHit() {
 		if (state == PLOK && invFrame == 0) {
@@ -324,5 +319,10 @@ public class BasicPlayer extends Player {
 			return collisionItem;
 		}
 		return collision;
+	}
+	
+	@Override
+	public CollisionMethod getGrazeCollisionMethod() {
+		return collisionGraze;
 	}
 }

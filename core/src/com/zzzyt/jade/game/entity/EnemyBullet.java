@@ -13,6 +13,8 @@ import com.zzzyt.jade.util.J;
  */
 public class EnemyBullet extends Bullet {
 
+	public int grazeCount=1;
+	
 	public EnemyBullet() {
 		super();
 	}
@@ -27,10 +29,18 @@ public class EnemyBullet extends Bullet {
 			J.onHit();
 			return true;
 		}
-
+		
+		if(closeTo(J.getPlayer()) && grazeCount!=0 && J.getPlayer().state==Player.PLOK) {
+			J.getPlayer().onGraze(this);
+			grazeCount--;
+		}
 		return false;
 	}
 
+	public boolean closeTo(Player player) {
+		return Collision.collide(player.getX(), player.getY(), player.getGrazeCollisionMethod(), x, y, data.collision);
+	}
+	
 	public boolean collide(Player player) {
 		return Collision.collide(this, player);
 	}

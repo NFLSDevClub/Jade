@@ -1,6 +1,35 @@
 package com.zzzyt.jade.game;
 
+import com.zzzyt.jade.util.Collision.CollisionMethod;
+import com.zzzyt.jade.game.entity.EnemyBullet;
+import com.zzzyt.jade.util.SE;
+
 public abstract class Player extends Entity {
+	
+	/**
+	 * Player state: PLOK, PLDB, PLRB <br/>
+	 */
+	public int state;
+	
+	/**
+	 * allow to trigger {@link #onShot()} {@link #onBomb()}?
+	 */
+	public boolean canBomb, canShot;
+
+	/**
+	 * Normal player state
+	 */
+	public static final int PLOK = 0;
+	/**
+	 * Waiting for deadbombing state
+	 */
+	public static final int PLDB = 1;
+	/**
+	 * Waiting for respawn state
+	 */
+	public static final int PLRB = 2;
+	
+
 	
 	/**
 	 * Event shot
@@ -37,5 +66,9 @@ public abstract class Player extends Entity {
 	public float getItemCollectionLineHeight() {
 		return 0;
 	}
+
+	public abstract void onGraze(EnemyBullet eb);
+
+	public abstract CollisionMethod getGrazeCollisionMethod();
 
 }

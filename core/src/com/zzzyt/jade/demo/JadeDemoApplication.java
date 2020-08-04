@@ -31,6 +31,8 @@ public class JadeDemoApplication extends JadeApplication {
 		SE.register("select", "snd/se_select00.wav");
 		SE.register("die", "snd/die16.wav");
 		SE.register("item","snd/se_item00.wav");
+		SE.register("graze", "snd/se_graze.wav");
+		SE.register("shoot", "snd/shoot16.wav");
 		
 		A.load(U.config().UIFont);
 		A.load("font/LBRITE.ttf");

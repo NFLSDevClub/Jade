@@ -1,6 +1,7 @@
 package com.zzzyt.jade.game;
 
 import com.zzzyt.jade.game.entity.BasicPlayer;
+import com.zzzyt.jade.game.entity.EnemyBullet;
 import com.zzzyt.jade.game.entity.Item;
 
 /**
@@ -56,6 +57,11 @@ public class EventManager {
 	}
 
 	public void onItem(Item item, Player player) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void onGraze(BasicPlayer basicPlayer, EnemyBullet eb) {
 		// TODO Auto-generated method stub
 		
 	}
