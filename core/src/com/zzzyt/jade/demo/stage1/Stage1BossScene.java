@@ -15,13 +15,13 @@ public class Stage1BossScene extends BossScene {
 
 		Array<Spellcard> phase1 = new Array<>();
 
-		phase1.add(new Spellcard(1000, 15 * 60, false, 1000, new Stage1Mid1()));
-		phase1.add(new Spellcard(1000, 60 * 60, false, 1000, new Stage1Mid2()));
+		phase1.add(new Spellcard(1000, 15 * 60, false, 1000000000, new Stage1Mid1()));
+		phase1.add(new Spellcard(1000, 60 * 60, false, 1000000000, new Stage1Mid2()));
 
 		Array<Spellcard> phase2 = new Array<>();
 
 		phase2.add(new Spellcard(1000, 60 * 60, false, 1000000000, new Stage1Mid1()));
-		phase2.add(new Spellcard(1000, 60 * 60, true, 1000, new Stage1Mid2()));
+		phase2.add(new Spellcard(1000, 60 * 60, true, 1000000000, new Stage1Mid2()));
 
 		phases = Array.with(phase1, phase2);
 	}

@@ -30,6 +30,10 @@ public class BossScene {
 	public final static double MAXHP=1e9;
 	
 	public Group st;
+	/**
+	 * Player have died/bombed in the current spellcard if this is true.
+	 */
+	public boolean failBonus;
 	
 	public BossScene(Array<Array<Spellcard>> phases) {
 		this();
@@ -65,6 +69,8 @@ public class BossScene {
 		// TODO effects
 		
 		J.getEM().onSpellcardFinish(getCurrentSpellcard(),this);
+		
+		failBonus=false;
 		
 		//remove old actors
 		for(Actor a:st.getChildren()) {

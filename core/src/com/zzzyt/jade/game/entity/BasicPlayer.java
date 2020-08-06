@@ -161,6 +161,10 @@ public class BasicPlayer extends Player {
 	@Override
 	public void onBomb() {
 		J.getSession().event.onBomb(this);
+		
+		if(J.getSession().bossScene!=null) {
+			J.getSession().bossScene.failBonus=true;
+		}
 	}
 
 	@Override
@@ -172,6 +176,7 @@ public class BasicPlayer extends Player {
 	@Override
 	public void onRebirthStart() {
 		J.getSession().event.onRebirthStart(this);
+		J.getSession().bossScene.failBonus=true;
 	}
 
 	@Override

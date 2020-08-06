@@ -25,8 +25,8 @@ public class PlayerMarisa extends BasicPlayer {
 			SE.play("shoot");
 			shotTimer = 0;
 
-			B.setAngleSpeed(new PlayerBullet(B.get(153), 1024, 1, 3), x - 10, y, 90, 25);
-			B.setAngleSpeed(new PlayerBullet(B.get(156), 1024, 1, 3), x + 10, y, 90, 25);
+			B.setAngleSpeed(new PlayerBullet(B.get(153), 1024, 1000, 3), x - 10, y, 90, 25);
+			B.setAngleSpeed(new PlayerBullet(B.get(156), 1024, 1000, 3), x + 10, y, 90, 25);
 		}
 	}
 	
