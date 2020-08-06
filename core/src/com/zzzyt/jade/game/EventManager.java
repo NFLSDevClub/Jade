@@ -1,8 +1,11 @@
 package com.zzzyt.jade.game;
 
 import com.zzzyt.jade.game.entity.BasicPlayer;
+import com.zzzyt.jade.game.entity.Enemy;
 import com.zzzyt.jade.game.entity.EnemyBullet;
 import com.zzzyt.jade.game.entity.Item;
+import com.zzzyt.jade.game.entity.PlayerBullet;
+import com.zzzyt.jade.game.task.Spellcard;
 
 /**
  * An event manager receives event and you can do custom things! Hooray <br/>
@@ -62,6 +65,21 @@ public class EventManager {
 	}
 
 	public void onGraze(BasicPlayer basicPlayer, EnemyBullet eb) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void onEnemyDamage(PlayerBullet playerBullet, Enemy e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void onPhaseFinish(BossScene bossScene) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void onSpellcardFinish(Spellcard currentSpellcard, BossScene bossScene) {
 		// TODO Auto-generated method stub
 		
 	}

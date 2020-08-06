@@ -51,6 +51,7 @@ public class PlayerBullet extends Bullet {
 				hit = true;
 				e.onHit(damage);
 				penetration--;
+				J.getEM().onEnemyDamage(this,e);
 			}
 		}
 

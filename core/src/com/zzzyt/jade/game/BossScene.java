@@ -64,6 +64,8 @@ public class BossScene {
 	public void onSpellcardFinish() {
 		// TODO effects
 		
+		J.getEM().onSpellcardFinish(getCurrentSpellcard(),this);
+		
 		//remove old actors
 		for(Actor a:st.getChildren()) {
 			if(a instanceof TimerActor) {
@@ -94,7 +96,9 @@ public class BossScene {
 	
 	public void onPhaseFinish() {
 		// TODO effects
-
+		
+		J.getEM().onPhaseFinish(this);
+		
 		spellIndex=0;
 		currentPhase++;
 		

@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
 import com.zzzyt.jade.game.Drawable;
 import com.zzzyt.jade.game.EntityArray;
+import com.zzzyt.jade.game.EventManager;
 import com.zzzyt.jade.game.Jade;
 import com.zzzyt.jade.game.Operator;
 import com.zzzyt.jade.game.Player;
@@ -293,7 +294,8 @@ public class J {
 		}
 	}
 
-	
-
+	public static EventManager getEM() {
+		return getSession().event;
+	}
 
 }
