@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.zzzyt.jade.demo.difficulty.DifficultyRegular;
+import com.zzzyt.jade.demo.DemoEventManager;
 import com.zzzyt.jade.demo.difficulty.DifficultyExtra;
 import com.zzzyt.jade.demo.player.PlayerMarisa;
 import com.zzzyt.jade.demo.player.PlayerReimu;
@@ -213,6 +214,9 @@ public class GameScreen extends BasicScreen {
 		}
 
 		BGM.play(null);
+		
+		jade.event=new DemoEventManager();
+		
 		frame.setJade(jade);
 	}
 

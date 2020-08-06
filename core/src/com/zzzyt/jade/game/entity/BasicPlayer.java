@@ -211,7 +211,7 @@ public class BasicPlayer extends Player {
 			was.update(t, dx);
 		} else if (state == PLDB) {
 			// deathbombing
-			if (J.isKeyPressed(U.config().keyBomb)) {
+			if (J.isKeyJustPressed(U.config().keyBomb) && canBomb) {
 				logger.debug("Deathbomb Succeed");
 				onBomb();
 				state = PLOK;
@@ -273,7 +273,7 @@ public class BasicPlayer extends Player {
 		if (canShot && J.isKeyPressed(U.config().keyShot)) {
 			onShot();
 		}
-		if (canBomb && J.isKeyPressed(U.config().keyBomb)) {
+		if (canBomb && J.isKeyJustPressed(U.config().keyBomb)) {
 			onBomb();
 		}
 

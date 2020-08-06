@@ -57,6 +57,16 @@ public class U {
 		}
 		return false;
 	}
+	
+	public static boolean checkKey2(int[] key) {
+		if (U.game.blocker.isBlocking())
+			return false;
+		for (int i = 0; i < key.length; i++) {
+			if (Gdx.input.isKeyJustPressed(key[i]))
+				return true;
+		}
+		return false;
+	}
 
 	public static float getAlpha(Sprite sprite) {
 		return sprite.getColor().a;

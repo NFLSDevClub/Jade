@@ -165,6 +165,10 @@ public class J {
 		return U.checkKey(keycode);
 	}
 
+	public static boolean isKeyJustPressed(int[] keycode) {
+		return U.checkKey2(keycode);
+	}
+	
 	public static String gameMode() {
 		return (String) Global.get("_gameMode");
 	}
@@ -288,6 +292,8 @@ public class J {
 			return null;
 		}
 	}
+
+	
 
 
 }
