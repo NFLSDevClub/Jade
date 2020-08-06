@@ -16,7 +16,7 @@ public class SE {
 	private static Logger logger = new Logger("SE", U.config().logLevel);
 
 	public static void play(String name) {
-		logger.debug("Playing \"" + name + "\".");
+//		logger.debug("Playing \"" + name + "\".");
 		Sound se = SEs.get(name);
 		if (se == null) {
 			logger.error("SE with this name doesn't exist!");

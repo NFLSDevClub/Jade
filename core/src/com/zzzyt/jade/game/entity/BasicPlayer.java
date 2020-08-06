@@ -156,7 +156,6 @@ public class BasicPlayer extends Player {
 	@Override
 	public void onShot() {
 		J.getSession().event.onPlayerShoot(this);
-		SE.play("shoot");
 	}
 
 	@Override

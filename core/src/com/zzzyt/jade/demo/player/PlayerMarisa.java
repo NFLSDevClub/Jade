@@ -5,6 +5,7 @@ import com.zzzyt.jade.game.entity.PlayerBullet;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.B;
 import com.zzzyt.jade.util.J;
+import com.zzzyt.jade.util.SE;
 
 public class PlayerMarisa extends BasicPlayer {
 	
@@ -20,6 +21,8 @@ public class PlayerMarisa extends BasicPlayer {
 		
 		shotTimer++;
 		if (shotTimer >= 2) {
+
+			SE.play("shoot");
 			shotTimer = 0;
 
 			B.setAngleSpeed(new PlayerBullet(B.get(153), 1024, 1, 3), x - 10, y, 90, 25);
