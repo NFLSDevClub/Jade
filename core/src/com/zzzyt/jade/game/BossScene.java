@@ -75,7 +75,6 @@ public class BossScene {
 		//remove old actors
 		for(Actor a:st.getChildren()) {
 			if(a instanceof TimerActor) {
-				System.out.println("fuck");
 				a.addAction(Actions.sequence(Actions.moveBy(0, 200,1f,Interpolation.sineIn),
 							Actions.removeActor()));
 			}

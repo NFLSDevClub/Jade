@@ -1,5 +1,6 @@
 package com.zzzyt.jade.demo;
 
+import com.badlogic.gdx.utils.Logger;
 import com.zzzyt.jade.game.BossScene;
 import com.zzzyt.jade.game.EventManager;
 import com.zzzyt.jade.game.Player;
@@ -10,13 +11,15 @@ import com.zzzyt.jade.game.entity.Item;
 import com.zzzyt.jade.game.entity.PlayerBullet;
 import com.zzzyt.jade.game.task.Spellcard;
 import com.zzzyt.jade.util.J;
+import com.zzzyt.jade.util.U;
 
 public class DemoEventManager extends EventManager {
 	public int playerLife=3;
-	public int playerBomb=2;
+	public int playerBomb=3;
 	public long score=0;
 	public long maxPoint=100000;
 	
+	public Logger logger=new Logger("DemoEventManager", U.config().logLevel);
 	
 	@Override
 	public void onUpdate(int frame) {
@@ -31,6 +34,7 @@ public class DemoEventManager extends EventManager {
 	@Override
 	public void onRebirthStart(BasicPlayer basicPlayer) {
 		playerLife--;
+		playerBomb=3;
 	}
 	
 	@Override
@@ -53,7 +57,7 @@ public class DemoEventManager extends EventManager {
 	public void onSpellcardFinish(Spellcard currentSpellcard, BossScene bossScene) {
 		if(!bossScene.failBonus) {
 			score+=currentSpellcard.getBonus();
-			System.out.println("Bonus!!!");
+			logger.info("Get Spellcard Bonus");
 		}
 	}
 }
