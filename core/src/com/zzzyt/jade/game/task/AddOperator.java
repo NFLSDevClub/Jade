@@ -6,9 +6,11 @@ import com.zzzyt.jade.util.J;
 
 public class AddOperator implements Task {
 
+	public int tag;
 	public Operator operator;
 
-	public AddOperator(Operator operator) {
+	public AddOperator(int tag, Operator operator) {
+		this.tag = tag;
 		this.operator = operator;
 	}
 
@@ -19,12 +21,12 @@ public class AddOperator implements Task {
 
 	@Override
 	public void update(int t) {
-		J.addOperator(operator);
+		J.addOperator(tag, operator);
 	}
 
 	@Override
 	public void init() {
-		
+
 	}
 
 }

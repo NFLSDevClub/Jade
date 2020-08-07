@@ -50,14 +50,14 @@ public class J {
 	public static EntityArray<Enemy> getEnemies() {
 		return Jade.session.getEnemies();
 	}
-	
-	public static Operator addOperator(Operator operator) {
-		Jade.session.addOperator(operator);
+
+	public static Operator addOperator(int tag, Operator operator) {
+		Jade.session.addOperator(tag, operator);
 		return operator;
 	}
 
-	public static void removeOperator(Operator operator) {
-		Jade.session.removeOperator(operator);
+	public static void removeOperator(int tag, Operator operator) {
+		Jade.session.removeOperator(tag, operator);
 	}
 
 	public static Array<Operator> getOperators(int tag) {
@@ -105,12 +105,12 @@ public class J {
 		Jade.session.add(e);
 		return e;
 	}
-	
+
 	public static Item add(Item e) {
 		Jade.session.add(e);
 		return e;
 	}
-	
+
 	public static void remove(Bullet bullet) {
 		Jade.session.remove(bullet);
 	}
@@ -118,21 +118,21 @@ public class J {
 	public static void remove(Enemy enemy) {
 		Jade.session.remove(enemy);
 	}
-	
+
 	public static void remove(Item enemy) {
 		Jade.session.remove(enemy);
 	}
-	
+
 	public static void clearBullets(boolean toItem) {
 		EntityArray<Bullet> tmp = J.getBullets();
 		for (int i = tmp.size() - 1; i >= 0; i--) {
 			if (tmp.get(i) != null && tmp.get(i) instanceof EnemyBullet) {
-				if(toItem) {
-					Item itm=new Item(A.getTexture("item/point.png"),1,10,tmp.get(i).x,tmp.get(i).y);
-					itm.follow=true;
+				if (toItem) {
+					Item itm = new Item(A.getTexture("item/point.png"), 1, 10, tmp.get(i).x, tmp.get(i).y);
+					itm.follow = true;
 					J.add(itm);
 				}
-				
+
 				J.remove(tmp.get(i));
 			}
 		}
@@ -142,14 +142,14 @@ public class J {
 		EntityArray<Enemy> tmp = J.getEnemies();
 		for (int i = tmp.size() - 1; i >= 0; i--) {
 			if (tmp.get(i) != null) {
-				if(!tmp.get(i).isBoss || clearBoss) {
+				if (!tmp.get(i).isBoss || clearBoss) {
 					J.remove(tmp.get(i));
 				}
 			}
-				
+
 		}
 	}
-	
+
 	public static void addDrawable(Drawable drawable) {
 		Jade.session.addDrawable(drawable);
 	}
@@ -169,7 +169,7 @@ public class J {
 	public static boolean isKeyJustPressed(int[] keycode) {
 		return U.checkKey2(keycode);
 	}
-	
+
 	public static String gameMode() {
 		return (String) Global.get("_gameMode");
 	}

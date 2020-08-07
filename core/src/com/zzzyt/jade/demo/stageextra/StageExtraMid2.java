@@ -13,8 +13,8 @@ public class StageExtraMid2 extends Single {
 	@Override
 	public void init() {
 		super.init();
-		J.addOperator(new AngularVelocity(0, 0.5f, 720));
-		Operator tmp = J.addOperator(new Acceleration(0, -0.03f, 0.3f));
+		J.addOperator(0, new AngularVelocity(0.5f, 720));
+		Operator tmp = J.addOperator(0, new Acceleration(-0.03f, 0.3f));
 		setUpdateFunc((frame) -> {
 			if (frame >= 15 * 60) {
 				terminate();
@@ -22,8 +22,8 @@ public class StageExtraMid2 extends Single {
 				return;
 			}
 			if (frame == 8 * 60) {
-				J.removeOperator(tmp);
-				J.addOperator(new Acceleration(0, 0.03f, 2f));
+				J.removeOperator(0, tmp);
+				J.addOperator(0, new Acceleration(0.03f, 2f));
 			}
 			if (frame == 12 * 60) {
 				J.clearOperators();

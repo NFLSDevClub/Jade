@@ -34,8 +34,8 @@ public class Jade implements Disposable {
 	public EntityArray<Bullet> bullets;
 	public Player player;
 	public BossScene bossScene;
-	public EventManager event=new EventManager();
-	
+	public EventManager event = new EventManager();
+
 	private boolean running;
 	private boolean paused;
 
@@ -76,9 +76,9 @@ public class Jade implements Disposable {
 
 	public void draw() {
 		if (running && !paused) {
-			
+
 			event.onDraw();
-			
+
 			fbo.begin();
 			U.glClear();
 			batch.begin();
@@ -87,22 +87,21 @@ public class Jade implements Disposable {
 					nDrawables.get(i).draw(batch);
 				}
 			}
-			
+
 			items.draw(batch);
 			enemies.draw(batch);
 			bullets.draw(batch);
-			
+
 			for (int i = 0; i < pDrawables.size; i++) {
 				if (pDrawables.get(i) != null) {
 					pDrawables.get(i).draw(batch);
 				}
 			}
-			
+
 			batch.end();
-			
+
 			fbo.end();
-			
-			
+
 		}
 	}
 
@@ -112,9 +111,9 @@ public class Jade implements Disposable {
 			return;
 		}
 		frame++;
-		
+
 		event.onUpdate(frame);
-		
+
 		for (int i = 0; i < tasks.size; i++) {
 			if (tasks.get(i) != null) {
 				tasks.get(i).update(frame);
@@ -130,11 +129,11 @@ public class Jade implements Disposable {
 				nDrawables.get(i).update(frame);
 			}
 		}
-		
+
 		items.update(frame);
 		enemies.update(frame);
 		bullets.update(frame);
-		
+
 		for (int i = 0; i < pDrawables.size; i++) {
 			if (pDrawables.get(i) != null) {
 				pDrawables.get(i).update(frame);
@@ -143,27 +142,29 @@ public class Jade implements Disposable {
 
 		if ((bullets.count <= U.config().cleanupBulletCount && bullets.blankCount >= U.config().cleanupBlankCount)
 				|| (bullets.size() >= 1048576)) {
-			logger.info("Cleaning up blanks in bullet array: bulletCount=" + bullets.count + " blankCount=" + bullets.blankCount);
+			logger.info("Cleaning up blanks in bullet array: bulletCount=" + bullets.count + " blankCount="
+					+ bullets.blankCount);
 			bullets.cleanUp();
 		}
-		
+
 		if ((enemies.count <= U.config().cleanupBulletCount && enemies.blankCount >= U.config().cleanupBlankCount)
 				|| (enemies.size() >= 1048576)) {
-			logger.info("Cleaning up blanks in enemy array: enemyCount=" + enemies.count + " blankCount=" + enemies.blankCount);
+			logger.info("Cleaning up blanks in enemy array: enemyCount=" + enemies.count + " blankCount="
+					+ enemies.blankCount);
 			enemies.cleanUp();
 		}
-		
+
 		if ((items.count <= U.config().cleanupBulletCount && items.blankCount >= U.config().cleanupBlankCount)
 				|| (items.size() >= 1048576)) {
 			logger.info("Cleaning up blanks in item array: count=" + items.count + " blankCount=" + items.blankCount);
 			items.cleanUp();
 		}
-		
-		//updating bossScene
-		if(bossScene!=null) {
+
+		// updating bossScene
+		if (bossScene != null) {
 			bossScene.update(frame);
-			if(bossScene.isFinished()) {
-				bossScene=null;
+			if (bossScene.isFinished()) {
+				bossScene = null;
 			}
 		}
 	}
@@ -185,29 +186,28 @@ public class Jade implements Disposable {
 		bullets.remove(bullet);
 		return this;
 	}
-	
+
 	public Jade add(Enemy enemy) {
 		enemies.add(enemy);
 		return this;
 	}
-	
+
 	public Jade remove(Enemy enemy) {
 		enemies.remove(enemy);
 		return this;
 	}
-	
+
 	public Jade add(Item item) {
 		items.add(item);
 		return this;
 	}
-	
+
 	public Jade remove(Item item) {
 		items.remove(item);
 		return this;
 	}
-	
-	public Jade addOperator(Operator operator) {
-		int tag = operator.getTag();
+
+	public Jade addOperator(int tag, Operator operator) {
 		Array<Operator> tmp = operators.get(tag);
 		if (tmp == null) {
 			tmp = new Array<Operator>(false, 8);
@@ -219,8 +219,8 @@ public class Jade implements Disposable {
 		return this;
 	}
 
-	public Jade removeOperator(Operator operator) {
-		Array<Operator> tmp = operators.get(operator.getTag());
+	public Jade removeOperator(int tag, Operator operator) {
+		Array<Operator> tmp = operators.get(tag);
 		if (tmp != null) {
 			tmp.removeValue(operator, true);
 		}
@@ -245,12 +245,12 @@ public class Jade implements Disposable {
 		logger.info("Resuming Jade seesion...");
 		paused = false;
 	}
-	
+
 	/**
 	 * When player is hit
 	 */
 	public void onHit() {
-		if(!U.config().invulnerable) {
+		if (!U.config().invulnerable) {
 			player.onHit();
 		}
 	}
@@ -303,7 +303,6 @@ public class Jade implements Disposable {
 		return enemies;
 	}
 
-	
 	public int getBulletCount() {
 		return bullets.count;
 	}
@@ -341,6 +340,5 @@ public class Jade implements Disposable {
 	public boolean isPaused() {
 		return paused;
 	}
-
 
 }

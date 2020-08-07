@@ -5,18 +5,11 @@ import com.zzzyt.jade.game.entity.Bullet;
 
 public class Acceleration implements Operator {
 
-	private int tag;
 	private float acceleration, target;
 
-	public Acceleration(int tag, float acceleration, float target) {
-		this.tag = tag;
+	public Acceleration(float acceleration, float target) {
 		this.acceleration = acceleration;
 		this.target = target;
-	}
-
-	@Override
-	public int getTag() {
-		return tag;
 	}
 
 	@Override

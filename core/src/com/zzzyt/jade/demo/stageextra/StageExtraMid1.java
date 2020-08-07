@@ -20,7 +20,7 @@ public class StageExtraMid1 extends Single {
 				return;
 			}
 			if (frame == 8 * 60) {
-				J.addOperator(new AngularVelocity(0, 0.5f, 180));
+				J.addOperator(0, new AngularVelocity(0.5f, 180));
 			}
 			if (frame % 3 == 0) {
 				for (int i = 0; i < 7; i++) {

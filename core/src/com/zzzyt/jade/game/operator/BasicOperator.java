@@ -5,17 +5,10 @@ import com.zzzyt.jade.game.entity.Bullet;
 
 public class BasicOperator implements Operator {
 
-	private int tag;
 	private Appliable appliable;
 
-	public BasicOperator(int tag, Appliable appliable) {
-		this.tag = tag;
+	public BasicOperator(Appliable appliable) {
 		this.appliable = appliable;
-	}
-
-	@Override
-	public int getTag() {
-		return tag;
 	}
 
 	@Override
