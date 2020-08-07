@@ -37,6 +37,7 @@ public class Bullet extends Entity {
 		this.boundingWidth = data.texture.getMaxWidth();
 		this.boundingHeight = data.texture.getMaxHeight();
 		this.sprite = new Sprite(data.texture.getFrame(0));
+		sprite.setOrigin(data.originX, data.originY);
 	}
 
 	public BulletData getData() {

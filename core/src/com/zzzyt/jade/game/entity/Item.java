@@ -44,7 +44,7 @@ public class Item extends Entity {
 		this.boundingHeight = t.getHeight();
 		this.sprite = new Sprite(t);
 		this.texture = t;
-		this.collision = new Collision.Circle(0, 0, radius);
+		this.collision = new Collision.Circle(radius);
 
 		this.x = x;
 		this.y = y;

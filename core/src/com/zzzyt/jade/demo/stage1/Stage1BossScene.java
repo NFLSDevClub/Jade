@@ -28,7 +28,7 @@ public class Stage1BossScene extends BossScene {
 
 	@Override
 	public void init() {
-		Enemy e = new Enemy(A.get("th10_player.atlas"), "th10_marisa", 5, 2, 0, -100, 1000, 100, 10, true);
+		Enemy e = new Enemy(A.get("th10_player.atlas"), "th10_marisa", 5, 2, 0, -100, 1000, 32, 16, true);
 		J.add(e);
 
 		super.init();

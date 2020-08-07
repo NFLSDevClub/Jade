@@ -52,8 +52,8 @@ public class Enemy extends Entity {
 		this.x = x;
 		this.y = y;
 		this.hp = hp;
-		this.collisionS = new Collision.Circle(0, 0, radiusS);
-		this.collisionP = new Collision.Circle(0, 0, radiusP);
+		this.collisionS = new Collision.Circle(radiusS);
+		this.collisionP = new Collision.Circle(radiusP);
 		if (isBoss) {
 			this.hp = BossScene.MAXHP;
 		}

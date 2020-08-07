@@ -48,23 +48,21 @@ public class BulletData {
 		}
 
 		if ("Circle".equals(raw.collisionMethod)) {
-			this.collision = new Collision.Circle(raw.collisionData[0], raw.collisionData[1], raw.collisionData[2]);
+			this.collision = new Collision.Circle(raw.collisionData[0]);
 		} else if ("Rectangle".equals(raw.collisionMethod)) {
-			this.collision = new Collision.Rectangle(raw.collisionData[0], raw.collisionData[1], raw.collisionData[2],
-					raw.collisionData[3]);
+			this.collision = new Collision.Rectangle(raw.collisionData[0], raw.collisionData[1]);
 		} else {
-			this.collision = new Collision.Circle(raw.collisionData[0], raw.collisionData[1], raw.collisionData[2]);
+			this.collision = new Collision.Circle(raw.collisionData[0]);
 		}
 
 		if (raw.originX == null) {
-			System.out.println("null trigger");
-			this.originX = texture.getMaxWidth()/2;
+			this.originX = texture.getMaxWidth() / 2;
 		} else {
 			this.originX = raw.originX;
 		}
 
 		if (raw.originY == null) {
-			this.originY = texture.getMaxHeight()/2;
+			this.originY = texture.getMaxHeight() / 2;
 		} else {
 			this.originY = raw.originY;
 		}

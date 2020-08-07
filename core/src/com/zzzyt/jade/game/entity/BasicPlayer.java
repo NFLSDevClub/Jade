@@ -58,9 +58,9 @@ public class BasicPlayer extends Player {
 
 		was = new FlyingAnimation(left, center, right, toLeft, toRight, frameLength, transitionFrameLength);
 		this.hitbox = hitbox;
-		this.collision = new Collision.Circle(0, 0, radius);
-		this.collisionItem = new Collision.Circle(0, 0, radius * ITEM_MUL);
-		this.collisionGraze = new Collision.Circle(0, 0, radius * GRAZE_MUL);
+		this.collision = new Collision.Circle(radius);
+		this.collisionItem = new Collision.Circle(radius * ITEM_MUL);
+		this.collisionGraze = new Collision.Circle(radius * GRAZE_MUL);
 
 		this.speedHigh = speedHigh;
 		this.speedLow = speedLow;
@@ -80,9 +80,9 @@ public class BasicPlayer extends Player {
 
 		this.hitbox = new Sprite(atlas.findRegion(regionName + "_hitbox"));
 		hitbox.setAlpha(0);
-		this.collision = new Collision.Circle(0, 0, radius);
-		this.collisionItem = new Collision.Circle(0, 0, radius * ITEM_MUL);
-		this.collisionGraze = new Collision.Circle(0, 0, radius * GRAZE_MUL);
+		this.collision = new Collision.Circle(radius);
+		this.collisionItem = new Collision.Circle(radius * ITEM_MUL);
+		this.collisionGraze = new Collision.Circle(radius * GRAZE_MUL);
 		this.speedHigh = speedHigh;
 		this.speedLow = speedLow;
 		this.x = U.screenToWorldX(U.config().w / 2);
@@ -99,9 +99,9 @@ public class BasicPlayer extends Player {
 		tmp.add(region);
 
 		was = new FlyingAnimation(tmp, tmp, tmp, tmp, tmp, 1, 1);
-		this.collision = new Collision.Circle(0, 0, radius);
-		this.collisionItem = new Collision.Circle(0, 0, radius * ITEM_MUL);
-		this.collisionGraze = new Collision.Circle(0, 0, radius * GRAZE_MUL);
+		this.collision = new Collision.Circle(radius);
+		this.collisionItem = new Collision.Circle(radius * ITEM_MUL);
+		this.collisionGraze = new Collision.Circle(radius * GRAZE_MUL);
 		this.speedHigh = speedHigh;
 		this.speedLow = speedLow;
 		this.x = U.screenToWorldX(U.config().w / 2);
@@ -161,9 +161,9 @@ public class BasicPlayer extends Player {
 	@Override
 	public void onBomb() {
 		J.getSession().event.onBomb(this);
-		
-		if(J.getSession().bossScene!=null) {
-			J.getSession().bossScene.failBonus=true;
+
+		if (J.getSession().bossScene != null) {
+			J.getSession().bossScene.failBonus = true;
 		}
 	}
 
@@ -176,7 +176,7 @@ public class BasicPlayer extends Player {
 	@Override
 	public void onRebirthStart() {
 		J.getSession().event.onRebirthStart(this);
-		J.getSession().bossScene.failBonus=true;
+		J.getSession().bossScene.failBonus = true;
 	}
 
 	@Override
@@ -196,7 +196,7 @@ public class BasicPlayer extends Player {
 		if (state == PLOK && invFrame == 0) {
 			state = PLDB;
 			internalFrameCounter = deathbombWindow;
-			SE.play("die");
+			SE.play("pldead");
 			J.getSession().event.onPlayerHit(this);
 		} else {
 			// no hitting
