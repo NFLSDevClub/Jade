@@ -39,7 +39,7 @@ public class OptionScreen extends BasicScreen {
 			GridButton button = (GridButton) musicVolume
 					.add(new GridButton(i * 5 + "%", 48, 0, 0, 200, 60, i, 0, null));
 			button.setActiveAction(() -> Actions.parallel(
-					Actions.sequence(Actions.show(),
+					Actions.sequence(Actions.show(), Actions.color(Color.WHITE),
 							Actions.moveTo(button.staticX + 2, button.staticY, 0.03f, Interpolation.sine),
 							Actions.moveTo(button.staticX - 4, button.staticY, 0.06f, Interpolation.sine),
 							Actions.moveTo(button.staticX, button.staticY, 0.03f, Interpolation.sine)),
@@ -50,35 +50,43 @@ public class OptionScreen extends BasicScreen {
 						BGM.setVolume(i / 20f);
 					})));
 			button.setInactiveAction(() -> Actions.hide());
-			button.setAction(() -> {
-				U.config().musicVolume = i / 20f;
-				BGM.setVolume(i / 20f);
-			});
 		}
 		musicVolume.select(M.clamp(M.round(U.config().musicVolume * 20), 0, 20), 0);
 		musicVolume.update();
 		input.addProcessor(musicVolume);
 		grid.add(musicVolume);
 
-		grid.add(new GridButton("S.E. Vol", 48, 740, 280, 200, 60, 0, 1, null));
+		final GridButton tmpButton1 = new GridButton("S.E. Vol", 48, 740, 280, 200, 60, 0, 1, null);
+		tmpButton1.setActiveAction(() -> Actions.parallel(
+				Actions.sequence(Actions.show(), Actions.color(Color.WHITE),
+						Actions.moveTo(tmpButton1.staticX + 2, tmpButton1.staticY, 0.03f, Interpolation.sine),
+						Actions.moveTo(tmpButton1.staticX - 4, tmpButton1.staticY, 0.06f, Interpolation.sine),
+						Actions.moveTo(tmpButton1.staticX, tmpButton1.staticY, 0.03f, Interpolation.sine)),
+				Actions.forever(Actions.sequence(Actions.color(new Color(0.9f, 0.9f, 0.9f, 1f), 0.5f),
+						Actions.color(Color.WHITE, 0.5f))),
+				Actions.forever(Actions.sequence(Actions.delay(1.5f), Actions.run(() -> {
+					SE.play("pldead");
+				})))));
+		grid.add(tmpButton1);
 		SEVolume = new ScrollingCenteredGrid(false, 0, 0);
 		SEVolume.setPosition(1040, 280);
 		SEVolume.setGridX(0).setGridY(1);
 
 		for (int ii = 0; ii <= 20; ii++) {
 			final int i = ii;
-			GridButton button = (GridButton) SEVolume.add(new GridButton(i * 5 + "%", 48, 0, 0, 200, 60, i, 0, null));
-			button.setActiveAction(() -> Actions.parallel(
-					Actions.sequence(Actions.show(),
-							Actions.moveTo(button.staticX + 2, button.staticY, 0.03f, Interpolation.sine),
-							Actions.moveTo(button.staticX - 4, button.staticY, 0.06f, Interpolation.sine),
-							Actions.moveTo(button.staticX, button.staticY, 0.03f, Interpolation.sine)),
+			final GridButton tmpButton2 = (GridButton) SEVolume
+					.add(new GridButton(i * 5 + "%", 48, 0, 0, 200, 60, i, 0, null));
+			tmpButton2.setActiveAction(() -> Actions.parallel(
+					Actions.sequence(Actions.show(), Actions.color(Color.WHITE),
+							Actions.moveTo(tmpButton2.staticX + 2, tmpButton2.staticY, 0.03f, Interpolation.sine),
+							Actions.moveTo(tmpButton2.staticX - 4, tmpButton2.staticY, 0.06f, Interpolation.sine),
+							Actions.moveTo(tmpButton2.staticX, tmpButton2.staticY, 0.03f, Interpolation.sine)),
 					Actions.forever(Actions.sequence(Actions.color(new Color(0.9f, 0.9f, 0.9f, 1f), 0.5f),
-							Actions.color(Color.WHITE, 0.5f)))));
-			button.setInactiveAction(() -> Actions.hide());
-			button.setAction(() -> {
-				U.config().SEVolume = i / 20f;
-			});
+							Actions.color(Color.WHITE, 0.5f))),
+					Actions.run(() -> {
+						U.config().SEVolume = i / 20f;
+					})));
+			tmpButton2.setInactiveAction(() -> Actions.hide());
 		}
 		SEVolume.select(M.clamp(M.round(U.config().SEVolume * 20), 0, 20), 0);
 		SEVolume.update();
