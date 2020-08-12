@@ -4,30 +4,32 @@ import com.zzzyt.jade.util.Collision.CollisionData;
 import com.zzzyt.jade.game.entity.EnemyBullet;
 
 public abstract class Player extends Entity {
-	
+
 	/**
 	 * Player state: PLOK, PLDB, PLRB <br/>
 	 */
-	public int state;
-	
+	public PlayerState state;
+
+	public enum PlayerState {
+		/**
+		 * Normal player state
+		 */
+		Normal,
+		/**
+		 * Waiting for deadbombing state
+		 */
+		DeathBombing,
+		/**
+		 * Waiting for respawn state
+		 */
+		Respwaning
+	}
+
 	/**
 	 * allow to trigger {@link #onShot()} {@link #onBomb()}?
 	 */
 	public boolean canBomb, canShot;
 
-	/**
-	 * Normal player state
-	 */
-	public static final int PLOK = 0;
-	/**
-	 * Waiting for deadbombing state
-	 */
-	public static final int PLDB = 1;
-	/**
-	 * Waiting for respawn state
-	 */
-	public static final int PLRB = 2;
-	
 	/**
 	 * Event shot
 	 */
@@ -49,7 +51,7 @@ public abstract class Player extends Entity {
 	 * Player fails to deathbomb and now waiting for rebirth frame
 	 */
 	public abstract void onRebirthStart();
-	
+
 	/**
 	 * Event rebirth end <br/>
 	 * Player has just rebirthed
@@ -58,6 +60,7 @@ public abstract class Player extends Entity {
 
 	/**
 	 * The item collection line height.
+	 * 
 	 * @return
 	 */
 	public float getItemCollectionLineHeight() {

@@ -1,6 +1,7 @@
 package com.zzzyt.jade.game.entity;
 
 import com.zzzyt.jade.game.Player;
+import com.zzzyt.jade.game.Player.PlayerState;
 import com.zzzyt.jade.game.shot.BulletData;
 import com.zzzyt.jade.util.Collision;
 import com.zzzyt.jade.util.J;
@@ -13,8 +14,8 @@ import com.zzzyt.jade.util.J;
  */
 public class EnemyBullet extends Bullet {
 
-	public int grazeCount=1;
-	
+	public int grazeCount = 1;
+
 	public EnemyBullet() {
 		super();
 	}
@@ -29,8 +30,8 @@ public class EnemyBullet extends Bullet {
 			J.onHit();
 			return true;
 		}
-		
-		if(closeTo(J.getPlayer()) && grazeCount!=0 && J.getPlayer().state==Player.PLOK) {
+
+		if (closeTo(J.getPlayer()) && grazeCount != 0 && J.getPlayer().state == PlayerState.Normal) {
 			J.getPlayer().onGraze(this);
 			grazeCount--;
 		}
@@ -40,7 +41,7 @@ public class EnemyBullet extends Bullet {
 	public boolean closeTo(Player player) {
 		return Collision.collide(player.getX(), player.getY(), player.getGrazeCollisionData(), x, y, data.collision);
 	}
-	
+
 	public boolean collide(Player player) {
 		return Collision.collide(this, player);
 	}

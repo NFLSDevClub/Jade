@@ -35,7 +35,7 @@ public class BasicPlayer extends Player {
 	/**
 	 * The number of frames from death to reborn <br/>
 	 */
-	public int rebirthFrame;
+	public int respawnFrame;
 
 	/**
 	 * invincibility frames
@@ -61,14 +61,14 @@ public class BasicPlayer extends Player {
 		this.collision = new Collision.Circle(radius);
 		this.collisionItem = new Collision.Circle(radius * ITEM_MUL);
 		this.collisionGraze = new Collision.Circle(radius * GRAZE_MUL);
-
 		this.speedHigh = speedHigh;
 		this.speedLow = speedLow;
 		this.x = U.screenToWorldX(U.config().w / 2);
 		this.y = U.screenToWorldY(32);
 		this.canBomb = this.canShot = true;
+		this.state = PlayerState.Normal;
 		this.deathbombWindow = deathbombWindow;
-		this.rebirthFrame = rebirthFrame;
+		this.respawnFrame = rebirthFrame;
 	}
 
 	public BasicPlayer(TextureAtlas atlas, String regionName, int frameLength, int transitionFrameLength, float radius,
@@ -88,9 +88,9 @@ public class BasicPlayer extends Player {
 		this.x = U.screenToWorldX(U.config().w / 2);
 		this.y = U.screenToWorldY(32);
 		this.canBomb = this.canShot = true;
-
+		this.state = PlayerState.Normal;
 		this.deathbombWindow = deathbombWindow;
-		this.rebirthFrame = rebirthFrame;
+		this.respawnFrame = rebirthFrame;
 	}
 
 	public BasicPlayer(TextureRegion region, float radius, float speedHigh, float speedLow, int deathbombWindow,
@@ -107,21 +107,21 @@ public class BasicPlayer extends Player {
 		this.x = U.screenToWorldX(U.config().w / 2);
 		this.y = U.screenToWorldY(32);
 		this.canBomb = this.canShot = true;
-
+		this.state = PlayerState.Normal;
 		this.deathbombWindow = deathbombWindow;
-		this.rebirthFrame = rebirthFrame;
+		this.respawnFrame = rebirthFrame;
 	}
 
 	public void draw(Batch batch) {
 
-		if (state == PLOK || state == PLDB) {
-			if (invFrame % 2 == 0 || state == PLDB) {
+		if (state == PlayerState.Normal || state == PlayerState.DeathBombing) {
+			if (invFrame % 2 == 0 || state == PlayerState.DeathBombing) {
 				TextureRegion tmp = was.getTexture();
 				batch.draw(tmp, x - tmp.getRegionWidth() / 2, y - tmp.getRegionHeight() / 2);
 			}
 		}
 
-		if (U.checkKey(U.config().keySlow) || state != PLOK) {
+		if (U.checkKey(U.config().keySlow) || state != PlayerState.Normal) {
 			U.addAlpha(hitbox, 0.1f);
 		} else {
 			U.addAlpha(hitbox, -0.1f);
@@ -193,8 +193,8 @@ public class BasicPlayer extends Player {
 
 	@Override
 	public void onHit() {
-		if (state == PLOK && invFrame == 0) {
-			state = PLDB;
+		if (state == PlayerState.Normal && invFrame == 0) {
+			state = PlayerState.DeathBombing;
 			internalFrameCounter = deathbombWindow;
 			SE.play("pldead");
 			J.getSession().event.onPlayerHit(this);
@@ -210,16 +210,16 @@ public class BasicPlayer extends Player {
 			invFrame--;
 		}
 
-		if (state == PLOK) {
+		if (state == PlayerState.Normal) {
 			updateOK(t);
 
 			was.update(t, dx);
-		} else if (state == PLDB) {
+		} else if (state == PlayerState.DeathBombing) {
 			// deathbombing
 			if (J.isKeyJustPressed(U.config().keyBomb) && canBomb) {
 				logger.debug("Deathbomb Succeed");
 				onBomb();
-				state = PLOK;
+				state = PlayerState.Normal;
 
 				J.getSession().event.onPlayerDeathbomb(this);
 				addInvincibilityFrame(120);
@@ -227,19 +227,19 @@ public class BasicPlayer extends Player {
 				logger.debug("Deathbomb Fail");
 				internalFrameCounter--;
 				if (internalFrameCounter <= 0) {
-					state = PLRB;
-					internalFrameCounter = rebirthFrame;
+					state = PlayerState.Respwaning;
+					internalFrameCounter = respawnFrame;
 
 					onRebirthStart();
 				}
 			}
 
 			was.update(t, dx);
-		} else if (state == PLRB) {
+		} else if (state == PlayerState.Respwaning) {
 
 			internalFrameCounter--;
 			if (internalFrameCounter <= 0) {
-				state = PLOK;
+				state = PlayerState.Normal;
 
 				onRebirthEnd();
 				addInvincibilityFrame(180);
