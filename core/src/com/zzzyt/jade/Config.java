@@ -14,6 +14,7 @@ public class Config {
 
 	public int fps;
 	public boolean vsyncEnabled;
+	public String windowTitle;
 	public float windowWidth;
 	public float windowHeight;
 	public int startupWindowWidth;
@@ -76,6 +77,7 @@ public class Config {
 		fps = 60;
 		vsyncEnabled = true;
 
+		windowTitle = "\u6771\u65b9\u8abf\u8a66\u796d\u3000\uff5e Demonstration of the Jade Engine.";
 		windowWidth = 1280;
 		windowHeight = 960;
 		startupWindowWidth = 1280;

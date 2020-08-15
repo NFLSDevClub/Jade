@@ -11,6 +11,8 @@ public class DesktopLauncher {
 		config.setWindowedMode(U.config().startupWindowWidth, U.config().startupWindowHeight);
 		config.useVsync(U.config().vsyncEnabled);
 		config.setResizable(U.config().allowResize);
+		config.setTitle(U.config().windowTitle);
+		config.setWindowIcon("icon/icon_16x.png", "icon/icon_32x.png", "icon/icon_48x.png", "icon/icon_128x.png");
 		JadeDemoApplication game = new JadeDemoApplication();
 		game.setSync(new DesktopSync());
 		new Lwjgl3Application(game, config);
