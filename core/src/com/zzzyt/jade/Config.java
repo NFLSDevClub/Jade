@@ -74,12 +74,12 @@ public class Config {
 		logLevel = Logger.DEBUG;
 
 		fps = 60;
-		vsyncEnabled = false;
+		vsyncEnabled = true;
 
 		windowWidth = 1280;
 		windowHeight = 960;
-		startupWindowWidth = 640;
-		startupWindowHeight = 480;
+		startupWindowWidth = 1280;
+		startupWindowHeight = 960;
 		frameWidth = 768;
 		frameHeight = 896;
 		frameOffsetX = 64;

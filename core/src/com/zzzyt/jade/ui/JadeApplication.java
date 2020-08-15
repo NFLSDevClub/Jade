@@ -28,9 +28,14 @@ public class JadeApplication implements ApplicationListener {
 	private Stage st;
 	private FPSDisplay fps;
 	public WindowedMean fpsCounter;
+	public Sync sync;
 
 	public void onStart() {
 
+	}
+
+	public void setSync(Sync sync) {
+		this.sync = sync;
 	}
 
 	@Override
@@ -121,6 +126,8 @@ public class JadeApplication implements ApplicationListener {
 
 		st.act(U.safeDeltaTime());
 		st.draw();
+
+		sync.sync(U.config().fps);
 	}
 
 	@Override
