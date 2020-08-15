@@ -11,8 +11,8 @@ public class DesktopLauncher {
 		config.setWindowedMode(U.config().startupWindowWidth, U.config().startupWindowHeight);
 		config.useVsync(U.config().vsyncEnabled);
 		config.setResizable(U.config().allowResize);
-		JadeDemoApplication tmp = new JadeDemoApplication();
-		tmp.setSync(new DesktopSync());
-		new Lwjgl3Application(tmp, config);
+		JadeDemoApplication game = new JadeDemoApplication();
+		game.setSync(new DesktopSync());
+		new Lwjgl3Application(game, config);
 	}
 }

@@ -15,6 +15,7 @@ import com.zzzyt.jade.ui.screen.FadeableScreen;
 import com.zzzyt.jade.ui.screen.ScreenState;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.BGM;
+import com.zzzyt.jade.util.AutoLoader;
 import com.zzzyt.jade.util.U;
 
 public class JadeApplication implements ApplicationListener {
@@ -74,8 +75,8 @@ public class JadeApplication implements ApplicationListener {
 
 		onStart();
 
-		BackgroundLoader backgroundLoader = new BackgroundLoader();
-		backgroundLoader.start();
+		AutoLoader autoLoader = new AutoLoader();
+		autoLoader.load();
 	}
 
 	@Override

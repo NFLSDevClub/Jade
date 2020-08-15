@@ -1,4 +1,4 @@
-package com.zzzyt.jade.ui;
+package com.zzzyt.jade.util;
 
 import java.net.URL;
 import java.util.zip.ZipEntry;
@@ -14,16 +14,14 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
 import com.zzzyt.jade.game.shot.ShotSheet;
-import com.zzzyt.jade.util.A;
-import com.zzzyt.jade.util.U;
 
-public class BackgroundLoader extends Thread {
+public class AutoLoader {
 
 	private Array<String> tasks;
 
 	private Logger logger;
 
-	public BackgroundLoader() {
+	public AutoLoader() {
 		this.tasks = new Array<String>();
 		this.logger = new Logger("BackgroundLoader", U.config().logLevel);
 	}
@@ -32,8 +30,17 @@ public class BackgroundLoader extends Thread {
 		tasks.add(folder);
 	}
 
-	@Override
-	public void run() {
+	public void loadAsync() {
+		Thread thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				load();
+			}
+		});
+		thread.start();
+	}
+
+	public void load() {
 		loadInternal();
 		for (String s : tasks) {
 			logger.debug("Reading resources for task \"" + s + "\"");
