@@ -22,7 +22,7 @@ public class JadeDemoApplication extends JadeApplication {
 	@Override
 	public void onStart() {
 		BGM.register(new BackgroundMusic("mus/Idea12.ogg", 0, 12));
-		BGM.register(new BackgroundMusic("mus/E.0109.ogg", 10, 50));
+		BGM.register(new BackgroundMusic("mus/E.0109.ogg", 2, 26));
 		BGM.register(new BackgroundMusic("mus/Yet Another Tetris (Piano ver.).ogg", 0, Float.MAX_VALUE));
 		
 		SE.register("cancel", "snd/se_cancel00.wav");
