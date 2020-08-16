@@ -2,14 +2,14 @@ package com.zzzyt.jade.demo.stage1;
 
 import com.zzzyt.jade.game.task.Wait;
 import com.zzzyt.jade.game.task.WaitForBossScene;
-import com.zzzyt.jade.game.task.Plural;
+import com.zzzyt.jade.game.task.Sequence;
 import com.zzzyt.jade.game.drawable.TiledScrollingBackground;
 import com.zzzyt.jade.game.task.AddBossScene;
 import com.zzzyt.jade.game.task.AddDrawable;
 import com.zzzyt.jade.game.task.SwitchBGM;
 import com.zzzyt.jade.util.A;
 
-public class Stage1 extends Plural {
+public class Stage1 extends Sequence {
 
 	@Override
 	public void init() {

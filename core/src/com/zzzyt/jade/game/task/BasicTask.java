@@ -3,22 +3,22 @@ package com.zzzyt.jade.game.task;
 import com.zzzyt.jade.game.Task;
 import com.zzzyt.jade.game.Updatable;
 
-public class Single implements Task {
+public class BasicTask implements Task {
 
 	private Updatable updateFunc;
 	private boolean finished;
 	private int firstT;
 	private int delay;
 
-	public Single() {
+	public BasicTask() {
 
 	}
 
-	public Single(Updatable updateFunc) {
+	public BasicTask(Updatable updateFunc) {
 		this(0, updateFunc);
 	}
 
-	public Single(int delay, Updatable updateFunc) {
+	public BasicTask(int delay, Updatable updateFunc) {
 		this.updateFunc = updateFunc;
 		this.delay = delay;
 	}
@@ -27,12 +27,12 @@ public class Single implements Task {
 		this.finished = true;
 	}
 
-	public Single setDelay(int delay) {
+	public BasicTask setDelay(int delay) {
 		this.delay = delay;
 		return this;
 	}
 
-	public Single setUpdateFunc(Updatable updateFunc) {
+	public BasicTask setUpdateFunc(Updatable updateFunc) {
 		this.updateFunc = updateFunc;
 		return this;
 	}

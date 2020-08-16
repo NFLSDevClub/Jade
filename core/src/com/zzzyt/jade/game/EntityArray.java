@@ -1,11 +1,14 @@
 package com.zzzyt.jade.game;
 
+import java.util.function.Consumer;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.zzzyt.jade.util.U;
 
 /**
  * A wrapper for Array that allows simple modification
+ * 
  * @author XGN
  *
  * @param <T>
@@ -16,26 +19,26 @@ public class EntityArray<T extends Entity> {
 	 * The number of blank elements
 	 */
 	public int blankCount;
-	
+
 	/**
 	 * The number of active elements
 	 */
 	public int count;
-	
+
 	public int size() {
 		return entities.size;
 	}
-	
+
 	public T get(int index) {
 		return entities.get(index);
 	}
-	
+
 	public void add(T t) {
 		count++;
 		t.internalId = entities.size;
 		entities.add(t);
 	}
-	
+
 	public void remove(T t) {
 		if (t.internalId != entities.size - 1)
 			blankCount++;
@@ -43,15 +46,15 @@ public class EntityArray<T extends Entity> {
 		entities.set(t.internalId, null);
 		t.internalId = -1;
 	}
-	
-	public void set(int index,T value) {
+
+	public void set(int index, T value) {
 		entities.set(index, value);
 	}
-	
+
 	public EntityArray() {
-		entities=new Array<>(false,1024);
+		entities = new Array<>(false, 1024);
 	}
-	
+
 	public void draw(SpriteBatch batch) {
 		for (int i = 0; i < entities.size; i++) {
 			if (entities.get(i) != null) {
@@ -59,7 +62,7 @@ public class EntityArray<T extends Entity> {
 			}
 		}
 	}
-	
+
 	public void update(int frame) {
 		for (int i = 0; i < entities.size; i++) {
 			if (entities.get(i) != null) {
@@ -76,5 +79,11 @@ public class EntityArray<T extends Entity> {
 		blankCount = 0;
 	}
 
+	public void forEach(Consumer<T> function) {
+		for (int i = 0; i < entities.size; i++) {
+			if (entities.get(i) != null) {
+			}
+		}
+	}
 
 }

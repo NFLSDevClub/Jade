@@ -1,12 +1,12 @@
 package com.zzzyt.jade.demo.stageextra;
 
 import com.zzzyt.jade.game.operator.AngularVelocity;
-import com.zzzyt.jade.game.task.Single;
+import com.zzzyt.jade.game.task.BasicTask;
 import com.zzzyt.jade.util.B;
 import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.util.M;
 
-public class StageExtraMid1 extends Single {
+public class StageExtraMid1 extends BasicTask {
 
 	private float tmpf;
 

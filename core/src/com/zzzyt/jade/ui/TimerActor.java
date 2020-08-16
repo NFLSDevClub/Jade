@@ -35,11 +35,11 @@ public class TimerActor extends Label {
 		super.act(delta);
 		
 		//update timer
-		float realtime=sc.time/60f;
+		float realtime=sc.timeLeft/60f;
 		setText(String.format("%02d", (int)realtime)
 				+"."
 				+String.format("%02d", (int)(realtime*100)%100)
-				+"\nHP:"+sc.hp+"/"+sc.maxhp
+				+"\nHP:"+sc.hp+"/"+sc.intitialHealth
 				+"\nBonus:"+sc.getBonus()
 				+"\nLife:"+((DemoEventManager)(J.getEM())).playerLife
 				+"\nBomb:"+((DemoEventManager)(J.getEM())).playerBomb

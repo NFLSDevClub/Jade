@@ -1,11 +1,11 @@
 package com.zzzyt.jade.demo.stage1;
 
-import com.zzzyt.jade.game.task.Single;
+import com.zzzyt.jade.game.task.BasicTask;
 import com.zzzyt.jade.util.B;
 import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.util.M;
 
-public class Stage1Mid2 extends Single {
+public class Stage1Mid2 extends BasicTask {
 
 	private float tmpf;
 

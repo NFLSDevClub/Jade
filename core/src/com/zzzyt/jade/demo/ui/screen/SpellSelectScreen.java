@@ -8,7 +8,7 @@ import com.zzzyt.jade.demo.stage1.Stage1Mid2;
 import com.zzzyt.jade.demo.stageextra.StageExtraMid1;
 import com.zzzyt.jade.demo.stageextra.StageExtraMid2;
 import com.zzzyt.jade.game.Task;
-import com.zzzyt.jade.game.task.Plural;
+import com.zzzyt.jade.game.task.Sequence;
 import com.zzzyt.jade.game.task.Wait;
 import com.zzzyt.jade.game.task.WaitForBulletClear;
 import com.zzzyt.jade.ui.grid.Grid;
@@ -89,8 +89,8 @@ public class SpellSelectScreen extends BasicScreen {
 		return "spellSelect";
 	}
 
-	private Plural constructStage(Task spell) {
-		return new Plural() {
+	private Sequence constructStage(Task spell) {
+		return new Sequence() {
 			@Override
 			public void init() {
 				super.init();

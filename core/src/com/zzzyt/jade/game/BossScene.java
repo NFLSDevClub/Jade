@@ -127,9 +127,9 @@ public class BossScene {
 		int leftHP=0,totalHP=0;
 		for(int i=0;i<phases.get(currentPhase).size;i++) {
 			if(i<spellIndex) {
-				totalHP+=phases.get(currentPhase).get(i).maxhp;
+				totalHP+=phases.get(currentPhase).get(i).intitialHealth;
 			}else {
-				totalHP+=phases.get(currentPhase).get(i).maxhp;
+				totalHP+=phases.get(currentPhase).get(i).intitialHealth;
 				leftHP+=phases.get(currentPhase).get(i).hp;
 			}
 		}
@@ -165,7 +165,7 @@ public class BossScene {
 			}
 		}
 		
-		getCurrentSpellcard().hp=getCurrentSpellcard().maxhp-lostHP;
+		getCurrentSpellcard().hp=getCurrentSpellcard().intitialHealth-lostHP;
 	}
 	
 	public Spellcard getCurrentSpellcard() {

@@ -3,7 +3,7 @@ package com.zzzyt.jade.game.task;
 import com.badlogic.gdx.utils.Array;
 import com.zzzyt.jade.game.Task;
 
-public class Plural implements Task {
+public class Sequence implements Task {
 
 	private Array<Task> tasks;
 	private int currentTask;
@@ -11,11 +11,11 @@ public class Plural implements Task {
 	private int loopCounter;
 	private boolean firstTime;
 
-	public Plural() {
+	public Sequence() {
 		this(1);
 	}
 
-	public Plural(int loopCount) {
+	public Sequence(int loopCount) {
 		this.loopCount = loopCount;
 	}
 
@@ -27,17 +27,17 @@ public class Plural implements Task {
 		return tasks.get(currentTask);
 	}
 
-	public Plural add(Task task) {
+	public Sequence add(Task task) {
 		tasks.add(task);
 		return this;
 	}
 
-	public Plural remove(Task task) {
+	public Sequence remove(Task task) {
 		tasks.removeValue(task, true);
 		return this;
 	}
 
-	public Plural setLoopCount(int loopCount) {
+	public Sequence setLoopCount(int loopCount) {
 		this.loopCount = loopCount;
 		return this;
 	}

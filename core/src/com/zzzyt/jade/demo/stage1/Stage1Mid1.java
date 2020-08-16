@@ -2,12 +2,12 @@ package com.zzzyt.jade.demo.stage1;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.zzzyt.jade.game.operator.Acceleration;
-import com.zzzyt.jade.game.task.Single;
+import com.zzzyt.jade.game.task.BasicTask;
 import com.zzzyt.jade.util.A;
 import com.zzzyt.jade.util.B;
 import com.zzzyt.jade.util.J;
 
-public class Stage1Mid1 extends Single {
+public class Stage1Mid1 extends BasicTask {
 
 	@Override
 	public void init() {

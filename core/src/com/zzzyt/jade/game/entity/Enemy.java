@@ -76,7 +76,7 @@ public class Enemy extends Entity {
 		}
 
 		// OOB Check
-		if (enableOOBCheck && x >= U.config().frameWidth + 300 || x <= -300 || y >= U.config().frameHeight + 300
+		if (enableOOBCheck && x >= U.config().w + 300 || x <= -300 || y >= U.config().h + 300
 				|| y <= -300) {
 			J.remove(this);
 		} else {

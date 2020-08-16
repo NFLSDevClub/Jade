@@ -1,11 +1,11 @@
 package com.zzzyt.jade.demo.stageextra;
 
 import com.zzzyt.jade.game.task.Wait;
-import com.zzzyt.jade.game.task.Plural;
+import com.zzzyt.jade.game.task.Sequence;
 import com.zzzyt.jade.game.task.SwitchBGM;
 import com.zzzyt.jade.game.task.WaitForBulletClear;
 
-public class StageExtra extends Plural {
+public class StageExtra extends Sequence {
 
 	@Override
 	public void init() {

@@ -1,10 +1,10 @@
 package com.zzzyt.jade.demo.difficulty;
 
 import com.zzzyt.jade.demo.stage1.Stage1;
-import com.zzzyt.jade.game.task.Plural;
+import com.zzzyt.jade.game.task.Sequence;
 import com.zzzyt.jade.util.J;
 
-public class DifficultyRegular extends Plural {
+public class DifficultyRegular extends Sequence {
 
 	private int difficulty;
 
