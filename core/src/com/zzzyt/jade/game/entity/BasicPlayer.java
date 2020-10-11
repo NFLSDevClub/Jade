@@ -176,7 +176,9 @@ public class BasicPlayer extends Player {
 	@Override
 	public void onRebirthStart() {
 		J.getSession().event.onRebirthStart(this);
-		J.getSession().bossScene.getCurrentSpellcard().failBonus = true;
+		if(J.getSession().bossScene!=null) {
+			J.getSession().bossScene.getCurrentSpellcard().failBonus = true;			
+		}
 	}
 
 	@Override
