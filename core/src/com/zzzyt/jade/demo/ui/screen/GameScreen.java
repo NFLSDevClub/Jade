@@ -15,6 +15,7 @@ import com.zzzyt.jade.game.Jade;
 import com.zzzyt.jade.game.Task;
 import com.zzzyt.jade.ui.GameFrame;
 import com.zzzyt.jade.ui.KeyListener;
+import com.zzzyt.jade.ui.TimerActor;
 import com.zzzyt.jade.ui.YesNoMenu;
 import com.zzzyt.jade.ui.grid.Grid;
 import com.zzzyt.jade.ui.grid.GridButton;

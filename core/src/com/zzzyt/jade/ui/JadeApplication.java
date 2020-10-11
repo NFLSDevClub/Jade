@@ -31,6 +31,8 @@ public class JadeApplication implements ApplicationListener {
 	public WindowedMean fpsCounter;
 	public Sync sync;
 
+	public static JadeApplication self;
+
 	public void onStart() {
 
 	}
@@ -41,6 +43,8 @@ public class JadeApplication implements ApplicationListener {
 
 	@Override
 	public void create() {
+		self = this;
+
 		Gdx.app.setLogLevel(U.config().logLevel);
 
 		U.game = this;

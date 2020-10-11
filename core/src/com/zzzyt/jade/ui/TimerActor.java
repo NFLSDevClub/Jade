@@ -24,8 +24,8 @@ public class TimerActor extends Label {
 		
 		super("00.00",A.getUILabelStyle(30));
 		setOrigin(Align.center);
-		setPosition(200, 600);
-		addAction(Actions.moveBy(0,-200,1f,Interpolation.sineOut));
+		setPosition(900, 1100);
+		addAction(Actions.moveBy(0,-350,1f,Interpolation.sineOut));
 		
 		this.sc=sc;
 	}
@@ -39,12 +39,13 @@ public class TimerActor extends Label {
 		setText(String.format("%02d", (int)realtime)
 				+"."
 				+String.format("%02d", (int)(realtime*100)%100)
-				+"\nHP:"+sc.hp+"/"+sc.intitialHealth
-				+"\nBonus:"+sc.getBonus()
-				+"\nLife:"+((DemoEventManager)(J.getEM())).playerLife
-				+"\nBomb:"+((DemoEventManager)(J.getEM())).playerBomb
-				+"\nScore:"+((DemoEventManager)(J.getEM())).score
-				+"\nValue:"+((DemoEventManager)(J.getEM())).maxPoint);
+				+'\n'
+				+"\nHP:        "+sc.hp+"/"+sc.intitialHealth
+				+"\nBonus: "+sc.getBonus()
+				+"\nLife:     "+((DemoEventManager)(J.getEM())).playerLife
+				+"\nBomb:  "+((DemoEventManager)(J.getEM())).playerBomb
+				+"\nScore:  "+((DemoEventManager)(J.getEM())).score
+				+"\nValue:  "+((DemoEventManager)(J.getEM())).maxPoint);
 		
 		if(realtime<=5) {
 			getStyle().fontColor=Color.RED;

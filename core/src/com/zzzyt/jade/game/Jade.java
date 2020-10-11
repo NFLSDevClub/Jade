@@ -5,13 +5,20 @@ import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.zzzyt.jade.demo.JadeDemoApplication;
+import com.zzzyt.jade.demo.ui.screen.GameScreen;
 import com.zzzyt.jade.game.entity.Bullet;
 import com.zzzyt.jade.game.entity.Enemy;
 import com.zzzyt.jade.game.entity.Item;
+import com.zzzyt.jade.ui.TimerActor;
+import com.zzzyt.jade.util.J;
 import com.zzzyt.jade.util.U;
 
 public class Jade implements Disposable {
@@ -73,6 +80,17 @@ public class Jade implements Disposable {
 
 		this.running = true;
 		this.paused = false;
+		
+		GameScreen tmp = (GameScreen) JadeDemoApplication.self.screens.get(2);
+
+		// remove old actors
+		for (Actor a : tmp.st.getActors()) {
+			if (a instanceof TimerActor) {
+				a.addAction(Actions.sequence(
+						Actions.parallel(Actions.moveBy(0, -350, 0.5f, Interpolation.sineIn), Actions.fadeOut(0.5f)),
+						Actions.removeActor()));
+			}
+		}
 	}
 
 	public void draw() {
