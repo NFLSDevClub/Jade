@@ -1,5 +1,6 @@
 package com.zzzyt.jade.game.task;
 
+import com.zzzyt.jade.game.Task;
 import com.zzzyt.jade.util.J;
 
 /**
@@ -16,12 +17,14 @@ public class Spellcard {
 	public int timeLeft;
 
 	public boolean isSurvival;
-	public BasicTask task;
+	public Task task;
 
 	public long bonus;
+	public boolean failBonus;
+
 	private int firstT = -1;
 
-	public Spellcard(int maxhp, int maxtime, boolean isSurvival, long bonus, BasicTask task) {
+	public Spellcard(int maxhp, int maxtime, boolean isSurvival, long bonus, Task task) {
 		super();
 		this.intitialHealth = maxhp;
 		this.maxTime = maxtime;
@@ -33,6 +36,7 @@ public class Spellcard {
 	public void init() {
 		this.hp = this.intitialHealth;
 		this.timeLeft = this.maxTime;
+		this.failBonus = false;
 		firstT = -1;
 
 		task.init();

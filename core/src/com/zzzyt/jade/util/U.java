@@ -5,7 +5,6 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
@@ -54,10 +53,13 @@ public class U {
 		for (int i = 0; i < key.length; i++) {
 			if (Gdx.input.isKeyPressed(key[i]))
 				return true;
+//			if (TestInputListener.keys[key[i]]) {
+//				return true;
+//			}
 		}
 		return false;
 	}
-	
+
 	public static boolean checkKey2(int[] key) {
 		if (U.game.blocker.isBlocking())
 			return false;
@@ -75,12 +77,6 @@ public class U {
 	public static Sprite addAlpha(Sprite sprite, float delta) {
 		sprite.setAlpha(M.clamp(sprite.getColor().a + delta, 0, 1));
 		return sprite;
-	}
-
-	public static TextureRegion setToCoverWorld(TextureRegion region) {
-		region.setRegionWidth(U.config().w);
-		region.setRegionHeight(U.config().h * 2);
-		return region;
 	}
 
 	public static float screenToWorldY(float y) {

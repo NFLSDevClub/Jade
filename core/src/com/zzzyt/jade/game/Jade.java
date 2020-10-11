@@ -46,11 +46,12 @@ public class Jade implements Disposable {
 
 		logger.info("Creating Jade session...");
 
-		this.fbo = new FrameBuffer(Format.RGBA8888, U.config().w, U.config().h, false);
+		this.fbo = new FrameBuffer(Format.RGBA8888, U.config().frameWidth, U.config().frameHeight, false);
 		this.fboRegion = new TextureRegion(fbo.getColorBufferTexture());
 
 		this.cam = new OrthographicCamera(fbo.getWidth(), fbo.getHeight());
 		cam.position.set(U.config().w / 2 - U.config().originX, U.config().h / 2 - U.config().originY, 0);
+		cam.zoom = Math.min(U.config().w / U.config().frameWidth, U.config().h / U.config().frameHeight);
 		cam.update();
 
 		fboRegion.flip(false, true);

@@ -23,7 +23,7 @@ public class BasicScreen implements FadeableScreen {
 	protected ScreenState state;
 
 	public BasicScreen() {
-		this.viewport = new ScalingViewport(U.config().windowScaling, U.config().windowWidth, U.config().windowHeight);
+		this.viewport = new ScalingViewport(U.config().windowScaling, U.config().screenWidth, U.config().screenHeight);
 		this.state = ScreenState.HIDDEN;
 	}
 
@@ -60,7 +60,7 @@ public class BasicScreen implements FadeableScreen {
 
 		this.background = new Image(background);
 		this.background.setZIndex(0);
-		this.background.setBounds(0, 0, U.config().windowWidth, U.config().windowHeight);
+		this.background.setBounds(0, 0, U.config().screenWidth, U.config().screenHeight);
 		st.addActor(this.background);
 
 		input.addProcessor(st);

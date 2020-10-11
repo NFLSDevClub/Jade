@@ -15,12 +15,12 @@ public class Config {
 	public int fps;
 	public boolean vsyncEnabled;
 	public String windowTitle;
-	public float windowWidth;
-	public float windowHeight;
+	public float screenWidth;
+	public float screenHeight;
 	public int startupWindowWidth;
 	public int startupWindowHeight;
-	public float frameWidth;
-	public float frameHeight;
+	public int frameWidth;
+	public int frameHeight;
 	public float frameOffsetX;
 	public float frameOffsetY;
 	public boolean allowFullScreen;
@@ -30,8 +30,8 @@ public class Config {
 	public TextureFilter textureMinFilter;
 	public TextureFilter textureMagFilter;
 
-	public int w;
-	public int h;
+	public float w;
+	public float h;
 	public float originX;
 	public float originY;
 	public float deleteDistance;
@@ -44,9 +44,6 @@ public class Config {
 	public boolean allowSpeedUpOutOfReplay;
 	public int speedUpMultiplier;
 	public float musicVolume;
-	/**
-	 * Guessed from 0.0-1.0 --XGN
-	 */
 	public float SEVolume;
 
 	public int[] keyDown;
@@ -78,10 +75,10 @@ public class Config {
 		vsyncEnabled = true;
 
 		windowTitle = "\u6771\u65b9\u8abf\u8a66\u796d\u3000\uff5e Demonstration of the Jade Engine.";
-		windowWidth = 1280;
-		windowHeight = 960;
-		startupWindowWidth = 1280;
-		startupWindowHeight = 960;
+		screenWidth = 1280;
+		screenHeight = 960;
+		startupWindowWidth = 960;
+		startupWindowHeight = 720;
 		frameWidth = 768;
 		frameHeight = 896;
 		frameOffsetX = 64;
@@ -109,10 +106,10 @@ public class Config {
 		musicVolume = 1;
 		SEVolume = 1;
 
-		keyDown = new int[] { Keys.DOWN };
-		keyUp = new int[] { Keys.UP };
-		keyLeft = new int[] { Keys.LEFT };
-		keyRight = new int[] { Keys.RIGHT };
+		keyDown = new int[] { Keys.DOWN, Keys.S };
+		keyUp = new int[] { Keys.UP, Keys.W };
+		keyLeft = new int[] { Keys.LEFT, Keys.A };
+		keyRight = new int[] { Keys.RIGHT, Keys.D };
 		keySelect = new int[] { Keys.Z, Keys.ENTER };
 		keyCancel = new int[] { Keys.X, Keys.ESCAPE };
 		keyShot = new int[] { Keys.Z };

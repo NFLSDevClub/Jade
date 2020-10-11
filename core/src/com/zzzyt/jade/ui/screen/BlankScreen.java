@@ -23,7 +23,7 @@ public class BlankScreen extends BasicScreen {
 
 		this.background = new Image(A.getTexture("bg/blank.png"));
 		background.setZIndex(0);
-		background.setSize(U.config().windowWidth, U.config().windowHeight);
+		background.setSize(U.config().screenWidth, U.config().screenHeight);
 		st.addActor(this.background);
 
 		input.addProcessor(st);

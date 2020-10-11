@@ -64,7 +64,7 @@ public class JadeApplication implements ApplicationListener {
 		this.fpsCounter = new WindowedMean(10);
 		this.screens = new Array<FadeableScreen>();
 
-		this.viewport = new ScalingViewport(U.config().windowScaling, U.config().windowWidth, U.config().windowHeight);
+		this.viewport = new ScalingViewport(U.config().windowScaling, U.config().screenWidth, U.config().screenHeight);
 		this.st = new Stage(viewport);
 		st.setDebugAll(U.config().debugActorLayout);
 

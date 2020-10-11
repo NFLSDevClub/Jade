@@ -104,7 +104,7 @@ public class GameScreen extends BasicScreen {
 		pauseMenu.selectFirst();
 
 		this.bg = new Image(A.getRegion("bg/game.png"));
-		bg.setBounds(0, 0, U.config().windowWidth, U.config().windowHeight);
+		bg.setBounds(0, 0, U.config().screenWidth, U.config().screenHeight);
 		st.addActor(bg);
 
 		input.addProcessor(pauseMenu);

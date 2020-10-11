@@ -16,7 +16,7 @@ public class FPSDisplay extends Actor {
 		this.font = A.get("font/debug.fnt");
 		this.counter = 0;
 		this.text = "----- fps";
-		setBounds(U.config().windowWidth - 160, 0, 160, 24);
+		setBounds(U.config().screenWidth - 100, 0, 100, 16);
 	}
 
 	@Override
@@ -29,6 +29,5 @@ public class FPSDisplay extends Actor {
 			counter = 0;
 		}
 		font.draw(batch, text, getX(), getY() + getHeight());
-
 	}
 }
