@@ -1,4 +1,8 @@
 # JaDE
+
+**This fork is a special version of Jade for NFLS Dev Club.**
+**Used all sorts of ad hoc code and will not be maintained.**
+
 JaDE (or Jade) is the abbreviation of **Ja**va **D**anmaku **E**ngine.
 
 It's a java framework running on libgdx(lwjgl) intended to create Touhou-like danmaku games.  
